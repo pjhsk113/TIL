@@ -10,23 +10,23 @@
 
 ### 1. 인스턴스를 **public static final 필드로 만들고 private으로 생성자를 방어한다.**
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f7e6d1e8-cd4c-4aa4-9c22-a2498b42b88b/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210102%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210102T052648Z&X-Amz-Expires=86400&X-Amz-Signature=cfd6a167a47dad526dec15c3935c72215383dba5460805e44030e827fcb78dad&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f7e6d1e8-cd4c-4aa4-9c22-a2498b42b88b/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210104%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210104T093703Z&X-Amz-Expires=86400&X-Amz-Signature=6bd73ccb3fffedd66786b24a1af4463c34860e75c3a2307bae3a20d34a881af7&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 private 생성자는 Singleton.INSTANCE가 초기화될 떄 딱 한번만 호출된다. public이나 protected 생성자가 없기 때문에 초기화될 때 만들어진 인스턴스가 전체 시스템에서 하나뿐임을 보장한다.
 
 장점 : 간결하기 때문에 누가봐도 싱글턴 클래스임을 한눈에 알아볼 수 있다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/68da23a1-2b8d-4071-a30c-284bfb5a1626/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210102%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210102T052655Z&X-Amz-Expires=86400&X-Amz-Signature=9b0c8386c3df5ce4f00bdcd3bc0855c27d824ce6808bb9f29c87452588afb88f&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/68da23a1-2b8d-4071-a30c-284bfb5a1626/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210104%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210104T093727Z&X-Amz-Expires=86400&X-Amz-Signature=242fe1699a0cdd1129c330b163a644c2b4030aba62f6d99594801dfee5eb9dde&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/24e6f5d7-497f-4e6d-bf24-3e1d22006b6f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210102%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210102T052659Z&X-Amz-Expires=86400&X-Amz-Signature=c782d65205c0c805c60f3266e6137c8afc85f99eadb09c6cbae087ad9455bd0b&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/24e6f5d7-497f-4e6d-bf24-3e1d22006b6f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210104%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210104T093803Z&X-Amz-Expires=86400&X-Amz-Signature=0082df66cebff104a2208dbc8faad34f8446effd0014dcf5dcb73bcf1b2a7e41&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 단, 리플렉션 API를 사용하면 private 생성자를 호출할 수 있어 새로운 인스턴스를 생성할 수 있다. 이를 해결하기 위해서는 생성자에서 두 번째 객체가 생성될 때 예외를 던지면 된다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e1e038de-18cd-4ba5-83dc-901a14c1bbb8/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210102%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210102T052702Z&X-Amz-Expires=86400&X-Amz-Signature=44e53addaa93d5e656dbe0740fbbc05f0fc50d0dfa0a0c8ee809a7d0b3008c6a&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e1e038de-18cd-4ba5-83dc-901a14c1bbb8/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210104%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210104T094209Z&X-Amz-Expires=86400&X-Amz-Signature=902caeb233008f262b85d3260f9a979bd8dfd8d96c1de3c25c4506a03018e2b0&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 ### 2. 정적 팩터리 메서드를 public static 멤버로 제공한다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/aeb956ce-56db-405a-996e-b3a8f3592acb/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210102%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210102T052705Z&X-Amz-Expires=86400&X-Amz-Signature=f2eb028a24a2f42124e99aae711ab26b74b72f4e907bb577cb35351b6bdabdc1&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/aeb956ce-56db-405a-996e-b3a8f3592acb/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210104%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210104T094233Z&X-Amz-Expires=86400&X-Amz-Signature=6413fd36e949210a71efe209a1e7efa8ba05a8d2fd7643857067a19b9103069c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 위 1번의 예외(리플렉션 API)는 똑같이 적용된다.
 
