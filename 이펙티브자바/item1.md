@@ -12,9 +12,9 @@
 
 예를들면,
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f48a3262-6e77-4927-94e0-44d2d2a8f7c9/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201231%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201231T102830Z&X-Amz-Expires=86400&X-Amz-Signature=19509e03857b2a6e94883e1464359e8baf8062db1665a47213c57e583a0c304c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f48a3262-6e77-4927-94e0-44d2d2a8f7c9/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210110%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210110T102304Z&X-Amz-Expires=86400&X-Amz-Signature=18c489a17c51f8dc249640e1f1eb0b625d9fce6ac9839071a8c714e84aaaedbc&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/1f0fc658-af83-414d-a385-3059f4aadeff/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201231%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201231T102855Z&X-Amz-Expires=86400&X-Amz-Signature=a83321df437f89c63d412d21f09821bab3e583653eedbcc97f04085a74e2f6cb&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/1f0fc658-af83-414d-a385-3059f4aadeff/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210110%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210110T102930Z&X-Amz-Expires=86400&X-Amz-Signature=8457a379b403d99ea7d2fd0ca5e0d4a5b1edfd3f18fda347f500cba502ede144&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 이름을 가진 정적 팩터리 메서드가 소수인 BigInteger를 반환한다는 의미를 더 잘 나타내고 있다.
 
@@ -35,9 +35,9 @@ ex) Boolean의 valueOf는 객체를 아예 생성 하지 않는다.
 - 불변 값 클래스에서 동치인 인스턴스가 단 하나뿐임을 보장할 수 있다.
 - 인스턴스 통제는 플라이웨이트 패턴의 근간이 된다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/1bdc3a09-575e-4f96-a782-1efb0d96f59f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201231%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201231T102916Z&X-Amz-Expires=86400&X-Amz-Signature=4073d7cad2b9a5a2f6ea4a02ee32eb0b7dd4336a6ad0d9a291402bfe46f3b1ea&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/1bdc3a09-575e-4f96-a782-1efb0d96f59f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210110%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210110T102946Z&X-Amz-Expires=86400&X-Amz-Signature=5acde373f2bcb8f57f9ab7b566146934725860f3a46f82982c97105d2c02f40f&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4cec3985-8fe9-4ffe-b668-9334c34ebe3b/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201231%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201231T102928Z&X-Amz-Expires=86400&X-Amz-Signature=7c40a4af413d0a4718a7576e6e71df0cbcc5ebeb91e662abd3a5da7b32eb4a87&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4cec3985-8fe9-4ffe-b668-9334c34ebe3b/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210110%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210110T102958Z&X-Amz-Expires=86400&X-Amz-Signature=dfd999b479ea199f8a7cc63e55d1079a9062a0c73d65df3ed193c6209d89535d&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 TRUE와 FALSE 각각 true, false 값을 가지는 인스턴스를 캐싱하고 있고, 값이 true 혹은 false가 들어오면 캐싱된 값이 사용되므로 객체를 생성하지 않는다. 이 덕분에 동치인 인스턴스가 하나뿐임을 보장할 수 있다.
 
@@ -53,7 +53,7 @@ TRUE와 FALSE 각각 true, false 값을 가지는 인스턴스를 캐싱하고 �
 
 아래는 위에서 설명한 장점을 잘 나타내는 EnumSet의 예제이다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/d9c61164-409a-4eb3-8a0b-98048c48301f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201231%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201231T102947Z&X-Amz-Expires=86400&X-Amz-Signature=24bce03c48dedf61ad7f9d38d2eb913ad966e6b37e6cfddaca8f3f31fbdaf445&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/d9c61164-409a-4eb3-8a0b-98048c48301f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210110%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210110T103014Z&X-Amz-Expires=86400&X-Amz-Signature=a681836d06128f1bde63af4f6e71c52a46b5f69762ccc42489aeee1baf9b1e8b&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 universe.length에 의해 EnumSet의 하위 객체인 RegularEnumSet, JumboEnumSet 중 반환 타입이 결정된다. 클라이언트는 EnumSet이 반환되는 것만 알면되고 어떤 객체가 반환 되는지 알 필요가 없다.
 
