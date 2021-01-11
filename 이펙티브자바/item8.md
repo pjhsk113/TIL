@@ -50,11 +50,11 @@ cleaner는 자신의 스레드를 통제할 수 있기 때문에 위와 같은 �
 
 finalizer attack 예시
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e90658ac-5953-4b8a-9a41-67612b715ccc/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210108%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210108T132112Z&X-Amz-Expires=86400&X-Amz-Signature=18ff628347bf11ed53569d7a659be226c10774524ef53bfb69c982fb6c8951d7&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e90658ac-5953-4b8a-9a41-67612b715ccc/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102738Z&X-Amz-Expires=86400&X-Amz-Signature=045e3974abcb8e09edcf00f3289e93ba6d9e97681cf938023f4fb0acb418d2dc&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/6f6edfb1-363d-43aa-8632-5ae9fa4c405e/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210108%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210108T132117Z&X-Amz-Expires=86400&X-Amz-Signature=c6d7cac57181d59f55a370d3507d5aec8b6bb3c46a8e8ae084db61b3c2c4490c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/6f6edfb1-363d-43aa-8632-5ae9fa4c405e/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102745Z&X-Amz-Expires=86400&X-Amz-Signature=06485d1af6bb6749a6bfa075cd626f5d70de2a2d033910baa5d1aaa5a9eedf10&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c9447167-b1c4-4d3f-8fea-c8bfd8c0fc32/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210108%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210108T132121Z&X-Amz-Expires=86400&X-Amz-Signature=5c2fe9ee6b40a38bf9436567e042cc1fcf40d74064e0c81bae53e7de76c45c4b&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c9447167-b1c4-4d3f-8fea-c8bfd8c0fc32/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102748Z&X-Amz-Expires=86400&X-Amz-Signature=6302fddce3b4a42d6a421d1a8a0c3699751ada4e965f9bbb5ceaf270913677b6&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 생성자나 직렬화 과정에서 예외가 발생하면 finalizer가 수행되는데, 이 finalizer를 악의적으로 오버라이딩한 하위클래스의 finalizer가 수행될 수 있다. 심지어 이 finalizer를 정적필드에 할당하면 가비지컬렉터에의해 수거되지도 않는다.
 
@@ -83,7 +83,7 @@ close 메서드 호출여부를 필드로 저장하고, 객체 사용 시 필드
 
 FileInputStream의 close 메서드를 살펴보면,
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/d83e772c-d378-4bc5-b6a7-26251c5a462d/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210108%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210108T132125Z&X-Amz-Expires=86400&X-Amz-Signature=beb5ba329e8486f2d2eb9aae790bbc901aa773d31d4764d617b77241598ccdb4&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/d83e772c-d378-4bc5-b6a7-26251c5a462d/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102752Z&X-Amz-Expires=86400&X-Amz-Signature=e423d8b17105a3e6b26a04c0e5fb3976d9092564d0f5a2b91560ab70729601a6&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 closed 변수를 통해 객체의 유효 여부를 기록한다. 다른 메서드는 이 필드를 검사해서 객체가 닫힌 후에 불렸다면 Exception를 던진다.
 
