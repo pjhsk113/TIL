@@ -26,9 +26,9 @@ String a = new String("Effective");
 
 String은 같은 문자열 리터럴이라면 같은 레퍼런스를 가지게 된다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/54356466-1b7e-4a77-9751-61fe801822b1/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210105%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210105T123639Z&X-Amz-Expires=86400&X-Amz-Signature=074a8fe4dc26993cf5bcc533162ab1f7d674ec3d75136bbad25c7589f515104a&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/54356466-1b7e-4a77-9751-61fe801822b1/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102240Z&X-Amz-Expires=86400&X-Amz-Signature=82060a8f54b9135d67903129d268acaa04355ddca2f46c006f641f63c607ea5e&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/0e73783c-df3b-4606-8eb8-248b85fc8f85/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210105%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210105T123827Z&X-Amz-Expires=86400&X-Amz-Signature=75ce47b7d83044105fc2a8a4bb67552da816ba3e78e3f49945c54259f8cccefa&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/0e73783c-df3b-4606-8eb8-248b85fc8f85/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102245Z&X-Amz-Expires=86400&X-Amz-Signature=37635476946a018f524061582c2e3d05027d7370bce6c30d0a62615afd49089f&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 위에서 생성한 **a와 b**는 같은 레퍼런스를 가지고 있다. 객체 공유(재사용)를 통해 불필요한 객체 생성을 하지 않는다는 뜻이다. 
 
@@ -38,7 +38,7 @@ String은 같은 문자열 리터럴이라면 같은 레퍼런스를 가지게 �
 
 Java의 String은 String Pool이라는 공간을 가지는데, 문자열 리터럴로 생성된 String은 String Pool에 객체를 생성하고 String Pool을 가르키게된다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/3d8436a5-e6ac-4cdb-a536-3375a149870c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210105%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210105T123847Z&X-Amz-Expires=86400&X-Amz-Signature=cf92634c2cf3118a9b337ef862741732c16549ce28932bff89d2676fdeae59a5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/3d8436a5-e6ac-4cdb-a536-3375a149870c/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102248Z&X-Amz-Expires=86400&X-Amz-Signature=afc35707c02571d4a139bf87a3bb08fcf76cffd1b80f413cdb75117c7f00ff60&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 ## 2.2 String이 불변 클래스로 만들어진 이유
 
@@ -66,23 +66,23 @@ for (int i = 0; i < 10000000; i++) {
 
 가장 간단하게 정규표현식을 예로 들 수 있다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/ec7e7882-20e4-4e4f-8506-95baed7d79d4/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210105%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210105T124222Z&X-Amz-Expires=86400&X-Amz-Signature=52ed67e4669eba86484a5ab8a3f73a215961c797a319b2cd10870736ad895d18&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/ec7e7882-20e4-4e4f-8506-95baed7d79d4/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102252Z&X-Amz-Expires=86400&X-Amz-Signature=596be00b3ce6dcc6bd5904e21b30e7ea1a5f0849c0bc024c0e76c2d91f54245e&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 위처럼 String.matches를 사용하는 것보다
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/ffc5be04-ae66-46c5-90e4-e3af8f2f9f55/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210105%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210105T124359Z&X-Amz-Expires=86400&X-Amz-Signature=c16c617ea75728dba33adfd22b2422cdabd2e2d27afdc116af69b9b07c16fb25&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/ffc5be04-ae66-46c5-90e4-e3af8f2f9f55/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102253Z&X-Amz-Expires=86400&X-Amz-Signature=49804d68f109a147fd412580e3af1e13d0c2289746b68eac0c5881cec3c9ded5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 이렇게 Pattern 인스턴스를 클래스 초기화 과정에서 캐싱하여 사용하는 것이 성능을 훨씬 끌어올릴 수 있다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/dd9b64ce-6b47-437a-a4bd-57db35b54338/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210105%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210105T124417Z&X-Amz-Expires=86400&X-Amz-Signature=ff4b069ed1360602cde8e729c0902983c3009f2187ab58d3e0e07e2346bd7fc5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/dd9b64ce-6b47-437a-a4bd-57db35b54338/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102255Z&X-Amz-Expires=86400&X-Amz-Signature=ca9d09db566256a06eba12347401053553a049e91fd70421a1121becf042e493&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 Parrern은 입력받은 정규표현식의 유한 상태 머신을 만들기 때문에 생성 비용이 높다. 하지만 String.matches 내부의 정규표현식용 Pattern 인스턴스는 한번 쓰고 버려져 바로 가비지 컬렉션 대상이 된다. 이는 비싼 칫솔을 사서 한번 쓰고 버리는 것과 같은 행위이다.
 
  위 두 방법은 빈번하게 호출되는 상황에서 상당한 성능차이를 보인다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/a9eb1185-e121-4e68-894d-b485185be181/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210105%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210105T124434Z&X-Amz-Expires=86400&X-Amz-Signature=819b1ce6cb1022462666145a2dc5ab798d8f63ab06ae6c02849014fee3ac2307&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/a9eb1185-e121-4e68-894d-b485185be181/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102257Z&X-Amz-Expires=86400&X-Amz-Signature=e85ac5be6be27a6868fbc7300d8dccc435dc118e3b389f024939fd3454c93338&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/7f1c2bb3-625c-424f-9ee4-f211faab5be7/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210105%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210105T124455Z&X-Amz-Expires=86400&X-Amz-Signature=0f8532559d12668315a06823dfdcedc7a119b935af7c376176aa0b9264809139&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/7f1c2bb3-625c-424f-9ee4-f211faab5be7/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102259Z&X-Amz-Expires=86400&X-Amz-Signature=157bce374fb0b7faa50246c34fa26914f36c251500e0e2f5bd0a8df9c75e2bae&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 캐싱된 인스턴스를 사용한 경우 약 10배 정도의 성능 향상 뿐만 아니라, 이름을 지어주어 코드의 의미가 훨씬 잘 드러난다는 장점도 있다.
 
@@ -118,9 +118,9 @@ private static long sum(){
 
 위의 코드에서는 불필요한 인스턴스가 2^31개 만들어진다. 박싱된 기본 타입인 Long을 명시했기 때문이다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/04c90e8b-5354-4fec-ad13-2054eac619fe/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210105%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210105T124523Z&X-Amz-Expires=86400&X-Amz-Signature=72eda8d5b2cea9bb4decea0aa573d7b8211afa8447a6bb39cd14e3d7178642bb&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/04c90e8b-5354-4fec-ad13-2054eac619fe/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102303Z&X-Amz-Expires=86400&X-Amz-Signature=5e82327c457a21a496f6db498fd5fdb269232b7a12fb8bf4f456e74c25c2ceb4&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/40742442-c90a-4a8c-81f3-952e5f7b4266/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210105%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210105T124543Z&X-Amz-Expires=86400&X-Amz-Signature=5e3f2b085b5ea8f3d3dd7a0881058333c82cea1fe1b7c36c6b5c92126b5d2fb3&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/40742442-c90a-4a8c-81f3-952e5f7b4266/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102305Z&X-Amz-Expires=86400&X-Amz-Signature=70dde3a17a3aed1953c970df56451d989d238250aaa147119d53786b594f4cad&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 Long(박싱 기본 타입)을 long(기본 타입)으로 변경해주는 것 만으로 엄청난 성능 차이가 나는 것을 확인 할 수있다.
 
