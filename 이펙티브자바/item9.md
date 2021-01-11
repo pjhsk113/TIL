@@ -60,7 +60,7 @@ readLine 메서드가 예외 > close 메서드 실패 > 두번째 예외가 첫�
 
 이 구조를 사용하려면 AutoCloseable 인터페이스를 구현해야 한다. 단순히 close 메서드를 정의한 인터페이스이다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/83174fcc-2a92-44f5-92e2-538a329c96c7/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210109%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210109T094926Z&X-Amz-Expires=86400&X-Amz-Signature=93f2cafebea21b856e1e5e9362e69798d5e12402461f5d06c3f197358482e0fc&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/83174fcc-2a92-44f5-92e2-538a329c96c7/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102848Z&X-Amz-Expires=86400&X-Amz-Signature=623d7b608e97de763648f10339a16ecc39178f6b9fc47f487b8c2787977c8f03&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 ```java
 String firstLineOfFile(String path) throws IOException {
