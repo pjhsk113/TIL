@@ -22,11 +22,11 @@
 
 pop 메서드를 살펴보면, 
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/1c1e4b5f-58ed-4e08-bead-5ceb55674c00/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102629Z&X-Amz-Expires=86400&X-Amz-Signature=12ba8a4301544c9918c36a2aebb24edb9046be4baa4509a839955aee717fe511&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdTfQMT%2FbtqQE9mDYsD%2FXhv7uDjiwQot72IKjeH5T1%2Fimg.png)
 
  removeElementAt 메서드를 사용하고 있다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/0d8a2e0d-2aeb-4cf0-b937-a3c2f88243d6/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102646Z&X-Amz-Expires=86400&X-Amz-Signature=6b6041d070e19222943d333f1076db95e110ead68618703e0c1894596222ea57&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcZo75i%2FbtqQLlzppri%2FGqS8C4ka6XG5DV93QhgWGK%2Fimg.png)
 
 removeElementAt에서도 원소를 삭제할 때 참조 해제해주고 있는 것을 볼 수 있다.
 
