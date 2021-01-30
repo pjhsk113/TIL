@@ -60,7 +60,7 @@ readLine 메서드가 예외 > close 메서드 실패 > 두번째 예외가 첫�
 
 이 구조를 사용하려면 AutoCloseable 인터페이스를 구현해야 한다. 단순히 close 메서드를 정의한 인터페이스이다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/83174fcc-2a92-44f5-92e2-538a329c96c7/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210111%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210111T102848Z&X-Amz-Expires=86400&X-Amz-Signature=623d7b608e97de763648f10339a16ecc39178f6b9fc47f487b8c2787977c8f03&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FctF2cu%2FbtqRAkfVpgo%2FwUoFwn6CWp5ljuhv6CajT0%2Fimg.png)
 
 ```java
 String firstLineOfFile(String path) throws IOException {
