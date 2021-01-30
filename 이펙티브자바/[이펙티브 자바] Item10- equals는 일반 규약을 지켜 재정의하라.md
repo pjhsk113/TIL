@@ -63,15 +63,15 @@ null이 아닌 모든 참조 값 x, y에 대해 x.equals(y)가 true면 y.equals(
 
 두 객체에게 서로 같은지 물었을 때 같은 답이 나와야 한다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/83a4a7c5-fd52-44ae-a302-99c0de738025/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210112%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210112T131118Z&X-Amz-Expires=86400&X-Amz-Signature=40ed8c49580444870e3dc4f33679096ab0a210a09c4af0cecf88c7173e57db68&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb8Fb3t%2FbtqSa9kavdt%2FMke0oRcWimGL8fthz7WP51%2Fimg.png)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fb4f85e6-a007-4314-a299-cafe1f4b14dd/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210112%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210112T131126Z&X-Amz-Expires=86400&X-Amz-Signature=02e80b7d9567b7c38b2082edde9060d9b0510a6d843410a6427aede8ee0df4e0&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fqkstl%2FbtqSgMPuSwY%2F8tuJPiRPEMxfDsEha3pKHK%2Fimg.png)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f995670b-27d9-47ad-95c5-94511b047ade/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210112%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210112T131129Z&X-Amz-Expires=86400&X-Amz-Signature=2cf0ff6e0e69fdacd272f85643fe954f9c07edd0fb75436258d1368ae1f00cee&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FduG9P7%2FbtqSduhkeg1%2FtDY0RRypEF9Ca8cyK2Mj4K%2Fimg.png)
 
 CaseInsensitiveString은 String을 알지만 String은 CaseInsensitiveString이 뭔지 모르기 때문에 (한 방향으로만 정상 동작) 대칭성을 위반하게 된다. 이러한 문제를 방지하려면 CaseInsensitiveString의 equals 메서드가 String 객체와 상호작용하지 않도록 해야한다. 따라서 아래와 같이 구현하면 대칭성을 만족하게 된다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/751e6794-fc04-4f03-81b9-8008d5159606/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210112%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210112T131132Z&X-Amz-Expires=86400&X-Amz-Signature=e4bfd17547966e5421e102685157dfc760b53c2d342286da8b0992c3a759e85c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FwYbmv%2FbtqR1DGDRrd%2FEt4mNlTraKmvwHw4Pv7kJK%2Fimg.png)
 
 ### 3.3 추이성(transitivity)
 
@@ -81,27 +81,27 @@ null이 아닌 모든 참조 값 x, y, z에 대해 x.equals(y)가 true이고 y.e
 
 상위 클래스에 없는 새로운 필드를 하위 클래스에 추가하는 상황을 생각해보자. 
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f942ff7f-8db3-4c73-af50-fa73fb73a9e5/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210112%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210112T131135Z&X-Amz-Expires=86400&X-Amz-Signature=a8fb2b028f5b161d01320b8725e1acb29371e7772427c638270ef5f185551799&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbt1gKe%2FbtqSa9qVuyM%2FEO1kVSxpgulDX52pvBDc2K%2Fimg.png)
 
 좌표를 가지는 Point 클래스가 있다. 이를 상속받아 색상 정보를 추가하는 하위 클래스를 추가해보자.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/e6e2342d-b1e3-478e-b45a-f88f66c43a26/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210112%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210112T131147Z&X-Amz-Expires=86400&X-Amz-Signature=0e40018b52dca22c3b65d77a92d20e20e3649ea6fdfcf76aed03424241ada3ec&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FqWVKO%2FbtqRXInUX0H%2FE3B57RYLWqlzYtdG8QwrF0%2Fimg.png)
 
 이 클래스의 equals 구현을 어떻게 해야할까? 상위 클래스의 equals를 그대로 사용한다면 추가된 color 필드는 비교하지 못한다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/9cacb138-d3d0-480b-8b49-93cf71d695b5/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210112%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210112T131150Z&X-Amz-Expires=86400&X-Amz-Signature=7f56a9407b75689cb46f033a93d3c26552c3c09bb8e887a0f1c7d0d6d085f452&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FUslIC%2FbtqRXIBuVy7%2FEpY6KHZHVRKwKReALT1dq1%2Fimg.png)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/a7596e6a-8021-4bac-bafd-6830e7f76e6a/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210112%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210112T131153Z&X-Amz-Expires=86400&X-Amz-Signature=261d342888e2f9a97e6cd358d09034e0039071c3593e7c9601e9998f385c2cc7&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FI0xPI%2FbtqSjBGVkEu%2FOAkZkS4d4hnJvFxKrS0adK%2Fimg.png)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/526106e9-bc88-481f-a83b-34498b4d9aa4/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210112%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210112T131156Z&X-Amz-Expires=86400&X-Amz-Signature=e1c1f7477e3eaa4541ef558f254fb655ea1b0cc9dbf0f791cb5c2385b7c3179c&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbKRQ5i%2FbtqSgLC3IRU%2FJdKsgMAIGlyHDX6yQTadCk%2Fimg.png)
 
 위와 같이 구현하면 대칭성에 위배되는 것이 명확하게 확인된다. 그렇다면 ColorPoint의 equals가 Point와 비교할 때는 색상을 무시하도록하면 해결이 될까?
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/9eb960d8-47ff-4cfe-acea-563add281cc2/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210112%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210112T131158Z&X-Amz-Expires=86400&X-Amz-Signature=96142f0b9c99adca92e1dc4e662adfda5bb5689d8d8f4b7704ccd42c7513c663&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FB4ft8%2FbtqR3RR9n6X%2FwpJr0zfWoGa2XhfoInWG7k%2Fimg.png)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/cd1cf717-cb74-4d0c-960d-2125081bd9fb/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210112%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210112T131202Z&X-Amz-Expires=86400&X-Amz-Signature=2c5bace8fc49ba84d86699bb71260c0eb12ab60d9a8a46a70c3803a17fd137ca&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FFzitQ%2FbtqSdtvUmba%2Fdt0xRVTxbpj9Fi2hUjQgG0%2Fimg.png)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f580b08f-51ce-4ab6-bb39-3bace1ac9d89/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210112%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210112T131208Z&X-Amz-Expires=86400&X-Amz-Signature=fb4160abaaefa834759d67c14717fbf65a97b0539c6e24282f713c519e436475&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FybJzv%2FbtqSdtbCaU7%2FSAFoOmtUR7yUoytfQiD9BK%2Fimg.png)
 
 대칭성은 보존되지만, 추이성에 위배되는 것을 확인할 수 있다. p1과 p3 비교에서는 색상까지 고려했기 때문이다. 또한 이 방식은 무한 재귀에 빠질 위험성도 있다. 
 
@@ -109,7 +109,7 @@ null이 아닌 모든 참조 값 x, y, z에 대해 x.equals(y)가 true이고 y.e
 
 그렇다고 instanceof 대신 getClass를 하라는 것은 아니다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/15640f4c-d784-4376-806c-e60069285738/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210112%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210112T131212Z&X-Amz-Expires=86400&X-Amz-Signature=0901a114781b664f8be5077fd79f01366e821cf3b7e239d019bfd6b00121749a&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FeokeoN%2FbtqRVqOG1kv%2FJQVfEPKon5wf7GaU9Kurl1%2Fimg.png)
 
 이 방법은 괜찮아 보이지만 실제로 활용할 수 없다. 아래 예제를 보면 올바르지 않다는 것을 알 수 있다.
 
@@ -152,9 +152,9 @@ public class CounterPoint extends Point{
 
 ### 상속 대신 컴포지션을 사용하라
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/2a8020c3-a867-408d-b443-e73e3016fded/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210112%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210112T131220Z&X-Amz-Expires=86400&X-Amz-Signature=59f091238f55dabd203aa91446dc4ea1417397545f839bdaa18e698f40ac986f&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbeabQg%2FbtqRVpWsete%2FlpNTid9HfjcJzEsh9FTkEk%2Fimg.png)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/498086ce-920e-4f20-9782-923e1613d48d/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210112%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210112T131222Z&X-Amz-Expires=86400&X-Amz-Signature=17232a682f664c6cd5258f8db618c19293c0e8cc0206b0bbb1e149174ec798b5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FzaxIy%2FbtqRVo4iBa0%2FuwOEhsbANPs3zzaB6MG0Nk%2Fimg.png)
 
 Point를 상속받는 구조 대신 Point를 private 필드로 두고, Point를 반환하는 뷰 메서드를 public으로 추가하는 방식이다.
 
