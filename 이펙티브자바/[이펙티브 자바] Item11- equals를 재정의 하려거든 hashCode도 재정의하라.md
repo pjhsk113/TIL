@@ -14,19 +14,19 @@ hashCode를 재정의하지 않으면 hashCode 일반 규약을 어기게 되어
 
 hashCode 재정의를 잘못했을 때 크게 문제가 되는 조항은 2번이다. 논리적으로 같은 객체는 같은 해시코드를 반환해야 한다. equals는 물리적으로 다른 두 객체를 논리적으로 같다고 할 수는 있다. 하지만 Object의 기본 hashCode 메서드는 이 둘이 전혀 다르다고 판단하여 서로 다른 값을 반환한다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c14e8958-94da-4473-aea1-dd51b0543f40/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210113%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210113T100436Z&X-Amz-Expires=86400&X-Amz-Signature=84e46695cf15ada29b4271222561d167f0772b719e342fa6564a5d0a2be83043&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdYUdFP%2FbtqS4LRk1mG%2FxTHJsurhhAyXi6ERlhkeV0%2Fimg.png)
 
 위의 코드를 살펴보자. 결과로 "제니"가 나와야 할 것 같지만 실제로는 null을 반환한다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/854ea9d7-2dc7-4b69-9bc1-f657a71501c8/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210113%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210113T100440Z&X-Amz-Expires=86400&X-Amz-Signature=c0563c42d09858976b157a8b6d0c56401a42e62149a480ea77609cb1ff30862f&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdRGEry%2FbtqTfDdFnPm%2F9vpl4r6sbn1J7RldOJKUv0%2Fimg.png)
 
 여기에는 2개의 인스턴스가 사용되었다. 하나는 put할때, 다른 하나는 get할 때 사용되었다. PhoneNumber 클래스는 hashCode를 재정의 하지 않았기 떄문에 논리적으로 동치인 두 객체가 다른 hashCode를 반환하여 2번 항목을 지키지 못한다.
 
 이러한 문제는 PhoneNumber 클래스에 equals와 hashCode를 재정의 해주기만 하면 해결된다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/9d77c837-194a-4899-8854-be8369867c46/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210113%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210113T100444Z&X-Amz-Expires=86400&X-Amz-Signature=7895b320d65e1aebd02f851bd936c8d34a9e0a5ced91d6557a62ee9cb8e32eb0&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb0G5Jf%2FbtqS3I8qwaH%2FKS18ruePMe6kBIeWcfhQJ0%2Fimg.png)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/5c215979-c2b1-4855-aba6-99386d9718ee/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210113%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210113T100448Z&X-Amz-Expires=86400&X-Amz-Signature=50a54cfce2914e69abe3d24d02d252a3373f012bec5b4dacc55f94d10e9650d5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FnXB0d%2FbtqThZ1OkWt%2F3JhS7KcYFqO5WG3DaiwKA0%2Fimg.png)
 
 ### 항상 같은 hashCode를 반환하면 2번 항목을 만족시키는 것 아닌가?
 
