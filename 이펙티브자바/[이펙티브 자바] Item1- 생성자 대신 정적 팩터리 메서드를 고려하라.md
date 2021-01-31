@@ -12,9 +12,9 @@
 
 예를들면,
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f48a3262-6e77-4927-94e0-44d2d2a8f7c9/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210124%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210124T122746Z&X-Amz-Expires=86400&X-Amz-Signature=aa16381386f85ec30338e3babec8b4c58004605979e99ff4b716d1064b601c67&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FA2L5M%2FbtqLYNUtZyS%2FNK4LPooEgPK61Vd19ta6BK%2Fimg.png)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/1f0fc658-af83-414d-a385-3059f4aadeff/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210124%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210124T122822Z&X-Amz-Expires=86400&X-Amz-Signature=ae130ae4c7f58f4fa35b93e68446d730b6bfdccbb8137a3b0c9dd95e56e04663&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FN6t1w%2FbtqLWIl4PQ0%2FJpi7LIQSKzwJNCFjfNiqR0%2Fimg.png)
 
 이름을 가진 정적 팩터리 메서드가 소수인 BigInteger를 반환한다는 의미를 더 잘 나타내고 있다.
 
@@ -35,9 +35,9 @@ ex) Boolean의 valueOf는 객체를 아예 생성 하지 않는다.
 - 불변 값 클래스에서 동치인 인스턴스가 단 하나뿐임을 보장할 수 있다.
 - 인스턴스 통제는 플라이웨이트 패턴의 근간이 된다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/1bdc3a09-575e-4f96-a782-1efb0d96f59f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210124%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210124T122837Z&X-Amz-Expires=86400&X-Amz-Signature=98906a2ce009bb14003c6e304511964174ae89e142bb9d0d7068995cee75840f&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbJU1A8%2FbtqLWI0Gpus%2FTykzEfDKPH3qPSevkYTtkk%2Fimg.png)
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/4cec3985-8fe9-4ffe-b668-9334c34ebe3b/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210124%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210124T122855Z&X-Amz-Expires=86400&X-Amz-Signature=1b7cd9cc3a881237c640a62f1a1fc74eb84996fd3ea5fd3f5254a2b317130644&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FGBXbz%2FbtqLU9EhnTx%2FmbB5pYDuv5GFkOrdRYlFZK%2Fimg.png)
 
 TRUE와 FALSE 각각 true, false 값을 가지는 인스턴스를 캐싱하고 있고, 값이 true 혹은 false가 들어오면 캐싱된 값이 사용되므로 객체를 생성하지 않는다. 이 덕분에 동치인 인스턴스가 하나뿐임을 보장할 수 있다.
 
@@ -53,7 +53,7 @@ TRUE와 FALSE 각각 true, false 값을 가지는 인스턴스를 캐싱하고 �
 
 아래는 위에서 설명한 장점을 잘 나타내는 EnumSet의 예제이다.
 
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/d9c61164-409a-4eb3-8a0b-98048c48301f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210124%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210124T122912Z&X-Amz-Expires=86400&X-Amz-Signature=8287ccfcb4c431faeba25024d423f813f4ef2018cce535db61d086aaf6f11c4f&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcAl30L%2FbtqL5AB34hp%2FS9LdwgJi1IhEdQFNWgjOA1%2Fimg.png)
 
 universe.length에 의해 EnumSet의 하위 객체인 RegularEnumSet, JumboEnumSet 중 반환 타입이 결정된다. 클라이언트는 EnumSet이 반환되는 것만 알면되고 어떤 객체가 반환 되는지 알 필요가 없다.
 
