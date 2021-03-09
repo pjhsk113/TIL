@@ -26,4 +26,107 @@
 
 새로운 태그가 추가될 때마다 모든 switch 문에 새로운 태그에 대한 행동을 처리하는 코드를 추가해야한다. 따라서 새로운 행동에 대한 switch 문이 하나라도 빼먹고 작성되면, 런타임에러가 터진다.
 
-즉, 태그 달린 클래스는 읽기 어렵기만하고 오류를 내기
+다시 말해 태그 달린 클래스는 읽기 어렵기만하고 오류를 내기 쉬운 비효율적인 클래스이다.
+
+## 개선 방안
+
+태그 달린 클래스를 클래스 계층구조로 변경하면 위와 같은 많은 단점들을 개선할 수 있다.
+
+### 1. 루트(root)가 될 추상 클래스를 정의한다.
+
+### 2. 태그에 따라 행동이 달라지던 메서드는 추상 메서드로 구현한다. 그렇지 않다면 일반 메서드로 구현한다.
+
+### 3. 공통으로 사용되는 필드들은 루트에 올린다.
+
+### 4. 루트 클래스를 확장한 구체 클래스를 의미별로 하나씩 정의한다.
+
+ → 각 의미에 해당하는 필드를 구체 클래스에 정의한다.
+
+### 5. 구체 클래스에서 추상 메서드를 구현한다.
+
+코드로 살펴보면 다음과 같다.
+
+```java
+// 태그 달린 클래스
+class Figure {
+    enum Shape {RECTANGLE, CIRCLE};
+
+    // 어떤 모양인지 나타내는 태그 필드
+    final Shape shape;
+
+    // 태그가 RECTANGLE일 때만 사용되는 필드들
+    double length;
+    double width;
+
+    // 태그가 CIRCLE일 때만 사용되는 필드들
+    double radius;
+
+    // 원을 만드는 생성자
+    Figure(double radius) {
+        shape = Shape.CIRCLE;
+        this.radius = radius;
+    }
+
+    // 사각형을 만드는 생성자
+    Figure(double length, double width) {
+        shape = Shape.RECTANGLE;
+        this.length = length;
+        this.width = width;
+    }
+
+    double area() {
+        switch (shape) {
+            case RECTANGLE:
+                return length * width;
+
+            case CIRCLE:
+                return Math.PI * (radius * radius);
+
+            default:
+                throw new AssertionError(shape);
+        }
+    }
+}
+```
+
+위와 같은 태그 달린 클래스를 **개선 방안의 규칙**을 적용하여 변경하면, 다음과 같이 개선할 수 있다.
+
+```java
+abstract class Figure {
+    abstract double area();
+}
+
+class Circle extends Figure {
+    final double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    double area() {
+        return Math.PI * (radius * radius);
+    }
+}
+
+class Rectangle extends Figure {
+    final double length;
+    final double width;
+
+    public Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    @Override
+    double area() {
+        return length * width;
+    }
+}
+```
+
+위와같이 변경하면 컴파일 시에 형 검사(type checking)를 하기 용이해진다. 이제 컴파일러의 도움을 받을 수 있게된 것이다. 또한, 각 구체 클래스의 멤버변수는 final로 선언할 수 있게 된다.
+
+# 핵심 정리
+
+태그 달린 클래스를 사용하지말고 계층 구조로 대체하는 방법을 생각해라. 기존에 태그 달린 클래스가 사용되어지고 있다면, 계층구조로의 리팩토링을 고려해보자.
