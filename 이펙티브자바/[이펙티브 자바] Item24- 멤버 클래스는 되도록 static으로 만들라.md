@@ -18,9 +18,9 @@
 
 정적 멤버 클래스는 바깥 클래스의 **private 멤버에도 접근할 수 있다는 점을 제외**하고 일반 클래스와 똑같다.
 
-![](notion://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fc2c747b5-43cb-48ac-a2eb-a56d18e09b1f%2FUntitled.png?table=block&id=534761fb-d5f8-4e68-9342-3785de51e8b4&width=1920&userId=55cc1585-16fe-44cd-965e-0b60ea44e75f&cache=v2)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FHVFma%2FbtqZ4Bsu75t%2FJoUeoB1Y6ZyB2wKg3jDKe1%2Fimg.png)
 
-![](notion://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F7e635455-6be1-44a1-9581-905705c12eba%2FUntitled.png?table=block&id=375ae832-9572-4a0b-8421-5193ab03cc1e&width=1920&userId=55cc1585-16fe-44cd-965e-0b60ea44e75f&cache=v2)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbt46Y7%2FbtqZ4AG77dX%2FiUBua6k5ri2hJIZRxpkG51%2Fimg.png)
 
 정적 멤버 클래스는 보통 바깥 클래스와 함께 쓰일 때 유용한 public 도우미 클래스로 쓰인다. 
 
