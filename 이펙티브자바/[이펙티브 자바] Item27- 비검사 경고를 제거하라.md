@@ -4,7 +4,7 @@
 
 다행히 대부분의 비검사 경고는 쉽게 제거할 수 있다. 대부분의 개발자들이 IDE를 통해 코드를 작성하고 컴파일 하는데, IDE는 코드상에 컴파일 경고가 날 수 있는 부분을 컴파일 전에 미리 알려준다. 
 
-![]()
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9SMth%2Fbtq091dGWVl%2FNt1vwiacVwKvQROgWhl6nK%2Fimg.png)
 
 ```java
 // 비검사 경고 발생
@@ -33,7 +33,7 @@ Set<String> some = new HashSet<>(); // 컴파일러가 타입 매개변수를 �
 
 ArrayList의 toArray를 예시로 들어보자.
 
-![]()
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbBfxDb%2Fbtq091dG0HM%2Fraq0kbeyeZ58aFGP74cxLk%2Fimg.png)
 
 메서드에 @SuppressWarnings가 선언되어있다. 이를 조금 더 좁은 범위로 좁히려면 아래와 같이 수정하면 된다.
 
