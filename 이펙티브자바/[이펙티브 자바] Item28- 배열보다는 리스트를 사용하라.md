@@ -42,3 +42,53 @@ List<Object> objectList = new ArrayList<Long>(); // 컴파일 에러 발생
 # 배열보다 리스트를 사용해야하는 두 번째 이유
 
 ### 실체화 가능 타입과 실체화 불가능 타입
+
+배열은 실체화가 가능한 자료형이다. 즉, 런타임에도 타입 정보를 가지고 있어 자신이 담기로한 타입을 인지하고 확인한다는 것이다. 따라서 배열은 컴파일 타임에 형 안전성을 보장할 수 없다.
+
+반면에, 제네릭은 컴파일 타임에 타입을 검사하고 런타임에 소거한다. 따라서 런타임에 원소 타입 정보를 가지고 있지 않고, 원소 타입을 런타임에 알 수 있는 방법이 없다. 
+
+이러한 주요 차이점 때문에 배열과 제네릭을 섞어 쓰기 어렵다. 예를 들어, 배열은 제네릭 타입, 매개변수화 타입, 타입 매개변수로 사용할 수 없다.
+
+```java
+// 사용 불가!!!!! 컴파일 에러
+
+new List<E>[] // 제네릭 타입 배열
+
+new List<String>[] // 매개변수화 타입 배열
+
+new E[] // 타입 매개변수 배열
+```
+
+제네릭 배열이 생성이 허용되지 않는 이유는 타입 안전(Type Safe) 하지 않기 때문이다. 
+
+만약 **제네릭 배열이 허용된다면** 다음과 같은 문제가 발생할 수 있다.
+
+```java
+// 제네릭 배열 선언
+List<String>[] stringLists = new List<String>[1];  // 1 (제네릭 배열)
+List<Integer> intList = List.of(42);               // 2 
+
+Object[] objects = stringLists;                    // 3
+objects[0] = intList;                              // 4
+String s = stringLists[0].get(0);                  // 5
+```
+
+위의 코드에서 3번부터 살펴보자. Object[]에 List<String>[](제네릭 배열)을 할당했다.
+
+```java
+List<String>[] stringLists = new List<String>[1]; // 1
+
+Object[] objects = List[] stringLists; // 3
+```
+
+ List<E>는 Object의 하위 타입이고 배열은 공변이니 아무 문제 없이 할당 가능하다.
+
+4번에서는 List<Integer>의 인스턴스를 Object 배열에 첫 원소로 저장한다.
+
+```java
+List<Integer> intList = List.of(42); // 2 
+
+objects[0] = intList; // 4
+```
+
+제네릭은 소거 방식으로 구현되기 때문에 List<Integer>의 인스턴스 타입은 List가 된다. 따라서 Object 배열의 첫 번째 원소로 이상없이 저장된다.
