@@ -34,11 +34,10 @@ public static <E> Set<E> union(Set<E> s1, Set<E> s2) {
 
 > 함수 객체란 함수 내부에 들어가는 객체를 말한다.
 
-![]()
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FH7qB3%2Fbtq12vFkE8j%2FGIVLo4ogzV54iDLwVY2Wzk%2Fimg.png)
 
-Collections.reversOrder
 
-![]()
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FMP6Pn%2Fbtq17X1CfMX%2F1vlksRwpTuVUZGgjnQToF0%2Fimg.png)
 
 reverseOrder()는 ReverseComparator의 싱글턴 객체 REVERSE_ORDER를 Comparator<T> 타입으로 형변환 해주는 역할을 한다. 이와 같은 형태가 제네릭 싱글턴 팩토리 패턴의 모습이라고 생각하면 된다.
 
