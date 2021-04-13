@@ -95,7 +95,50 @@ public void popAll(Collection<? super E> dst) {
 
 위와 같이 코드를 수정하면 E의 상위 타입 Collection에 stack 원소를 담을 수 있게 된다.
 
-**이처럼 불공변에 유연성을 극대화하려면 생산자, 소비자용 입력 매개변수에 와일드카드 타입을 사용하면 된다.**
-
 > E 생산자 - <? extends E>
 E 소비자 - <? super E>
+
+**이처럼 불공변에 유연성을 극대화하려면 생산자, 소비자용 입력 매개변수에 와일드카드 타입을 사용하면 된다.**
+
+하지만 입력 매개변수가 생산자와 소비자 역할을 동시에 한다면 **타입을 정확히 지정**해야 하는 상황으로 **와일드카드 타입을 사용하지 말야한다.**
+
+> 펙스(PECS): Producer-Extends, Consumer-Super
+어떤 와일드카드 타입을 써야하는지 헷갈릴 땐 위의 공식을 떠올려보자!
+
+### PECS의 간단 예시
+
+```java
+// PECS가 적용되기 전 max 메서드
+public static <E extends Comparable<E>> E max(List<E> list)
+```
+
+```java
+// PECS를 두 번 적용한 max 메서드
+public static <E extends Comparable<? super E>> E max(List<? extends E> list)
+```
+
+매개변수의 List<E>는 E 인스턴스를 생산하므로 List<? extends E>로
+
+Comparable<E>는 E 인스턴스를 소비하므로 Comaprable<? super E>로 변경한다.
+
+Comparable은 언제나 소비자이므로 Comparable<? super E>를 사용하는 편이 좋다.
+
+![%5B%E1%84%8B%E1%85%B5%E1%84%91%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B5%E1%84%87%E1%85%B3%20%E1%84%8C%E1%85%A1%E1%84%87%E1%85%A1%5D%20Item31-%20%E1%84%92%E1%85%A1%E1%86%AB%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%8C%E1%85%A5%E1%86%A8%20%E1%84%8B%E1%85%AA%E1%84%8B%E1%85%B5%E1%86%AF%E1%84%83%E1%85%B3%E1%84%8F%E1%85%A1%E1%84%83%E1%85%B3%E1%84%85%E1%85%B3%E1%86%AF%20%208ed39b0a7eb5465c8adbaa000282e6df/Untitled.png](%5B%E1%84%8B%E1%85%B5%E1%84%91%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B5%E1%84%87%E1%85%B3%20%E1%84%8C%E1%85%A1%E1%84%87%E1%85%A1%5D%20Item31-%20%E1%84%92%E1%85%A1%E1%86%AB%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%8C%E1%85%A5%E1%86%A8%20%E1%84%8B%E1%85%AA%E1%84%8B%E1%85%B5%E1%86%AF%E1%84%83%E1%85%B3%E1%84%8F%E1%85%A1%E1%84%83%E1%85%B3%E1%84%85%E1%85%B3%E1%86%AF%20%208ed39b0a7eb5465c8adbaa000282e6df/Untitled.png)
+
+Collections의 max 메서드
+
+---
+
+## 타입 매개변수와 와일드카드 사용 기준
+
+메서드를 정의할 때 타입 매개변수와 와일드카드 둘 중 어느 것을 사용해도 괜찮을 때가 많다. 예를 들어 리스트의 아이템을 교환하는 메서드가 있다고 가정해보자.
+
+```java
+// swap 메서드 타입 매개변수, 와일드카드 둘 다 사용가능하다.
+public static <E> void swap(List<E> list, int i, int j);
+public static void swap(List<?> list, int i, int j);
+```
+
+위의 메서드에서는 어떤 것을 사용해야할까?
+
+**기본 규칙은 메서드 선언에 타입 매개변수가 한 번만 나올 경우 와일드카드로 대체하는 것이다.** 이때 비한정적 타입 매개변수라면 비한정적 와일드카드로, 한정적 타입 매개변수라면 한정적 와일드카드로 바꾸면 된다.
