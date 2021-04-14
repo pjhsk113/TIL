@@ -123,7 +123,7 @@ Comparable<E>는 E 인스턴스를 소비하므로 Comaprable<? super E>로 변�
 
 Comparable은 언제나 소비자이므로 Comparable<? super E>를 사용하는 편이 좋다.
 
-![]()
+![](https://blog.kakaocdn.net/dn/bXugi5/btq2DEUTBNB/nuqzEygEpfcYaeot03EU0K/img.png)
 
 Collections의 max 메서드
 
