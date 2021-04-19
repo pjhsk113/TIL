@@ -42,7 +42,7 @@ public interface DoSomething {
 
 해당 애노테이션으로 얻을 수 있는 이점은 함수형 인터페이스라는 것을 명확히 명시하는 것과 함수형 인터페이스를 위반했을 경우 컴파일 에러를 바로 알 수 있어 인터페이스를 조금 더 견고하게 관리할 수 있다는 점이다.
 
-![]()
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FOLlOP%2Fbtq2P4t2ykx%2Fw5NvNOxZm1q0al8Orm7PKK%2Fimg.png)
 
 # 람다 표현식(Lambda Expressions)
 
