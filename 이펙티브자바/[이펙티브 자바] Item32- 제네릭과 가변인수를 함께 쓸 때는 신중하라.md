@@ -50,9 +50,9 @@ Java7 부터는 **@SafeVarargs** 애너테이션이 추가되어, **타입 제�
 
 ![]()
 
-# 가변인수 메서드가 안전한지 확인하는 방법?
+# 가변인수 메서드가 안전한지 확인하는 방법
 
-다음 두 조건을 모두 만족하는 제네릭 varargs 메서드는 안전하다고 할 수 있다. 단, 하나라도 어겼다면 수정이 필요하다.
+다음 두 조건을 모두 만족하는 제네릭 varargs 메서드는 안전하다고 할 수 있다. **단, 하나라도 어겼다면 수정이 필요하다.**
 
 ### 1. varargs 매개변수 배열에 아무것도 저장하지 않는다.
 
@@ -60,7 +60,22 @@ Java7 부터는 **@SafeVarargs** 애너테이션이 추가되어, **타입 제�
 
 위의 두 조건이 만족됨을 확인했다면 @SafeVarargs 애너테이션으로 경고를 제거하자.
 
-> @SafeVarargs 애너테이션은 재정의한 메서드도 안전할지 보장할 수 없기 때문에, 재정의 할 수 없는 메서드에만 달아야한다.
->
->Java8 - static 메서드, final 인스턴스 메서드 허용  
- Java9 - static 메서드, final 인스턴스 메서드, private 인스턴스 메서드 허용
+@SafeVarargs 애너테이션은 재정의한 메서드도 안전할지 보장할 수 없기 때문에, 재정의 할 수 없는 메서드에만 달아야한다.
+
+Java8 - static 메서드, final 인스턴스 메서드 허용
+Java9 - static 메서드, final 인스턴스 메서드, private 인스턴스 메서드 허용
+
+# @SafeVarargs 대체 방안
+
+varargs 배열 매개변수@SafeVarargs로 경고를 제거하는 것이 유일한 해결 방법은 아니다. varargs 매개변수를 List 매개변수로 바꿀 수도 있다.
+
+```java
+static <T> List<T> flatten(List<List<? extends T>> lists){
+  List<T> restul = new ArrayList<>();
+  for(List<? extends T> list : lists)
+    result.addAll(list);
+  return result;
+}
+```
+
+이 방식의 장점은 컴파일러가 메서드의 타입 안정성을 검증할 수 있다는 것이다. 코드가 살짝 지저분해지고 속도가 조금 느려질 수 있지만, 우리가 직접 @SafeVarargs 애너테이션을 달지 않아도 된다.
