@@ -8,7 +8,7 @@
 
 제네릭이나 매개변수화 타입을 포함한 가변인수 메서드를 호출하면 컴파일러가 경고를 보낸다.
 
-![]()
+![](https://blog.kakaocdn.net/dn/tyUS4/btq3gbysI4y/XtEpjywvYo58SAha4vLSA1/img.png)
 
  아래의 예시처럼 힙 오염이 일어날 수 있기 때문이다. 
 
@@ -34,11 +34,11 @@ Java에서는 제네릭 배열 생성을 허용하지 않는다. 즉, 컴파일 
 
 **Arrays.asList**와 **Collections.addAll** 등이 있다.
 
-![]()
+![](https://blog.kakaocdn.net/dn/cTFmlg/btq3cSsC620/URrmOtpATJljkO89MCzHJK/img.png)
 
 Arrays.asList
 
-![]()
+![](https://blog.kakaocdn.net/dn/UQNXN/btq3cSlRmf8/lRpTHbN7Uhl5a4MH8CuVf0/img.png)
 
 # 가변인수 메서드의 타입 안전을 보장하는 장치
 
@@ -46,9 +46,9 @@ Java7 부터는 **@SafeVarargs** 애너테이션이 추가되어, **타입 제�
 
 위에서 살펴본 **Arrays.asList**와 **Collections.addAll** 등의 메서드도 **@SafeVarargs**로 해당 메서드가 타입 안전함을 보장하고 있다.
 
-![]()
+![](https://blog.kakaocdn.net/dn/Zmspd/btq3hVhpHuw/DWR8J3IOJ5Nr0VOaMZMyt1/img.png)
 
-![]()
+![](https://blog.kakaocdn.net/dn/FEWtu/btq3dygoOd4/l2Rp7wvi2vth6WfKbpyVIK/img.png)
 
 # 가변인수 메서드가 안전한지 확인하는 방법
 
