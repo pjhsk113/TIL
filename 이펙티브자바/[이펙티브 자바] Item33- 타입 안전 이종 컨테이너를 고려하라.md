@@ -86,3 +86,7 @@ public <T extends Annotation> T getAnnotation(Class<T> annotationType)
 annotationType 인수(annotationClass)는 애너테이션 타입을 뜻하는 한정적 타입 토큰이다. 위의 메서드는 토큰으로 명시한 타입의 애너테이션이 대상 요소에 달려있다면 애너테이션을 반환하고, 없다면 null을 반환한다. **즉, 애너테이션된 요소는 그 키가 애너테이션 타입인 타입 안전 이종 컨테이너이다.**
 
 만약 Class<?> 타입의 객체를 한정적 타입 토큰을 받는 메서드로 넘기려면 어떻게 해야할까? Class 클래스의 asSubclass 메서드를 사용하면 된다. asSubclass는 호출된 인스턴스 자신의 Class 객체를 인수가 명시한 클래스로 형변환 해준다. 형변환에 성공하면 인수로 받은 클래스 객체를 반환하고, 실패하면 ClassCastException을 반환한다.
+
+# 핵심 정리
+- 컨테이너 자체가 아닌 키를 타입 매개변수로 바꾸면 타입 안전 이종 컨테이너를 만들 수 있다.
+- 타입 안전 이종 컨테이너는 Class를 키로 쓰며, 이를 **타입 토큰**이라 부른다.
