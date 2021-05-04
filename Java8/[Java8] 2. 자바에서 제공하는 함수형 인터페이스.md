@@ -1,6 +1,6 @@
 # [Java8] 자바에서 제공하는 함수형 인터페이스
 
-# Java가 제공하는 함수형 인터페이스
+# Java가 제공하는 주요 함수형 인터페이스
 
 [java.util.function](https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html)은 Java에서 자주 사용되는 함수형 인터페이스를  미리 정의해둔 패키지이다. 대표적으로 다음과 같은 함수형 인터페이스가 존재한다.
 
@@ -16,7 +16,7 @@
 
 ## Function<T, R>
 
-T 타입을 받아서 R 타입을 리턴하는 함수형 인터페이스
+T 타입을 받아서 R 타입을 리턴하는 함수형 인터페이스이다.
 
 Integer 타입을 받아서 Integer 타입을 리턴하는 간단한 예제를 살펴보자.
 
@@ -114,3 +114,69 @@ public static void main(String[] args) {
 ```
 
 get으로 값을 받아올 수 있다.
+
+## Predicate<T>
+
+T타입을 받아서 boolean을 리턴하는 함수형 인터페이스이다.
+
+```java
+public static void main(String[] args) {
+	Predicate<String> isHello = (s) -> s.startWith("Hello");
+	isHello.test("Hi"); // false
+	isHello.test("Hello"); // true
+}
+```
+
+test()로 값을 넘길 수 있으며, 함수 조합용 메서드인 or, and, negate 등을 통해 조합을 할 수 있다. 
+
+## UnaryOperator<T>
+
+앞서 살펴본 Function<T, R>의 특수한 형태로, Function<T, R>의 입력 타입 T와 리턴타입 R이 같을 경우 UnaryOperator<T>로 사용할 수 있다. 
+
+```java
+// before
+public static void main(String[] args) {
+	Function<Integer, Integer> plus10 = (i) -> i + 10;
+	Function<Integer, Integer> multiply2 = (i) -> i * 2;
+
+	plus10.andThen(multiply2).apply(2); // (10 + 2) * 2 = 24
+	plus10.compose(multiply2).apply(2); // (2 * 2) + 10 = 14
+}
+```
+
+```java
+// after
+public static void main(String[] args) {
+	UnaryOperator<Integer> plus10 = (i) -> i + 10;
+	UnaryOperator<Integer> multiply2 = (i) -> i * 2;
+
+	plus10.andThen(multiply2).apply(2); // (10 + 2) * 2 = 24
+	plus10.compose(multiply2).apply(2); // (2 * 2) + 10 = 14
+}
+```
+
+위 두개의 코드는 같은 동작을 나타낸다. 
+
+![%5BJava8%5D%20%E1%84%8C%E1%85%A1%E1%84%87%E1%85%A1%E1%84%8B%E1%85%A6%E1%84%89%E1%85%A5%20%E1%84%8C%E1%85%A6%E1%84%80%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%84%82%E1%85%B3%E1%86%AB%20%E1%84%92%E1%85%A1%E1%86%B7%E1%84%89%E1%85%AE%E1%84%92%E1%85%A7%E1%86%BC%20%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%90%E1%85%A5%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%89%E1%85%B3%20c8fb84e1824f457ea32cdf09ecd971a5/Untitled.png](%5BJava8%5D%20%E1%84%8C%E1%85%A1%E1%84%87%E1%85%A1%E1%84%8B%E1%85%A6%E1%84%89%E1%85%A5%20%E1%84%8C%E1%85%A6%E1%84%80%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%84%82%E1%85%B3%E1%86%AB%20%E1%84%92%E1%85%A1%E1%86%B7%E1%84%89%E1%85%AE%E1%84%92%E1%85%A7%E1%86%BC%20%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%90%E1%85%A5%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%89%E1%85%B3%20c8fb84e1824f457ea32cdf09ecd971a5/Untitled.png)
+
+UnaryOperator는 Function을 상속받았기 때문에 디폴트 메서드인 andThen()과 compose() 모두 사용할 수 있다.
+
+## BinaryOperator<T>
+
+BinaryOperator<T>는 BiFunction<T, U, R>의 특수한 형태로써, 입력과 출력의 타입이 다를 거라는 가정하에 만들어진 BiFunction과는 다르게 타입이 하나로 사용될 것을 고려해 만들어진 함수형 인터페이스이다.
+
+```java
+public static void main(String[] args) {
+	// BiFunction<Integer, Integer, Integer> plus = (a, b) -> a + b;
+	BinaryOperator<Integer> plus = (a,b) -> a + b;
+	System.out.println(plus.apply(10, 20)); // 30 출력
+}
+```
+
+BiFunction<Integer, Integer, Integer>과 BinaryOperator<Integer>는 같은 동작을 한다.
+
+# 그외에 함수형 인터페이스
+
+Java는 위에서 설명한 주요 함수형 인터페이스 외에도 굉장히 많은 함수형 인터페이스를 제공하고있다.(**BiConsumer<T, U>, DoubleBinaryOperator, BooleanSupplier**.... 등)
+
+[java.util.function](https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html)에서 더 다양한 함수형 인터페이스 종류를 알아볼 수 있다. 앞서 공부한 주요 함수형 인터페이스를 이해하고 살펴보면, 다른 함수형 인터페이스도 쉽게 이해할 수 있다.
