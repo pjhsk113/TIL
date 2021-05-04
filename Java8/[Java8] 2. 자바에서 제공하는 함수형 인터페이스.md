@@ -157,7 +157,7 @@ public static void main(String[] args) {
 
 위 두개의 코드는 같은 동작을 나타낸다. 
 
-![%5BJava8%5D%20%E1%84%8C%E1%85%A1%E1%84%87%E1%85%A1%E1%84%8B%E1%85%A6%E1%84%89%E1%85%A5%20%E1%84%8C%E1%85%A6%E1%84%80%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%84%82%E1%85%B3%E1%86%AB%20%E1%84%92%E1%85%A1%E1%86%B7%E1%84%89%E1%85%AE%E1%84%92%E1%85%A7%E1%86%BC%20%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%90%E1%85%A5%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%89%E1%85%B3%20c8fb84e1824f457ea32cdf09ecd971a5/Untitled.png](%5BJava8%5D%20%E1%84%8C%E1%85%A1%E1%84%87%E1%85%A1%E1%84%8B%E1%85%A6%E1%84%89%E1%85%A5%20%E1%84%8C%E1%85%A6%E1%84%80%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%84%82%E1%85%B3%E1%86%AB%20%E1%84%92%E1%85%A1%E1%86%B7%E1%84%89%E1%85%AE%E1%84%92%E1%85%A7%E1%86%BC%20%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%90%E1%85%A5%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%89%E1%85%B3%20c8fb84e1824f457ea32cdf09ecd971a5/Untitled.png)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcEZeBW%2Fbtq4bXTAHgw%2FAWBuljcwgGcaAksLPoMXRk%2Fimg.png)
 
 UnaryOperator는 Function을 상속받았기 때문에 디폴트 메서드인 andThen()과 compose() 모두 사용할 수 있다.
 
