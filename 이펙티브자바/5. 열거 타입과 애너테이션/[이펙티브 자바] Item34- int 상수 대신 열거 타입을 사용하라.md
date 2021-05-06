@@ -1,4 +1,4 @@
-# [이펙티브 자바] Item33 - int 상수 대신 열거 타입을 사용하라
+# [이펙티브 자바] Item34 - int 상수 대신 열거 타입을 사용하라
 
 Java에서 열거 타입을 지원하기 전에는 정수 상수를 한 묶음 선언해서 사용하는 정수 열거 패턴을 사용했다. 하지만 정수 열거 패턴에는 많은 단점이 존재한다. 
 
@@ -262,3 +262,85 @@ public static Optional<Operation> fromString(String symbol) {
     return Optional.ofNullable(stringToEnum.get(symbol));
 }
 ```
+
+위의 코드에서 Operation 상수가 stringToEnum Map에 추가되는 시점은 열거 타입 상수 생성 후 정적 필드가 초기화될 때다. 열거 타입의 생성자가 실행되는 시점에는 정적 필드가 초기화되기 전이기 때문에 생성자에서 정적 필드를 참조하려고 시도하면 컴파일 에러가 발생한다. 따라서 자신의 인스턴스를 추가하지 못하게하는 제약이 존재하는 것이다.
+
+열거 타입의 정적 필드 중 열거 타입의 생성자에 접근할 수 있는 것은 상수 변수뿐이다.
+
+## 전략 열거 타입 패턴
+
+상수별 메서드 구현에는 열거 타입 상수끼리 코드를 공유하기 어렵다는 단점이 있다. 이 단점을 보완하려면 **전략 열거 타입 패턴**을 사용하자.
+
+**전략 열거 타입 패턴**은 상수를 추가할 때 전략을 선택하도록 하는 패턴이다. private 중첩 열거 타입을 만들고 계산을 위임한다. 그리고 바깥 열거 타입 생성자에서 전략을 인자로 받게하면 된다.
+
+```java
+// 전략 열거 타입 패턴
+public enum PayrollDay {
+    MONDAY(PayType.WEEKDAY),
+    TUESDAY(PayType.WEEKDAY),
+    WEDNESDAY(PayType.WEEKDAY),
+    THURSDAY(PayType.WEEKDAY),
+    FRIDAY(PayType.WEEKDAY),
+    SATURDAY(PayType.WEEKEND),
+    SUNDAY(PayType.WEEKEND);
+    
+    private final PayType payType;
+
+    PayrollDay(PayType payType) {
+        this.payType = payType;
+    }
+
+    int pay(int minutesWorked, int payRate) {
+        return payType.pay(minutesWorked,payRate);
+    }
+
+    // private 중첩 열거 타입
+    private enum PayType {
+        WEEKDAY {
+            int overtimePay(int minutesWorked, int payRate) {
+                return minutesWorked <= MINS_PER_SHIFT ?
+                        0 : (minutesWorked - MINS_PER_SHIFT) * payRate / 2;
+            }
+        },
+        WEEKEND {
+            int overtimePay(int minutesWorked, int payRate) {
+                return minutesWorked * payRate / 2;
+            }
+        };
+
+        abstract int overtimePay(int minutesWorked, int payRate);
+        private static final int MINS_PER_SHIFT = 8 * 60;
+
+        int pay(int minutesWorked, int payRate) {
+            int basePay = minutesWorked * payRate;
+            return basePay + overtimePay(minutesWorked,payRate);
+        }
+    }
+}
+```
+
+**전략 열거 타입 패턴**은 switch문보다 복잡하지만 안전하고 유연하다. 
+
+다만, ****switch문을 적절하게 활용하면 좋은 선택이 되는 경우도 있다. 바로 **기존 열거 타입에 상수별 동작을 혼합해 넣는 경우이다.**
+
+서드파티에서 가져온 Operation 열거 타입이 있는데, 각 연산의 반대 연산을 반환하는 메서드가 필요하다고 가정해보자. 아래의 코드는 그 역할을 충실히 할 수 있는 정적 메서드의 예시이다.
+
+```java
+public static Operation inverse(Operation op) {
+	switch(op) {
+	  case PLUS: return Operation.MINUS;
+	  case MINUS: return Operation.PLUS;
+	  case TIMES: return Operation.DIVIDE;
+	  case DIVIDE: return Operation.TIMES;
+
+	  default: throw new AssertionError("알 수 없는 연산: " + op);
+}
+```
+
+## 열거 타입을 언제 사용해야할까?
+
+### 필요한 원소를 컴파일 타임에 다 알 수 있는 상수 집합이라면 항상 열거 타입을 사용하자!
+
+ex) 태양계 행성, 한 주의 요일, 체스 말
+
+그리고 열거 타입에 정의된 상수 개수가 영원히 고정 불변일 필요는 없다. 열거 타입은 나중에 상수가 추가돼도 바이너리 수준에서 호환되도록 설계되었기 때문이다.
