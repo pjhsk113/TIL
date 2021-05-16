@@ -187,3 +187,88 @@ public enum Phase {
     }
 }
 ```
+
+Transition이 이전 상태 from과 이후 상태 to를 가지도록 변경하고 2차 배열을 사용하던 부분을 **Map<Phase, Map<Phase, Phase.Transition>>** 타입으로 변경했다. 해당 타입을 초기화하는 코드를 살펴보자.
+
+```java
+Stream.of(values()).collect(Collectors.groupingBy(t -> t.from, 
+		() -> new EnumMap<>(Phase.class),
+```
+
+첫 번째 수집기 **groupngBy**에서는 이전 상태인 from을 기준으로 바깥쪽 Map을 묶고 구현체를 EnumMap으로 명시한다. Phase의 key에 Map을 value로 갖는 Map을 반환한다.
+
+```java
+Collectors.toMap(t -> t.to, t -> t,
+       (x, y) -> y, () -> new EnumMap<>(Phase.class))));
+```
+
+두 번째 수집기인 **toMap**에서는 이후 상태인 to를 기준으로 EnumMap을 생성한다. 안쪽 Map을 초기화하는 코드로 Phase의 key에 Transition을 value로 갖는 Map을 반환한다. toMap의 병합 함수 인 (x, y) → y 는 실제로 쓰이지 않는데, 이는 단지 EnumMap을 얻으려면 맵 팩터리가 필요하고 수집기들은 점층적 팩터리를 제공하기 때문이다.
+
+## 새로운 상태를 추가한다면?
+
+기존 배열 형태로 구성되었을 경우, 새로운 상태(상수)를 추가하려면 새로운 상수를 Phase에 1개, Phase.Transition에 2개를 추가하고 원소 9개짜리인 배열을 원소 16개의 배열로 교체해야한다. 만약 여기서 원소를 너무 적게 혹은 너무 많게 입력하거나, 잘못된 순서로 나열하면 런타임 오류가 발생한다.
+
+```java
+// 새로운 상태 PLASMA를 추가
+public enum Phase {
+    SOLID, LIQUID, GAS, PLASMA;
+
+    public enum Transition {
+        MELT,FREEZE, BOIL, CONDENSE, SUBLIME, DEPOSIT, IONIZE, DEIONIZE;
+
+				// 기존 9개였던 원소가 16개가 되었다.
+				// 원소를 잘못된 순서로 나열하면 런타임 오류가 발생한다.
+        private static final Transition[][] TRANSITIONS = {
+                {null, MELT, SUBLIME, null},
+                {FREEZE, null, BOIL, null},
+                {DEPOSIT, CONDENSE, null, IONIZE},
+                {null, null, DEIONIZE, null},
+        };
+
+        public static Transition from(Phase from, Phase to) {
+            return TRANSITIONS[from.ordinal()][to.ordinal()];
+        }
+    }
+}
+```
+
+하지만 EnumMap에서는 아주 간단하다. Phase에 상태를 추가하고 Transition에 두 전의 상태와 from, to를 추가해주면 끝이다.
+
+```java
+public enum Phase {
+    SOLID, LIQUID, GAS, PLASMA;
+
+    public enum Transition {
+        MELT(SOLID, LIQUID),
+        FREEZE(LIQUID, SOLID),
+        BOIL(LIQUID, GAS),
+        CONDENSE(GAS, LIQUID),
+        SUBLIME(SOLID, GAS),
+        DEPOSIT(GAS, SOLID),
+				IONIZE(GAS, PLASMA),
+        DEIONIZE(PLASMA, GAS);
+
+				// 나머지 코드는 그대로다.
+        private final Phase from;
+        private final Phase to;
+
+        Transition(Phase from, Phase to) {
+            this.from = from;
+            this.to = to;
+        }
+
+        // 상전이 맵을 초기화한다.
+        private static final Map<Phase, Map<Phase, Phase.Transition>>
+                m = Stream.of(values()).collect(Collectors.groupingBy(t -> t.from,
+                () -> new EnumMap<>(Phase.class),
+                Collectors.toMap(t -> t.to, t -> t,
+                        (x, y) -> y, () -> new EnumMap<>(Phase.class))));
+
+        public static Phase.Transition from(Phase from, Phase to) {
+            return m.get(from).get(to);
+        }
+    }
+}
+```
+
+나머지는 로직에서 잘 처리되니 잘못 수정할 가능성이 적어진다. 배열과 ordinal 인덱싱을 사용하는 것보다 훨씬 안전하고 유지보수하기 좋다.
