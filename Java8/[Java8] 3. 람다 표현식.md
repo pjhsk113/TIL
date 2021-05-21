@@ -45,4 +45,98 @@ BinaryOperator<Integer> sum = (a, b) -> a + b;
 BinaryOperator<Integer> sum = (Integer a, Integer b) -> a + b;
 ```
 
-## 변수 캡쳐
+## 변수 캡쳐(Variable capture)
+
+변수 캡쳐는 람다 표현식에서 외부 변수를 참조할 때 그 값을 복사해두는 것을 말한다.
+
+이해를 위해 다음 예제를 살펴보자.
+
+```java
+public class Dummy {
+    public static void main(String[] args) {
+        Dummy dummy = new Dummy();
+        dummy.run();
+    }
+
+    private void run() {
+        // 지역 변수
+        int baseNumber = 10;
+        
+        IntConsumer printInt = (i) -> {
+            // 람다 표현식 외부의 값인 baseNumber를 참조
+            System.out.println(i + baseNumber);  
+        };
+
+        printInt.accept(10);
+    }
+}
+```
+
+printInt는 baseNumber를 참조하고있다. 이때 변수 캡쳐가 일어난다.
+
+그렇다면 변수 캡쳐는 왜 일어나는 것일까? 그 이유는 람다가 별도의 쓰레드에서 실행 가능하기 때문이다. 지역 변수는 JVM의 메모리 중 Stack 영역에 저장되고 각 쓰레드는 별도의 Stack을 가지고 있다. 즉, 서로 다른 쓰레드간 Stack 영역이 공유되지 않는다는 뜻이다.
+
+만약, 람다의 쓰레드가 종료되기 전 참조하고 있는 baseNumber의 쓰레드가 먼저 종료되어 baseNumber가 Stack에서 사라진다면 이는 오류로 이어질 수 있다. 따라서 변수 캡쳐(Variable capture)를 통해 자신의 스택에 참조하고 있는 변수를 복사해두어 오류를 방지하는 것이다.
+
+이 처럼 값을 복사해오기 때문에 참조되는 변수는 변경되면 안된다. **즉, final이어야 한다**. 참조되는 변수의 값을 변경하려고 하면 동시성 문제가 발생할 수 있어 컴파일 에러가 발생한다. 
+
+![%5BJava8%5D%20%E1%84%85%E1%85%A1%E1%86%B7%E1%84%83%E1%85%A1%20%E1%84%91%E1%85%AD%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%B5%E1%86%A8%20aa198231aa10431588cb04f4c9841014/Untitled.png](%5BJava8%5D%20%E1%84%85%E1%85%A1%E1%86%B7%E1%84%83%E1%85%A1%20%E1%84%91%E1%85%AD%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%B5%E1%86%A8%20aa198231aa10431588cb04f4c9841014/Untitled.png)
+
+### effectively final?
+
+Java8 이전에는 final을 명시적으로 선언해줘야 했지만 Java8 이후로는 **참조 변수가 final처럼 동작한다면** 생략 가능하도록 변경됐다. 이를 **effectively final**이라 한다.
+
+**변수 캡쳐**는 람다 표현식뿐아니라 익명 클래스나 내부 클래스에서도 사용되던 기술이다.
+
+```java
+private void run() {
+        int baseNumber = 10;
+
+        // 내부 클래스
+        class LocalClass {
+            void printBaseNumber() {
+                System.out.println(baseNumber);
+            }
+        }
+
+        // 익명 클래스
+        Consumer<Integer> integerConsumer = new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) {
+                System.out.println(baseNumber);
+            }
+        };
+        
+        // 람다 표현식
+        IntConsumer printInt = (i) -> {
+            System.out.println(i + baseNumber);
+        };
+
+        printInt.accept(10);
+    }
+}
+```
+
+하지만 람다와 다른점이 한 가지 있는데, 바로 **쉐도잉**이다.
+
+## 쉐도잉
+
+쉐도윙이란 '가려진다'라는 의미다. 같은 변수명이 존재할 경우 스코프에 의해서 외부의 참조가 가려지는 것이다. 
+
+아래 예시를 살펴보자.
+
+![%5BJava8%5D%20%E1%84%85%E1%85%A1%E1%86%B7%E1%84%83%E1%85%A1%20%E1%84%91%E1%85%AD%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%B5%E1%86%A8%20aa198231aa10431588cb04f4c9841014/Untitled%201.png](%5BJava8%5D%20%E1%84%85%E1%85%A1%E1%86%B7%E1%84%83%E1%85%A1%20%E1%84%91%E1%85%AD%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%B5%E1%86%A8%20aa198231aa10431588cb04f4c9841014/Untitled%201.png)
+
+내부 클래스에서 baseNumber를 참조하고 있다. 하지만 이때 내부에 같은 이름을 가진 변수를 선언해보자.
+
+![%5BJava8%5D%20%E1%84%85%E1%85%A1%E1%86%B7%E1%84%83%E1%85%A1%20%E1%84%91%E1%85%AD%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%B5%E1%86%A8%20aa198231aa10431588cb04f4c9841014/Untitled%202.png](%5BJava8%5D%20%E1%84%85%E1%85%A1%E1%86%B7%E1%84%83%E1%85%A1%20%E1%84%91%E1%85%AD%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%B5%E1%86%A8%20aa198231aa10431588cb04f4c9841014/Untitled%202.png)
+
+내부 클래스에서 참조하는 변수가 달라진 것을 확인할 수 있다. 즉, 외부에 존재하는 baseNumber가 내부에 baseNumber에 의해 **가려진** 것이다.
+
+익명 클래스도 마찬가지로 **쉐도잉**된다.
+
+![%5BJava8%5D%20%E1%84%85%E1%85%A1%E1%86%B7%E1%84%83%E1%85%A1%20%E1%84%91%E1%85%AD%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%B5%E1%86%A8%20aa198231aa10431588cb04f4c9841014/Untitled%203.png](%5BJava8%5D%20%E1%84%85%E1%85%A1%E1%86%B7%E1%84%83%E1%85%A1%20%E1%84%91%E1%85%AD%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%B5%E1%86%A8%20aa198231aa10431588cb04f4c9841014/Untitled%203.png)
+
+하지만 람다는 조금 다르다. 내부 클래스나 익명 클래스처럼 변수를 가질 수 없는데, 그 이유는 람다의 스코프가 외부 변수와 같기 때문이다. 즉, 같은 스코프에 같은 변수를 2개 선언하려는 것과 같기 때문에 가질 수 없는 것이다.
+
+![%5BJava8%5D%20%E1%84%85%E1%85%A1%E1%86%B7%E1%84%83%E1%85%A1%20%E1%84%91%E1%85%AD%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%B5%E1%86%A8%20aa198231aa10431588cb04f4c9841014/Untitled%204.png](%5BJava8%5D%20%E1%84%85%E1%85%A1%E1%86%B7%E1%84%83%E1%85%A1%20%E1%84%91%E1%85%AD%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%B5%E1%86%A8%20aa198231aa10431588cb04f4c9841014/Untitled%204.png)
