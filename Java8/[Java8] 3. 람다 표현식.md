@@ -80,7 +80,7 @@ printInt는 baseNumber를 참조하고있다. 이때 변수 캡쳐가 일어난�
 
 이 처럼 값을 복사해오기 때문에 참조되는 변수는 변경되면 안된다. **즉, final이어야 한다**. 참조되는 변수의 값을 변경하려고 하면 동시성 문제가 발생할 수 있어 컴파일 에러가 발생한다. 
 
-![]()
+![](https://blog.kakaocdn.net/dn/xQDZw/btq5Dac5r9g/U0yKzlQhBFMiA197WrDAk1/img.png)
 
 ### effectively final?
 
@@ -125,18 +125,20 @@ private void run() {
 
 아래 예시를 살펴보자.
 
-![]()
+![](https://blog.kakaocdn.net/dn/YK0sd/btq5Dac5utD/FRntRLTYb51b3YDpXwuVT1/img.png)
 
 내부 클래스에서 baseNumber를 참조하고 있다. 하지만 이때 내부에 같은 이름을 가진 변수를 선언해보자.
 
-![]()
+![](https://blog.kakaocdn.net/dn/mxW32/btq5GdNGiai/xNpifBKmjSsoZrKPMBxw8K/img.png)
 
 내부 클래스에서 참조하는 변수가 달라진 것을 확인할 수 있다. 즉, 외부에 존재하는 baseNumber가 내부에 baseNumber에 의해 **가려진** 것이다.
 
 익명 클래스도 마찬가지로 **쉐도잉**된다.
 
-![]()
+![](https://blog.kakaocdn.net/dn/cFZLDe/btq5yBWy1LL/MEzH2HLXp55czyZHwMzXG1/img.png)
 
 하지만 람다는 조금 다르다. 내부 클래스나 익명 클래스처럼 변수를 가질 수 없는데, 그 이유는 람다의 스코프가 외부 변수와 같기 때문이다. 즉, 같은 스코프에 같은 변수를 2개 선언하려는 것과 같기 때문에 가질 수 없는 것이다.
 
-![]()
+![](https://blog.kakaocdn.net/dn/bWVeAy/btq5zFZtxxp/neNq3UU4FARX8KhsHV8ki0/img.png)
+
+이처럼 람다 표현식은 익명 클래스, 내부 클래스와는 다른 스코프를 가진다. 따라서 람다는 쉐도잉되지 않으며, 이는 익명 클래스, 내부 클래스와의 차이점이라고 볼 수 있다.
