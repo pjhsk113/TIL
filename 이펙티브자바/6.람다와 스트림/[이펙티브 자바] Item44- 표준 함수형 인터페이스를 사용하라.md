@@ -127,9 +127,9 @@ public static void main(String[] args) {
 
 서로 다른 함수형 인터페이스를 같은 위치의 인수로 받는 메서드들을 다중 정의해서는 안된다. 클라이언트에게 모호함을 안겨주고 올바른 메서드를 알려주기위해 형변환을 해줘야하기 때문이다.
 
-![]()
+![](https://blog.kakaocdn.net/dn/eKsd8q/btq6V4BTODN/XTMbLIPKFm7ShouB2Ds791/img.png)
 
-![]()
+![](https://blog.kakaocdn.net/dn/Jo2rw/btq6SvtOaw8/Hu7jHUkilRY8pIGmbEW7mK/img.png)
 
 실제로 ExecutorService의 submit 메서드는 Callable<T>와 Runnable을 받는 것을 다중정의했다. 그래서 가끔씩 올바른 메서드를 알려주기위해 형변환을 해줘야하는 상황이 생길 수 있다.
 
