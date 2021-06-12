@@ -16,32 +16,32 @@ Java8에 추가된 스트림 API는 다량의 데이터 처리를 돕고자 만�
 
 1. 컬렉션
 
-    ![]()
+    ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcQ8OPJ%2Fbtq66kx9WE1%2Fgc57o7C3uGugzlvvPBwc3k%2Fimg.png)
 
 2. 배열
 
-    ![]()
+    ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcFaXw3%2Fbtq64RXLa0t%2FfnjAd0HYfNxz86xcS0wW81%2Fimg.png)
 
 3. 파일
 
-    ![]()
+    ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvX6Ey%2Fbtq64xSJaT8%2FIe1JnwVnm8TGCU5gQra3Ak%2Fimg.png)
 
 4. 정규표현식 패턴 매처
 
-    ![]()
+    ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fcj8u8T%2Fbtq650NsKS4%2FY1KEBq8VCYl4A0KbPGZAyK%2Fimg.png)
 
 5. 난수 생성기
     1. 무한 스트림
 
-        ![]()
+        ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F68hFo%2Fbtq66u1QnXI%2FAIkTpRV8z4DcasN1bHXdwk%2Fimg.png)
 
         or
 
-        ![]()
+        ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fn0ckO%2Fbtq64mcSKy3%2FFuBG5uNYeLR6hnNBVEUYKK%2Fimg.png)
 
     2. 유한 스트림
 
-        ![]()
+        ![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbfBp5h%2Fbtq65UflNRj%2FDr0woeFfSSP9pvFGlA9SOk%2Fimg.png)
 
 6. 기본 스트림 - IntStream, LongStream, DoubleStream
 
