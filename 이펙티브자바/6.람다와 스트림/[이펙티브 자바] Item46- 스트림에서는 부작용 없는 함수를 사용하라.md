@@ -43,3 +43,62 @@ forEach는 종단 연산 중 기능이 가장 적고 가장 덜 스트림스럽�
 수집기는 스트림을 사용하려면 꼭 배워야하는 새로운 개념이다. 수집기는 java.util.stream.Collectors 클래스의 메서드를 사용하는데, **스트림의 원소들을 축소해서 객체 하나에 모아주는 역할을 한다.** 익숙해지기 전까지 그저 축소 전략을 캡슐화한 블랙박스 객체라고 생각하자.
 
 수집기가 생성하는 객체는 주로 컬렉션이며, toList(), toSet(), toCollection(collectionFactory) 이렇게 총 3가지의 수집기가 있다.
+
+## toList()
+
+스트림의 원소를 List에 모아준다.
+
+빈도표에서 가장 흔한 단어 10개를 뽑아내는 파이프라인 예제를 살펴보자.
+
+```java
+List<String> topTen = freq.keySet().stream()
+    .sorted(comparing(freq::get).reversed())
+    .limit(10)
+    .collect(toList());
+```
+
+빈도수 `freq::get` 를 역순으로 sorted하고, 단어 10개를 뽑아 List로 모아 반환하는 코드다. 중간 연산 로직만 완성하면 List로 모아 반환하는 건 식은 죽 먹기다.
+
+> 위의 toList()는 Collectors의 메서드로 정적 임포트하여 사용하고 있다. 이렇듯 정적 임포트를 사용하면 코드 가독성이 좋아진다.
+collect(Collectors.toList())  → collect(toList())
+
+## toMap()
+
+### toMap(keyMapper, valueMapper) - 인수 2개
+
+맵 수집기 toMap()은 스트림 원소를 Key-Value 형태로 재생산한다. 스트림의 각 원소가 고유한 키에 매핑되어 있을 때 사용하기 적합하다.
+
+toMap(keyMapper, valueMapper)은 각 Key에 매핑되는 keyMapper(함수)와 Value에 매핑되는 valueMapper(함수)를 인수로 받는다.
+
+```java
+// toMap(keyMapper, valueMapper) 예제
+private static final Map<String, Operation> stringToEnum =
+    Stream.of(values()).collect(
+        toMap(Object::toStringg, e -> e));
+```
+
+위의 예제는 열거 타입 상수의 문자열 표현을 열거 타입 자체에 매핑하는 구현 예제이다. toMap()은  스트림 원소가 다수의 같은 키를 사용하는 경우 IllegalStateException을 던진다. 주의하자.
+
+### toMap(keyMapper, valueMapper, mergeFunction) - 인수 3개
+
+같은 키를 공유하는 값들이 있는 경우 병함 함수를 통해 기존 값에 합쳐진다. 어떤 키와 그 키에 연관된 원소들 중 하나를 골라 연관 짓는 맵을 만들 때 유용하다.
+
+```java
+// toMap(keyMapper, valueMapper, mergeFunction) 예제
+Map<Artist, Album> topHits = albums.collect(
+    toMap(Album::artist, a->a, maxBy(comparing(Album::sales))));
+```
+
+위 예제는 음악가와 음악가의 베스트 앨범을 연관지어 Map으로 만드는 스트림 코드다. 코드를 읽으면 자연스럽게 의미가 해석된다.
+
+또, 인수가 3개인 toMap의 원소가 충돌할 경우 마지막 값을 취하는 수집기를 만들때도 유용하다.
+
+```java
+toMap(keyMapper, valueMapper, (oldValue, newValue) -> newValue)
+```
+
+### toMap(keyMapper, valueMapper, mergeFunction, Map의 구현체) - 인수 4개
+
+인수가 4개인 toMap은 마지막 인수로 맵 팩터리를 받는다. 즉, TreeMap이나 EnumMap과 같은 Map의 구현체를 지정할 수 있다. 
+
+## groupingBy
