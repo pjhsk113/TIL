@@ -102,3 +102,68 @@ toMap(keyMapper, valueMapper, (oldValue, newValue) -> newValue)
 인수가 4개인 toMap은 마지막 인수로 맵 팩터리를 받는다. 즉, TreeMap이나 EnumMap과 같은 Map의 구현체를 지정할 수 있다. 
 
 ## groupingBy
+
+### 가장 일반적인 groupingBy
+
+분류 함수를 입력받고 원소들을 카테고리별로 모아 놓은 Map을 반환한다. 반환된 Map에 담긴 각각의 값은 List다.
+
+```java
+words.collect(groupingBy(words -> alphabetize(word)))
+```
+
+### 값을 리스트외에 다른 타입으로 반환하는 방법
+
+값을 리스트 외 다른 타입으로 반환하기 위해서는 다운스트림(3번째 인자)을 명시해야 한다. 다운스트림의 역할은 해당 카테고리의 모든 원소를 담은 스트림으로부터 값을 생성하는 일이다.
+
+```java
+// 다운스트림으로 counting()을 건낸다.
+words.collect(groupingBy(String::toLowerCase, counting())
+```
+
+### 다운스트림에 더해 맵 팩터리를 지정하기
+
+맵 팩터리를 지정해 맵과 그 안에 담긴 컬렉션의 타입을 모두 지정할 수 있게 만들 수 있다.
+
+일반적으로 3번째 인자로 맵 팩터리가 와야하지만, 맵 팩터리(mapFactory) 매개변수가 다운스트림 매개변수보다 앞에 놓인다. 
+
+```java
+// 2번째 인자는 맵 팩터리, 3번째 인자는 다운스트림
+words.collect(groupingBy(String::toLowerCase, TreeMap::new, counting())
+```
+
+## joining
+
+### 인자가 없는 joining()
+
+원소들을 연결하는 역할을 한다. joining은 문자열 등의 CharSequence 인스턴스의 스트림에만 적용할 수 있다.
+
+### 인자가 1개 joining(delimiter)
+
+구분문자를 매개변수로 받아 문자열 연결 부위에 삽입하여 연결한다.
+
+```java
+// came, saw, conquered joining
+words.collect(joining('/'));
+
+// came/saw/conquered 출력
+```
+
+### 인자가 3개 joining(perfix, delimiter, suffix)
+
+접두문자, 구분문자, 후미문자를 입력받아 문자열을 연결한다.
+
+```java
+// came, saw, conquered joining
+words.collect(joining('[', ',', ']'));
+
+// [came, saw, conquered] 출력
+```
+
+## 이외의 다양한 메서드
+
+maxBy, minBy, summing, averaging, reducing, filtering, mapping, flatMapping, collectingAndThen 등... 굉장히 다양한 메서드가 존재한다. 대부분의 프로그래머는 이 존재를 몰라도 된다. 설계 관점에서 보면, 스트림의 기능을 일부 복제하여 다운스트림 수집기를 작은 스트림처럼 동작하게 한 것이기 때문이다.
+
+# 핵심 정리
+
+- 스트림 파이프라인 프로그래밍의 핵심은 부작용(side effect)없는 함수 객체다.
+- 스트림을 올바르게 사용하려면 수집기를 잘 알아둬야한다.(toList, toSet, toMap, groupingBy, joining)
