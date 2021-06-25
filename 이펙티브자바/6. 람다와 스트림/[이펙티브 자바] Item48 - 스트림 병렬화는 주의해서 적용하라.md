@@ -24,7 +24,7 @@ public class MersennePrime {
 }
 ```
 
-![]()
+![](https://blog.kakaocdn.net/dn/ANQtn/btq8aauxGwK/XJnwnvhlTZ2sC4RlwWwdDK/img.png)
 
 20개의 메르센 소수를 생성하는 프로그램을 실행해보니 14.7초가 걸린다. 이 프로그램의 성능을 올리는 방법으로 병렬처리를 떠올려서, parallel()을 호출해 병렬처리를 한다고 생각해보자. 이 프로그램의 성능을 올라갈까? 
 
@@ -109,7 +109,7 @@ public class ParallelPrime {
 }
 ```
 
-![]()
+![](https://blog.kakaocdn.net/dn/cSqSp6/btq789XJWwH/CdwKaW9Bei6zWgKiBmOyzK/img.png)
 
 **10^6을 계산하는데 약 5초**, **10^7을 계산하는데 44.5초**가 걸렸다. 이러한 연산에 parallel() 메서드를 추가해서 병렬화해보자. 
 
@@ -127,7 +127,7 @@ public class ParallelPrime {
 }
 ```
 
-![]()
+![](https://blog.kakaocdn.net/dn/cKWWfK/btq7894tyqE/Bnw48IoqfLU3DVEtbJkyak/img.png)
 
 **10^6을 계산하는데 약 2.9초**, **10^7을 계산하는데 18.6초**가 걸렸다. parallel() 메서드 호출을 하나 추가한 것 뿐이지만 **시간이 2배 이상 단축**됐다.
 
