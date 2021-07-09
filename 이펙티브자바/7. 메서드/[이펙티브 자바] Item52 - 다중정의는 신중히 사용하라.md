@@ -129,7 +129,7 @@ public class SetList {
 
 [-3, -2, -1, 0, 1, 2] 의 값에서 [0, 1, 2]를 지우니까 [-3, -2, -1]이 출력되어야 할 것 같다.
 
-![]()
+![](https://blog.kakaocdn.net/dn/9qIOX/btq9cIkCc6I/fRI3xsm3Nx0UhwPACNSEM1/img.png)
 
 실제로 [-3, -2, -1]이 출력되면서 테스트가 통과한다. Set의 remove() 메서드의 시그니처는 remove(Object)기 때문에 정상적으로 0 이상의 값을 지운다.
 
@@ -154,15 +154,15 @@ public class SetList {
 
 이 코드도 마찬가지로 [-3, -2, -1]이 출력되어야 할 것 같다.
 
-![]()
+![](https://blog.kakaocdn.net/dn/DqJDI/btq9f4M3vSb/4P97SZQes3xGARQAAbs2xK/img.png)
 
 하지만 전혀 다른 결과가 출력된다. 왜 [-2, 0, 2]가 출력될까? 
 
 그 이유는 List의 remove가 다중정의되있기 때문이다. 
 
-![]()
+![](https://blog.kakaocdn.net/dn/0rKco/btq9fluYLoh/ItlEJfrRuBDl0InKKQlYD1/img.png)
 
-![]()
+![](https://blog.kakaocdn.net/dn/cdXXel/btq9gzsu2FJ/H1WvIdlykk1jnSBaSsUd91/img.png)
 
 위의 코드에서는 remove(Object)가 아닌 remove(int index) 메서드가 선택된다. 따라서 값이 아닌 index의 원소를 제거하기 때문에 [-2, 0, 2]라는 값이 출력되는 것이다.
 
