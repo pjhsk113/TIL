@@ -20,7 +20,7 @@ public static void main(String[] args) {
 }
 ```
 
-![]()
+![](https://blog.kakaocdn.net/dn/cmTy3W/btra8A48evu/C5ZtTq463d3NQKpIxhSgzK/img.png)
 
 잔돈으로 0.3999999999999가 출력된다. 당연히 우리가 원하는 결과는 아니다. 이처럼 정확한 계산이 필요한 금융 계산에 부동소수 타입을 사용하면 정확한 답이 아닌 **근사치**로 계산된다.
 
