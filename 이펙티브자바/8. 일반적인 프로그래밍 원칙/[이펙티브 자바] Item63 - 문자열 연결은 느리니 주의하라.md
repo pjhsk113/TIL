@@ -38,7 +38,7 @@ statement() 메서드 수행 시간은 Item 수의 제곱에 비례해 늘어나
 
 Item의 원소를 10000개로 하고 문자열의 길이가 80인 문자열의 연결 테스트해보니 엄청난 성능차이가 나타났다.
 
-![]()
+![](https://blog.kakaocdn.net/dn/bZFcBW/btrb9G36y7U/CKCHTyhjcBpEL6n7Sw7vT0/img.png)
 
 # 핵심 정리
 
