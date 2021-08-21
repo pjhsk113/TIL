@@ -52,9 +52,9 @@ private static long sum(){
 
 위의 코드에서는 불필요한 인스턴스가 2^31개 만들어진다. 박싱된 기본 타입인 Long을 명시했기 때문이다.
 
-![]()
+![](https://blog.kakaocdn.net/dn/bQTegt/btrbgoKX01P/VcN2LmEtG48Z5zZqODlcG0/img.png)
 
-![]()
+![](https://blog.kakaocdn.net/dn/dV8fHq/btrbqubxCyd/giK7NsDKy9ukjIxbhHkVw1/img.png)
 
 오류나 경고없이 컴파일되지만, 성능이 크게 느려진다.
 
