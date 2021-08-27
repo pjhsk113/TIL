@@ -19,7 +19,7 @@
 ### 💯 오늘 한 일
 
 - Codility Easy - LongestPassword solved
-- Codility Medium - FloodDepth faild
+- Codility Medium - FloodDepth failed
 
   
 <br/>
