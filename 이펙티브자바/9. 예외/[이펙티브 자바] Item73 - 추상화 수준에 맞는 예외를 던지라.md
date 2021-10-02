@@ -21,7 +21,7 @@ try {
 
 AbstractSequentialList는 List의 추상 골격 클래스이다.
 
-![]()
+![](https://blog.kakaocdn.net/dn/bUxvJZ/btrgBgABIUH/9ZcUFuPXWdERVVmlGKiTD1/img.png)
 
 이 예에서 수행한 예외 번역은 List<E> 인터페이스의 get() 메서드 명세에 명시된 필수 사항이다.
 
