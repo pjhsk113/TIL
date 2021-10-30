@@ -8,7 +8,7 @@
 
 예를 들어, IndexOutOfBoundsException의 상세 메시지에는 범위의 최솟값과 최댓값, 그리고 범위를 벗어난 인덱스의 값을 담아야 한다. 원인이 될 수 있는 모든 매개변수와 필드 값을 실패 메시지에 담으면 무엇을 고쳐야 할지 분석하는데 큰 도움이 된다.
 
-![]()
+![](https://blog.kakaocdn.net/dn/b1lP4r/btrhjX6VBn7/YPiL26TqVM1ftFn3DzmJt1/img.png)
 
 IndexOutOfBoundsException은 String을 매개변수로 받고있어 메시지를 만들어 보내야한다. Java9에서 index를 받는 생성자가 추가됐지만 여전히 최댓값과 최솟값은 받지 않는다. 따라서 다음과 같이 필요한 정보를 모두 생성자에서 받고 상세 메시지까지 미리 생성해놓는 것도 좋은 방법 중 하나다.
 

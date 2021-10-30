@@ -29,11 +29,11 @@ public Object pop() {
 
 ### 3. 실패 가능성있는 코드는 객체의 상태 변경 코드보다 앞에 배치한다.
 
-![]()
+![](https://blog.kakaocdn.net/dn/b0deN8/btrhX19teOT/2JoTzPJVAqlvH2u5nUYfj0/img.png)
 
 TreeMap을 예로 들어 생각해보자. TreeMap은 원소들을 어떤 기준으로 정렬한다. 즉, 원소들은 비교할 수 있는 타입이어야 하며 원소를 put(객체의 상태를 변경)하기 전에 비교 가능한 타입인지 검사한다. 
 
-![]()
+![](https://blog.kakaocdn.net/dn/J3Mjv/btrhVYrQkZb/iGUmbcVdQXUsD8e0nGUm51/img.png)
 
 만약 비교할 수 없는 타입이라면 ClassCastException을 던진다.
 
@@ -43,9 +43,9 @@ TreeMap을 예로 들어 생각해보자. TreeMap은 원소들을 어떤 기준�
 
 예를 들면, 어떤 정렬 메서드는 정렬하기 전 리스트의 값을 배열에 옮겨 담고 정렬을 수행한다. 배열을 사용하면 원소 접근이 빨라질뿐더러 정렬에 실패하더라도 기존 리스트는 변하지 않는 효과를 가질 수 있기 때문이다.
 
-![]()
+![](https://blog.kakaocdn.net/dn/sh9Dm/btrhWJONhsE/6twH08dn89YPcbrxOAZiY0/img.png)
 
-![]()
+![](https://blog.kakaocdn.net/dn/cCVzdT/btrh3puJ8kR/drrHmt1APP7nNtovYlCKKk/img.png
 
 ### 5. 발생한 실패를 가로채는 복구 코드를 작성하고 이전 상태로 되돌린다.
 

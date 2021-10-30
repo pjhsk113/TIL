@@ -133,7 +133,7 @@ public class Dummy {
 
 이 프로그램은 0부터 23까지 출력한 후 관찰자 자신을 구독해지한 다음 종료될 것이라 예상된다. 하지만 실제로 실행해 보면 23까지 출력한 후 ConcurrentModificationException을 던진다.
 
-![Untitled](%5B%E1%84%8B%E1%85%B5%E1%84%91%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B5%E1%84%87%E1%85%B3%20%E1%84%8C%E1%85%A1%E1%84%87%E1%85%A1%5D%20Item79%20-%20%E1%84%80%E1%85%AA%E1%84%83%E1%85%A9%E1%84%92%E1%85%A1%E1%86%AB%20%E1%84%83%E1%85%A9%E1%86%BC%E1%84%80%E1%85%B5%E1%84%92%E1%85%AA%E1%84%82%E1%85%B3%E1%86%AB%20%E1%84%91%E1%85%B5%E1%84%92%E1%85%A1%E1%84%85%20a9461937a69745e5b0e13218be4549e1/Untitled.png)
+![](https://blog.kakaocdn.net/dn/TsfMv/btrjqnoQ1aJ/DnbIUw5WT6HSUZJ0m47yHk/img.png)
 
 이렇게 예외가 발생하는 이유는 added 메서드 호출이 일어난 시점이 notifyElementAdded가 관찰자들의 리스트를 순회하는 도중이기 때문이다.
 
