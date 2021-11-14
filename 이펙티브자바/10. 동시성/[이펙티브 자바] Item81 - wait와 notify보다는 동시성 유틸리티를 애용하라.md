@@ -14,7 +14,7 @@ java.util.concurrent 동시성 유틸리티는 **실행자 프레임워크, 동�
 
 List, Queue, Map 등 표준 컬렉션 인터페이스에 동시성을 추가해 구현한 고성능 컬렉션이다. 동기화를 내부에서 수행하여 높은 동시성에 도달할 수 있다. 
 
-![Untitled](%5B%E1%84%8B%E1%85%B5%E1%84%91%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B5%E1%84%87%E1%85%B3%20%E1%84%8C%E1%85%A1%E1%84%87%E1%85%A1%5D%20Item81%20-%20wait%E1%84%8B%E1%85%AA%20notify%E1%84%87%E1%85%A9%E1%84%83%E1%85%A1%E1%84%82%E1%85%B3%E1%86%AB%20%E1%84%83%E1%85%A9%E1%86%BC%20cdba043c2c4441899088e6e5f0890630/Untitled.png)
+![](https://blog.kakaocdn.net/dn/yPZ6c/btrkaOe0ll0/H4wldXxZWsehmqipQBPjS1/img.png)
 
 내부에서 동기화를 수행하므로 동시성을 무력화 할 수 없고 외부에서 락을 추가로 사용하면 오히려 속도가 느려지니 주의하자.
 
@@ -67,7 +67,7 @@ CountDownLatch는 일회성 장벽으로, 하나 이상의 스레드가 또 다�
 
 생성자로 받는 int 값을 받으며, 이 값이 countDown 메서드를 몇 번 호출해야 대기중인 스레드를 깨우는지를 결정한다.
 
-![Untitled](%5B%E1%84%8B%E1%85%B5%E1%84%91%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B5%E1%84%87%E1%85%B3%20%E1%84%8C%E1%85%A1%E1%84%87%E1%85%A1%5D%20Item81%20-%20wait%E1%84%8B%E1%85%AA%20notify%E1%84%87%E1%85%A9%E1%84%83%E1%85%A1%E1%84%82%E1%85%B3%E1%86%AB%20%E1%84%83%E1%85%A9%E1%86%BC%20cdba043c2c4441899088e6e5f0890630/Untitled%201.png)
+![](https://blog.kakaocdn.net/dn/nAnjp/btrj87soXbB/Ct4GPgMjGO9kb8gkGWUT71/img.png)
 
 CountDownLatch를 잘 활용하면 유용한 기능을 쉽게 구현할 수 있다.
 
@@ -121,7 +121,7 @@ public static void main(String[] args) throws InterruptedException {
 }
 ```
 
-![Untitled](%5B%E1%84%8B%E1%85%B5%E1%84%91%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B5%E1%84%87%E1%85%B3%20%E1%84%8C%E1%85%A1%E1%84%87%E1%85%A1%5D%20Item81%20-%20wait%E1%84%8B%E1%85%AA%20notify%E1%84%87%E1%85%A9%E1%84%83%E1%85%A1%E1%84%82%E1%85%B3%E1%86%AB%20%E1%84%83%E1%85%A9%E1%86%BC%20cdba043c2c4441899088e6e5f0890630/Untitled%202.png)
+![](https://blog.kakaocdn.net/dn/kWBLV/btrkbUMQ4iT/clYPicT0e8qmbkVVcFBxtk/img.png)
 
 time에 넘겨진 실행자 서비스는 매개변수로 지정한 동시성 수준만큼으 스레드를 생성할 수 있어야한다. 그렇지 못하면 **스레드 기아 교착상태**가 발생하며 이 메서드는 끝나지 않는다.
 
