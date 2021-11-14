@@ -45,7 +45,7 @@ synchronized 한정자가 달려있는 메서드는 스레드 안전하다고 �
 
 대표적인 예로 Collections.synchronizedMap을 살펴보자.
 
-![Untitled](Item82%20-%20%E1%84%89%E1%85%B3%E1%84%85%E1%85%A6%E1%84%83%E1%85%B3%20%E1%84%8B%E1%85%A1%E1%86%AB%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%89%E1%85%A5%E1%86%BC%20%E1%84%89%E1%85%AE%E1%84%8C%E1%85%AE%E1%86%AB%E1%84%8B%E1%85%B3%E1%86%AF%20%E1%84%86%E1%85%AE%E1%86%AB%E1%84%89%E1%85%A5%E1%84%92%E1%85%AA%E1%84%92%E1%85%A1%E1%84%85%E1%85%A1%20c5e4d33f7847495bacd0c738ae08473a/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bN5dVM/btrkHn3OjSy/E9WUWvKk0pxgjWQyPQ2FX0/img.png)
 
 > synchronizedMap이 반환한 맵의 컬렉션 뷰를 순회하려면 반드시 그 맵을 락으로 사용해 수동으로 동기화하라. 
 
