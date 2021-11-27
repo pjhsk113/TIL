@@ -147,7 +147,7 @@ public class MutablePeriod {
 
 이 프로그램의 실행 결과는 다음과 같다.
 
-![Untitled](%5B%E1%84%8B%E1%85%B5%E1%84%91%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B5%E1%84%87%E1%85%B3%20%E1%84%8C%E1%85%A1%E1%84%87%E1%85%A1%5D%20item88%20-%20readObject%20%E1%84%86%E1%85%A6%E1%84%89%E1%85%A5%E1%84%83%E1%85%B3%E1%84%82%E1%85%B3%E1%86%AB%20%E1%84%87%E1%85%A1%E1%86%BC%203618505ecdf243be95d8b252ecbc2674/Untitled.png)
+![](https://blog.kakaocdn.net/dn/cDfKjD/btrmirh6D6S/CKHJe9q62sxPFx5Hq8E9ck/img.png)
 
 처음에는 불변식으로 생성됐지만 의도적으로 내부의 값을 수정할 수 있게되어 올바르지 않은 값이 생성되었다. 이와 같은 방법으로 공격자는 불변이라고 생각하는 클래스에 엄청난 보안 문제를 일으킬 수 있다.
 
