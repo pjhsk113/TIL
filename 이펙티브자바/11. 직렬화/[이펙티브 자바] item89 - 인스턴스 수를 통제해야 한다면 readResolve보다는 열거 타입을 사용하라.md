@@ -26,7 +26,7 @@ public class Elvis {
 
 readResolve 메서드를 사용하면 readObject 메서드가 만들어낸 인스턴스를 다른 것으로 대체할 수 있다. 역직렬화 후 새로 생성된 객체를 인수로 readResolve가 호출되고, 이 메서드가 반환한 객체 참조가 새로 생성된 객체를 대신해 반환한다. 이때 새로 생성된 객체의 참조는 유지되지 않아 GC 대상이 된다.
 
-![Untitled](%5B%E1%84%8B%E1%85%B5%E1%84%91%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B5%E1%84%87%E1%85%B3%20%E1%84%8C%E1%85%A1%E1%84%87%E1%85%A1%5D%20item89%20-%20%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5%E1%86%AB%E1%84%89%E1%85%B3%20%E1%84%89%E1%85%AE%E1%84%85%E1%85%B3%E1%86%AF%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%8C%E1%85%A6%E1%84%92%E1%85%A2%2012d14f1aa5c44d0a9cd07dfa9a8b2a9d/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bAReJK/btrmhhnJcIc/C1lsVgKgBnkEhVZdM5UULk/img.png)
 
 ```java
 // 진짜 Elvis를 반환하고, 가짜 Elvis는 GC에 맡긴다.

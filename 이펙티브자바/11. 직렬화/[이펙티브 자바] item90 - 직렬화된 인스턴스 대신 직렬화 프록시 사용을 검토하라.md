@@ -210,7 +210,7 @@ EnumSet은 정적 팩터리만 제공한다.
 
 EnumSet은 직렬화 프록시 패턴을 사용해서 실제로 이렇게 동작한다. 
 
-![Untitled](%5B%E1%84%8B%E1%85%B5%E1%84%91%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B5%E1%84%87%E1%85%B3%20%E1%84%8C%E1%85%A1%E1%84%87%E1%85%A1%5D%20item90%20-%20%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%85%E1%85%A7%E1%86%AF%E1%84%92%E1%85%AA%E1%84%83%E1%85%AC%E1%86%AB%20%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%89%E1%85%B3%E1%84%90%E1%85%A5%E1%86%AB%E1%84%89%E1%85%B3%20%E1%84%83%2072261e4f315a4dbbbd5d0172eea5e714/Untitled.png)
+![](https://blog.kakaocdn.net/dn/F0Sn3/btrmiFg5uKF/1YUgx3gPxFdNzCXMoIFPA1/img.png)
 
 ## 직렬화 프록시의 한계
 

@@ -2,7 +2,7 @@
 
 ### 방어적 복사(가변 필드)를 사용하는 불변 클래스의 Serializable 구현
 
-[item50](https://www.notion.so/Item50-98048da652474d1a9a21ca16aa30c88c)에서는 불변 날짜 범위 클래스를 만드는데 가변 Date 필드를 이용했다. 따라서 불변식을 지키기 위해 생성자와 접근자에 Date 객체를 방어적으로 복사하느라 코드가 상당히 길어졌다.
+[item50](https://jjingho.tistory.com/99)에서는 불변 날짜 범위 클래스를 만드는데 가변 Date 필드를 이용했다. 따라서 불변식을 지키기 위해 생성자와 접근자에 Date 객체를 방어적으로 복사하느라 코드가 상당히 길어졌다.
 
 ```java
 public final class Period {
