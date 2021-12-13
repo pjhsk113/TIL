@@ -208,8 +208,60 @@ public class Member {
 
 먼저, 컬럼 매핑에 사용되는 애너테이션은 다음과 같다.
 
-- @Column
-- @Temporal
-- @Enumerated
-- @Lob
-- @Transient
+- @Column - 컬럼 매핑
+- @Temporal - 날짜 타입 매핑
+- @Enumerated - enum 타입 매핑
+- @Lob - BLOB, CLOB 매핑
+- @Transient - 특정 필드를 컬러에 매핑하지 않음(매핑 무시)
+
+```java
+@Entity
+public class Member {
+    @Id
+    private Long id;
+
+    @Column(name = "name")
+    private String username;
+
+    private Integer age;
+
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
+
+    @Lob
+    private String description;
+}
+```
+
+### @Column의 속성
+
+@Column은 필드와 테이블 컬럼을 매핑할 때 사용한다.  \
+
+DDL이 붙은 속성들은 DDL을 자동 생성할 때만 사용되고 JPA 실행 로직에는 영향을 주지 않는다.
+@Column 애너테이션은 아래와 같은 속성들을 가지고 있다. 용된다.
+
+| 속성 | 기능 | 기본 값 |
+| --- | --- | --- |
+| name | 필드와 매핑할 컬럼 명 | 객체 필드의 이름 |
+| insertable | 등록 가능 여부 | true |
+| updatable | 변경 가능 여부 | true |
+| nullable(DDL) | null 허용 여부 |  |
+| unique(DDL) | @Table의 uniqueConstraints와 같지만 하나의 컬럼에 간단히 유니크 조건을 걸 때 사용한다. |  |
+| columnDefinition(DDL) | DB 컬럼 정보를 직접 줄수 있다. |  |
+| length(DDL) | 문자 길이 제약 조건 | 255 |
+| precision | BIgDecimal 혹은 BigInteger 처럼 큰 숫자나 정밀한 소수를 다루어야 할 때 사용한다. 
+소숫점을 포함한 전체 자릿수를 나타냄 | persision = 19 |
+| scale(DDL) | BIgDecimal 혹은 BigInteger 처럼 큰 숫자나 정밀한 소수를 다루어야 할 때 사용한다. 
+소수의 자릿수를 나타냄 | scale = 2 |
+
+### @Enumerated 속성
+
+@ㄷEnumerated 속성은 enum 타입을 매핑할 때 사용한다.
+
+절대 ORDINAL 타입을 사용하면 enum의 순서인 Integer 타입의 값이 들어가기 때문에 프로그램이 깨지기 쉽다.
