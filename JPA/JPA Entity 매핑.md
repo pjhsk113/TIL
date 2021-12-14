@@ -262,6 +262,44 @@ DDL이 붙은 속성들은 DDL을 자동 생성할 때만 사용되고 JPA 실�
 
 ### @Enumerated 속성
 
-@ㄷEnumerated 속성은 enum 타입을 매핑할 때 사용한다.
+@Enumerated는 enum 타입을 매핑할 때 사용한다.
 
-절대 ORDINAL 타입을 사용하면 enum의 순서인 Integer 타입의 값이 들어가기 때문에 프로그램이 깨지기 쉽다.
+| 속성 | 기능 | 기본 값 |
+| --- | --- | --- |
+| value | EnumType.ORDINAL - enum 순서를 데이터 베이스에 저장
+EnumType.STRING - enum 이름을 데이터 베이스에 저장 | EnumType.ORDINAL |
+
+@Enumerated를 사용한다면 `EnumType.STRING`을 사용하자. 
+이를 생략하면 기본값인 EnumType.ORDINAL으로 속성이 설정된다.
+
+ORDINAL은 Enum의 순서를 나타내는 Integer 값이 데이터베이스에 저장되기 때문에 깨지기 쉽다. 또한, 숫자로 저장되므로 어떤 값을 나타내는지 명확하지도 않다.
+
+### @Temporal 속성
+
+@Temporal은 날짜 타입을 매핑할 때 사용한다.
+
+| 속성 | 기능 | 기본 값 |
+| --- | --- | --- |
+| value | TemporalType.DATE: 날짜, 데이터베이스 date 타입과 매핑 (예: 2013–10–11)
+TemporalType.TIME: 시간, 데이터베이스 time 타입과 매핑 (예: 11:11:11)
+TemporalType.TIMESTAMP: 날짜와 시간, 데이터베이스 timestamp 타입과 매핑(예: 2013–10–11 11:11:11)
+ |  |
+
+### @Lob 속성
+
+@Lob은 BLOB, CLOB 타입을 매핑할 때 사용한다.
+
+지정할 수 있는 속성이 없으며, 필드 타입이 문자면 CLOB을 나머지는 BLOB을 매핑한다.
+
+- CLOB: String, char[], java.sql.CLOB
+- BLOB: byte[], javs.sql.BLOB
+
+### @Transient 속성
+
+필드 매핑을 하지 않을 때 명시하는 애너테이션이다. 
+주로 메모리상에 임시로 값을 보관하고 싶을 때 사용한다.
+
+```java
+@Transient
+private Integer something;
+```
