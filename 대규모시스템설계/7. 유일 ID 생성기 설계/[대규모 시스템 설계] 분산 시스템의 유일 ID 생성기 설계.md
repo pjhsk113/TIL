@@ -62,7 +62,7 @@ UUID 값은 충돌 가능성이 매우 낮기 때문에 서버간 조율 없이 
 
 티켓 서버의 핵심 아이디어는 auto_increment 기능을 갖춘 데이터베이스 서버를 중앙 집중형으로 하나만 사용하도록 하는 것이다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f2976c05-008f-48c1-851e-3100c3abb73e/Untitled.png)
+![Untitled](https://blog.kakaocdn.net/dn/yKrIZ/btrycPM8Aeu/BmQLkbKGORoHd6Thc3LJDK/img.png)
 
 장점
 
@@ -78,7 +78,7 @@ UUID 값은 충돌 가능성이 매우 낮기 때문에 서버간 조율 없이 
 트위터에서 사용하는 스노플레이크라고 부르는 독창적인 ID 생성 기법이다.
 생성해야하는 ID 구조를 여러 section으로 분할하고 각 section에는 각자의 쓰임새를 나타내는 정보를 담는다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/96a55ba1-a2cc-4caa-bd2c-f00abdc3c76d/Untitled.png)
+![Untitled](https://blog.kakaocdn.net/dn/bWM3yN/btryex5LT9W/KFfL4xYtnrWWdcpWKkZOA1/img.png)
 
 - `sign`
     - 1 bit 할당
