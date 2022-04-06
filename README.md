@@ -5,8 +5,6 @@
 
 ## Java
 
----
-
 - Java8
   - [함수형 인터페이스와 람다 표현식](https://github.com/pjhsk113/TIL/blob/main/Java8/%5BJava8%5D%201.%20%ED%95%A8%EC%88%98%ED%98%95%20%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EC%99%80%20%EB%9E%8C%EB%8B%A4%20%ED%91%9C%ED%98%84%EC%8B%9D%20.md)
   - [자바에서 제공하는 함수형 인터페이스](https://github.com/pjhsk113/TIL/blob/main/Java8/%5BJava8%5D%202.%20%EC%9E%90%EB%B0%94%EC%97%90%EC%84%9C%20%EC%A0%9C%EA%B3%B5%ED%95%98%EB%8A%94%20%ED%95%A8%EC%88%98%ED%98%95%20%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4.md)
@@ -17,8 +15,6 @@
 
 ## Spring
 
----
-
 - 추가 예정
 - JPA
   - [JPA 알아보기](https://github.com/pjhsk113/TIL/blob/main/JPA/JPA%20%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0.md)
@@ -27,12 +23,9 @@
 
 ## 네트워크
 
----
 - [웹과 네트워크의 기본](https://github.com/pjhsk113/TIL/blob/main/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC/%5B%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC%5D%20%EC%9B%B9%EA%B3%BC%20%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC%20%EA%B8%B0%EB%B3%B8.md)
 
 ## 도서
-
----
 
 - 이펙티브 자바
   - [객체 생성과 파괴](https://github.com/pjhsk113/TIL/tree/main/%EC%9D%B4%ED%8E%99%ED%8B%B0%EB%B8%8C%EC%9E%90%EB%B0%94/1.%20%EA%B0%9D%EC%B2%B4%20%EC%83%9D%EC%84%B1%EA%B3%BC%20%ED%8C%8C%EA%B4%B4)
@@ -56,12 +49,9 @@
   
 ## daily log
 
----
 - [2021](https://github.com/pjhsk113/TIL/tree/main/2021)
 - [2022](https://github.com/pjhsk113/TIL/tree/main/2022)
 
 ## 블로그 포스팅
-
----
 
 - 추가 예정
