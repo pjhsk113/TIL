@@ -44,13 +44,13 @@ public class TestRepository {
 
 Springboot 프로젝트를 생성하면  다음과 같은 클래스가 만들어진다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/011ed12e-551f-4ed7-b666-267401e60049/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/011ed12e-551f-4ed7-b666-267401e60049/Untitled.png)
+![](https://blog.kakaocdn.net/dn/pUFyg/btqD0hxDx5C/l4PctQtgrpFnHivMaluVFK/img.png)
 
 Bean 등록이 잘 이루어지는지 확인하기 위해 먼저 `@SpringBootApplication` 이라는 Annotation을 지워준다. (`@SpringBootApplication`이 어떤 역할을 하는지는 마지막에 설명)
 
 그리고 Bean 설정 파일인 xml을 만들어준다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e3afcc12-8f7b-4a49-adb6-c13e2c89ba69/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e3afcc12-8f7b-4a49-adb6-c13e2c89ba69/Untitled.png)
+![](https://blog.kakaocdn.net/dn/dhxCCk/btqD3IGT9cc/kEdlRM2VUtwMGGbJp7XdmK/img.png)
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -115,7 +115,7 @@ public class DemoApplication {
 
 등록된 bean들을 가져오고 testService의 testRepository가 null이 아닌지 체크를 해본다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bc339781-d146-479e-a45f-895ab1f18f98/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bc339781-d146-479e-a45f-895ab1f18f98/Untitled.png)
+![](https://blog.kakaocdn.net/dn/LCCAS/btqD0N4dimZ/jrUAslFPe0nKfpD9eTpBqK/img.png)
 
 실행 시켜보면 true가 출력이되고 testRepository가 null이 아니라는 것을 확인 할 수 있다.
 
@@ -146,11 +146,11 @@ Component라는 Annotation(`@Component`)을 이용해서 bean으로 등록할 �
 
 예를 들면,
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4634b05d-3350-4982-9468-c0dfbf3abc26/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4634b05d-3350-4982-9468-c0dfbf3abc26/Untitled.png)
+![](https://blog.kakaocdn.net/dn/cWKzAH/btqD2GpeErJ/f563jb457io3qSXNlFwE2k/img.png)
 
 `@Service`라는 Annotation은 `@Component`를 확장한 Annotation이다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7ecc8588-8ce2-47ff-af51-361de752787d/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7ecc8588-8ce2-47ff-af51-361de752787d/Untitled.png)
+![](https://blog.kakaocdn.net/dn/zLLOM/btqD2vuJfN8/WmYlNGKtYb2CoJvLhtess1/img.png)
 
 이처럼 Annotation을 명시하는 것 만으로 손쉽게 Bean을 등록할 수 있게되었다.
 
@@ -239,7 +239,7 @@ basePackageClasses는 Application 클래스가 위치한 곳을 명시하기 때
 
 처음에 `@SpringBootApplication` Annotation을 지운 이유이다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/04c1977a-7cee-45ec-a320-2a361bbb4c83/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/04c1977a-7cee-45ec-a320-2a361bbb4c83/Untitled.png)
+![](https://blog.kakaocdn.net/dn/ShNyQ/btqD0iciCbY/Jdx25hCj90bx44Sk1tfHDk/img.png)
 
 `@SpringBootApplication`은 기본적으로 **ComponentScan**과 **Configuration**을 가지고 있고,
 

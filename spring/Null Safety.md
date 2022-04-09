@@ -50,7 +50,7 @@ public class AppRunner implements ApplicationRunner {
 
 보통 잘못된 메서드명을 입력하면 아래 사진처럼 IDE에서 경고를 해준다.
 
-![ex) 메서드명에 오타가 난 경우](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fc752bc7-ace4-4b1c-9882-7196814c7b45/Untitled.png)
+![ex) 메서드명에 오타가 난 경우](https://blog.kakaocdn.net/dn/7Acuh/btqERQX5BqJ/mkgZuyCLeM8ZXEZMqHKick/img.png)
 
 ex) 메서드명에 오타가 난 경우
 
@@ -60,7 +60,7 @@ IDE의 경고 메시지의 도움을 받아 Null을 방지한다.
 
 아래의 사진처럼 @NonNull 애노테이션을 명시해서 Null값을 받지 않겠다고 선언해주었다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/eff936b3-6f70-4b96-ba75-d8b932faa034/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/eff936b3-6f70-4b96-ba75-d8b932faa034/Untitled.png)
+![](https://blog.kakaocdn.net/dn/osUY9/btqEQYP53qn/5oKMLL7OSC9rqZizGMcox0/img.png)
 
 의도대로라면 IDE의 경고 메시지를 통해 Null 방지를 위한 기능이 작동해야한다.
 
@@ -68,7 +68,7 @@ IDE의 경고 메시지의 도움을 받아 Null을 방지한다.
 
 Null 방지를 위한 기능이 작동하지 않는 것이다.
 
-![ex) 파라미터 값을 null로 보낸 경우](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6bcd66f3-970d-4877-972f-22d96517afa4/Untitled.png)
+![ex) 파라미터 값을 null로 보낸 경우](https://blog.kakaocdn.net/dn/bpQRwv/btqEPmkgI4L/vuoXybooT0JKTYKX7iaO9k/img.png)
 
 ex) 파라미터 값을 null로 보낸 경우
 
@@ -78,23 +78,23 @@ ex) 파라미터 값을 null로 보낸 경우
 
 2. Build, Execution, Deployment → Compiler → CONFIGURE ANNOTATIONS 선택
 
-   ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f83b9257-d3c1-49c6-af29-8041d7c1d1b9/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f83b9257-d3c1-49c6-af29-8041d7c1d1b9/Untitled.png)
+   ![](https://blog.kakaocdn.net/dn/FJy0a/btqEPmxOk6K/8fX72m8QOL9R5Bhpiojv3K/img.png)
 
 3. Springframework의 애노테이션을 추가해준다.
 
-   ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a12a7796-04f8-4e27-bdcd-da3d9b82c940/Untitled1.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a12a7796-04f8-4e27-bdcd-da3d9b82c940/Untitled1.png)
+   ![](https://blog.kakaocdn.net/dn/br3asV/btqEPvafrfT/fKuEyx3XhEikN2z6yGu5KK/img.png)
 
-   ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8163a135-1791-412b-a9a3-97c56c484341/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8163a135-1791-412b-a9a3-97c56c484341/Untitled.png)
+   ![](https://blog.kakaocdn.net/dn/F5OAo/btqEPuCn4TC/gsed2RntJ9Jkx2RWDUbSl0/img.png)
 
-   ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/11171a7d-c252-4923-adb6-5c41e04fed29/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/11171a7d-c252-4923-adb6-5c41e04fed29/Untitled.png)
+   ![](https://blog.kakaocdn.net/dn/d3hJFl/btqEPU1TrRs/F6KUAms1okFSNN6E33jppK/img.png)
 
-   ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/983cd4d2-98bb-49f6-aa63-c2a1691a06f0/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/983cd4d2-98bb-49f6-aa63-c2a1691a06f0/Untitled.png)
+   ![](https://blog.kakaocdn.net/dn/oATQl/btqERRvWcs2/0WdYq3bnB19JWeDUbV0KJK/img.png)
 
 
 다시 화면으로 돌아와 아까 작성했던 AppRunner를 살펴보면,
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a98397b2-91c9-458c-9dc5-c268f20e0fcb/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a98397b2-91c9-458c-9dc5-c268f20e0fcb/Untitled.png)
+![](https://blog.kakaocdn.net/dn/3OUug/btqEQYieLEU/gJ1OaCJxKojhduZhO8ihXK/img.png)
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ffe62834-bc51-433a-99b1-a35f784de07a/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ffe62834-bc51-433a-99b1-a35f784de07a/Untitled.png)
+![](https://blog.kakaocdn.net/dn/XYQGT/btqERsQFKnf/ZdDvAlAn6WWkTlPdl3vw6K/img.png)
 
 다음과 같이 Null 방지 에러메시지가 출력되는 것을 확인할 수 있다.

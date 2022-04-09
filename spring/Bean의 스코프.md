@@ -67,7 +67,7 @@ public class AppRunner implements ApplicationRunner {
 
 AppRunner를 통해 두개의 Bean을 주입받고 Proto와 Single의 proto를 호출해본다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/46554192-b6f2-4e63-a699-128b9ba4e1c6/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/46554192-b6f2-4e63-a699-128b9ba4e1c6/Untitled.png)
+![](https://blog.kakaocdn.net/dn/c0YsAi/btqEuYXdkkH/NOlwudvkd1ro1a9z97gqL1/img.png)
 
 결과를 보면 각 Proto가 같은 레퍼런스를 가지고있는 것을 확인할 수 있다.
 
@@ -110,7 +110,7 @@ public class AppRunner implements ApplicationRunner {
 }
 ```
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ce14aa21-28fb-4804-a18b-f9228df80102/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ce14aa21-28fb-4804-a18b-f9228df80102/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bzT3r3/btqEttqw0UF/pfkjkbnukjCHZeAd4wVIq0/img.png)
 
 프로토타입으로 스코프를 준 Proto라는 Bean은 매번 새로운 인스턴스를 생성한 것이 확인된다.
 
@@ -176,7 +176,7 @@ public class Single{
 
 CGLIB를 이용하여 프로토타입 Bean을 Class 기반의 Proxy 객체로 감싸서 Bean으로 사용할 수있다.
 
-![프토로타입을 감싼 Proxy Bean](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6e317465-07d5-4e90-bcfa-be2ef20a62ef/Untitled.png)
+![프토로타입을 감싼 Proxy Bean](https://blog.kakaocdn.net/dn/MPaEl/btqEvhaSX7h/CQp0IwkNwf4BU5sRKvhaK1/img.png)
 
 프토로타입을 감싼 Proxy Bean
 

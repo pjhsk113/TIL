@@ -39,15 +39,15 @@ Spring boot 프로젝트에서는 @SpringBootApplication에 이미 @Configuratio
 
 예를들면,
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/15f80bf0-11dd-4e9d-ae5e-398dc799b186/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/15f80bf0-11dd-4e9d-ae5e-398dc799b186/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bk517m/btqEbuQ5gTp/siwfXiHsfUd5Mt9d9nzNG1/img.png)
 
 이와 같은 패키지 구조일 때 DemoApplication이 속해있는 패키지는 컴포넌트 스캔이 적용되지만
 
 이 패키지 밖에있는 out의 MyTestService는 스캔이 되질 않는다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/09e0de31-8cd2-44ad-bc25-7e9eecbd17ac/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/09e0de31-8cd2-44ad-bc25-7e9eecbd17ac/Untitled.png)
+![](https://blog.kakaocdn.net/dn/dEMpm0/btqEcUVzZHU/YkQea17NT00U1Dqyhiug01/img.png)
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ea25666f-641e-45a5-a182-ae727e631859/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ea25666f-641e-45a5-a182-ae727e631859/Untitled.png)
+![](https://blog.kakaocdn.net/dn/b75XJ2/btqEbQM8jd2/YRiLvDkhPTOtu7HldmFicK/img.png)
 
 MyTestService에 @Service가 붙어있음에도 DemoApplication에서 MyTestService의 의존성 주입을 시도하면 bean을 찾을 수 없다는 에러가 발생한다.
 

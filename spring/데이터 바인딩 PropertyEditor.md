@@ -97,9 +97,9 @@ class EventControllerTest {
 }
 ```
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e3876424-891c-450d-88a6-bb5d5ac764ff/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e3876424-891c-450d-88a6-bb5d5ac764ff/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bITokc/btqEK8Y5IdO/2BcKE6Iiu3dn8AK77Og3vK/img.png)
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8d274cdd-bf86-457d-a83c-7f9ec38a703f/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8d274cdd-bf86-457d-a83c-7f9ec38a703f/Untitled.png)
+![](https://blog.kakaocdn.net/dn/cSq2hE/btqEK8Y5Inv/pFvbjbWKskYq3mzkKAPzj0/img.png)
 
 String을 Event 타입으로 변환할 수 없기 때문에 500 에러와 함께
 
@@ -165,7 +165,7 @@ public class EventController {
 
 우리는 Event 타입을 처리하는 기능이 필요하기 때문에 다음과 같이 WebDataBinder를 통해 Event 타입을 처리할 PropertyEditor(EventEditor)를 등록해준 후 다시 Test를 돌려보자.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d9d23806-aac7-48bc-8ecc-3eeaedac4736/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d9d23806-aac7-48bc-8ecc-3eeaedac4736/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bt1ilM/btqEIIVg7kI/L6rkJDBjZnkURJYpoQR1iK/img.png)
 
 테스트가 잘 통과 된것을 확인할 수 있다.
 

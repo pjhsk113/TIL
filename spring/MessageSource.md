@@ -17,7 +17,7 @@ ApplicationContext는 다양한 기능을 상속하고있는데, 그 중 Message
 
 스프링 부트에서는 별다른 설정 없이 messages로 시작하는 properties들을 MessageSource로 읽어알아서 Bundle로 인식한다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c066cffc-049e-4bfd-bfb4-077dd723da58/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c066cffc-049e-4bfd-bfb4-077dd723da58/Untitled.png)
+![](https://blog.kakaocdn.net/dn/b3FL5h/btqEChXCnYu/5DLTqlIO4ionHivUym0P2k/img.png)
 
 다음과 같이 resources 밑에 **message.properties**와 **message_ko_KR.properties**를 만들어준다.
 
@@ -56,7 +56,7 @@ public class AppRunner implements ApplicationRunner {
 
 MessageSource를 주입받아 getMessage를 이용해 콘솔에 메시지를 찍어보자.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d759f6c2-47ad-4b50-972e-973eb0544d78/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d759f6c2-47ad-4b50-972e-973eb0544d78/Untitled.png)
+![](https://blog.kakaocdn.net/dn/3tGdT/btqECu3uXB3/ToELxoB1DTa2vijTUauiOK/img.png)
 
 Locale에 따라 잘 찍힌다.
 
