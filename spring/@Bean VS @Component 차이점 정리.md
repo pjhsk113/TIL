@@ -18,7 +18,7 @@
 
 이해를 돕기위해 먼저 @Bean 애노테이션을 살펴보자.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/35b02c7e-48cf-47be-ae20-4d396e30eb04/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/35b02c7e-48cf-47be-ae20-4d396e30eb04/Untitled.png)
+![](https://blog.kakaocdn.net/dn/daSP5l/btqEnh3XBne/GgNS4WnvmQ8oGvCp9JBQ41/img.png)
 
 @Target이 METHOD로 지정되어있다.  이는 메소드 위에 선언되어야 한다는 의미이다.
 
@@ -34,7 +34,7 @@
 
 
 
-![@Bean 사용 예시](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2f65d350-01bb-45c6-a300-34ae2c12d9b9/Untitled.png)
+![@Bean 사용 예시](https://blog.kakaocdn.net/dn/dJ9xjc/btqEmw8vlL2/yLBXuAR3UpoocQcdf7FGnK/img.png)
 
 @Bean 사용 예시
 
@@ -46,7 +46,7 @@
 
 마찬가지로 @Component 애노테이션을 살펴보자.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9b853e21-1f58-44b9-a702-04e07b496f85/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9b853e21-1f58-44b9-a702-04e07b496f85/Untitled.png)
+![](https://blog.kakaocdn.net/dn/H0htN/btqEoBN680W/qdhIKEDm4KxSpz9TJp5GHK/img.png)
 
 @Target이 TYPE로 설정되어있다.
 
@@ -56,13 +56,13 @@
 
 @Component 애노테이션을 사용한다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6bf31c3e-3680-47d2-bb43-34a8ebc7f1b2/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6bf31c3e-3680-47d2-bb43-34a8ebc7f1b2/Untitled.png)
+![](https://blog.kakaocdn.net/dn/dXqavI/btqEm2lCsGn/fN2nE3jCn9IbSiyEwGgbt1/img.png)
 
 ---
 
 ElementType의 의미가 궁금하다면 ElementType을 살펴보면 된다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2e1738b5-dc6e-4b67-816a-c80487847588/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2e1738b5-dc6e-4b67-816a-c80487847588/Untitled.png)
+![](https://blog.kakaocdn.net/dn/03Eq1/btqEnhv4qZB/BllDSPmHXUau5SKDXveefk/img.png)
 
 열거형 타입(enum)의 ElementType을 보면 앞서 살펴봤던 METHOD뿐 아니라, TYPE의 의미를
 
