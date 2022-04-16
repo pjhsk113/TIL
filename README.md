@@ -5,13 +5,15 @@
 
 ## Java
 
-- Java8
+- Java
   - [함수형 인터페이스와 람다 표현식](https://github.com/pjhsk113/TIL/blob/main/Java8/%5BJava8%5D%201.%20%ED%95%A8%EC%88%98%ED%98%95%20%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EC%99%80%20%EB%9E%8C%EB%8B%A4%20%ED%91%9C%ED%98%84%EC%8B%9D%20.md)
   - [자바에서 제공하는 함수형 인터페이스](https://github.com/pjhsk113/TIL/blob/main/Java8/%5BJava8%5D%202.%20%EC%9E%90%EB%B0%94%EC%97%90%EC%84%9C%20%EC%A0%9C%EA%B3%B5%ED%95%98%EB%8A%94%20%ED%95%A8%EC%88%98%ED%98%95%20%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4.md)
   - [람다 표현식](https://github.com/pjhsk113/TIL/blob/main/Java8/%5BJava8%5D%203.%20%EB%9E%8C%EB%8B%A4%20%ED%91%9C%ED%98%84%EC%8B%9D.md)
   - [메서드 레퍼런스](https://github.com/pjhsk113/TIL/blob/main/Java8/%5BJava8%5D%204.%20%EB%A9%94%EC%84%9C%EB%93%9C%20%EB%A0%88%ED%8D%BC%EB%9F%B0%EC%8A%A4.md)
   - [인터페이스의 default 메서드와 static 메서드](https://github.com/pjhsk113/TIL/blob/main/Java8/%5BJava8%5D%205.%20%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EC%9D%98%20default%20%EB%A9%94%EC%84%9C%EB%93%9C%EC%99%80%20static%20%EB%A9%94%EC%84%9C%EB%93%9C.md)
   - [Stream API](https://github.com/pjhsk113/TIL/blob/main/Java8/%5BJava8%5D%206.%20Stream%20API.md)
+  - [Java Bean VS Spring Bean](https://github.com/pjhsk113/TIL/blob/main/Java/Java%20Bean%20VS%20Spring%20Bean.md)
+  - [추상 클래스와 인터페이스 적재적소에 사용하기](https://github.com/pjhsk113/TIL/blob/main/Java/%EC%B6%94%EC%83%81%20%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80%20%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%20%EC%A0%81%EC%9E%AC%EC%A0%81%EC%86%8C%EC%97%90%20%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0.md)
 
 ## Spring
 
@@ -57,6 +59,7 @@
   - [처리율 제한 장치 설계](https://github.com/pjhsk113/TIL/blob/main/%EB%8C%80%EA%B7%9C%EB%AA%A8%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%84%A4%EA%B3%84/4.%20%EC%B2%98%EB%A6%AC%EC%9C%A8%20%EC%A0%9C%ED%95%9C%20%EC%9E%A5%EC%B9%98%20%EC%84%A4%EA%B3%84/%5B%EB%8C%80%EA%B7%9C%EB%AA%A8%20%EC%8B%9C%EC%8A%A4%ED%85%9C%20%EC%84%A4%EA%B3%84%5D%20%EC%B2%98%EB%A6%AC%EC%9C%A8%20%EC%A0%9C%ED%95%9C%20%EC%9E%A5%EC%B9%98.md)
   - [안정 해시 설계](https://github.com/pjhsk113/TIL/blob/main/%EB%8C%80%EA%B7%9C%EB%AA%A8%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%84%A4%EA%B3%84/5.%20%EC%95%88%EC%A0%95%ED%95%B4%EC%8B%9C%EC%84%A4%EA%B3%84/%5B%EB%8C%80%EA%B7%9C%EB%AA%A8%20%EC%8B%9C%EC%8A%A4%ED%85%9C%20%EC%84%A4%EA%B3%84%5D%20%EC%95%88%EC%A0%95%ED%95%B4%EC%8B%9C.md)
   - [유일 ID 생성기 설계](https://github.com/pjhsk113/TIL/blob/main/%EB%8C%80%EA%B7%9C%EB%AA%A8%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%84%A4%EA%B3%84/7.%20%EC%9C%A0%EC%9D%BC%20ID%20%EC%83%9D%EC%84%B1%EA%B8%B0%20%EC%84%A4%EA%B3%84/%5B%EB%8C%80%EA%B7%9C%EB%AA%A8%20%EC%8B%9C%EC%8A%A4%ED%85%9C%20%EC%84%A4%EA%B3%84%5D%20%EB%B6%84%EC%82%B0%20%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%9D%98%20%EC%9C%A0%EC%9D%BC%20ID%20%EC%83%9D%EC%84%B1%EA%B8%B0%20%EC%84%A4%EA%B3%84.md)
+  - [알림 시스템 설계](https://github.com/pjhsk113/TIL/blob/main/%EB%8C%80%EA%B7%9C%EB%AA%A8%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%84%A4%EA%B3%84/10.%20%EC%95%8C%EB%A6%BC%20%EC%8B%9C%EC%8A%A4%ED%85%9C%20%EC%84%A4%EA%B3%84/%5B%EB%8C%80%EA%B7%9C%EB%AA%A8%20%EC%8B%9C%EC%8A%A4%ED%85%9C%20%EC%84%A4%EA%B3%84%5D%20%EC%95%8C%EB%A6%BC%20%EC%8B%9C%EC%8A%A4%ED%85%9C%20%EC%84%A4%EA%B3%84.md)
   
 ## daily log
 
