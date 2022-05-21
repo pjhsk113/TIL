@@ -4,7 +4,7 @@
 
 MySQL의 스토리지 엔진 중에서 유일하게 레코드 기반의 잠금을 제공하며, 높은 동시성 처리가 가능하고 안정적이며 성능이 뛰어난 스토리지 엔진이다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/542f4ab3-514e-4e55-ba8a-fd126a7f79ca/Untitled.png)
+![](https://blog.kakaocdn.net/dn/tPaaL/btrCJwuQ8hG/LNKmaji5lgkP7fPPk8DywK/img.png)
 
 ### 프라이머리 키에 의한 클러스터링
 
@@ -33,7 +33,7 @@ READ_UNCOMMITTED의 경우 InnoDB 버퍼 풀이나 데이터 파일로부터 데
 InnoDB 스토리지 엔진은 MVCC을 이용해 잠금을 걸지 않고 읽기 작업을 수행한다.
 **SERIALIZABLE이 아닌 다른 격리 수준에서는 다른 트랜잭션이 가지고 있는 잠금을 기다리지 않고 읽기 작업이 가능하다.**
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7f024f57-7a57-4e67-bee3-d1dcfffaf9c1/Untitled.png)
+![](https://blog.kakaocdn.net/dn/cUXnxN/btrCMaxn5lg/uxsEpVofkqe9CpCYNgSPb0/img.png)
 
 ### 자동 데드락 감지
 
@@ -93,7 +93,7 @@ InnoDB 스토리지 엔진은 버퍼 풀의 페이지 조각을 관리하기 위
 
 InnoDB 버퍼 풀은 데이터베이스 성능 향상을 위해 데이터 캐시 기능과 쓰기 버퍼링 기능을 지원하는데, 버퍼 풀의 메모리 공간을 늘리는 것은 데이터 캐시 기능만 향상시키는 것이다. 쓰기 버퍼링 기능까지 향상시키려면 리두 로그와의 관계를 먼저 이해해야 한다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b80ff33c-5b84-45a6-8154-ab3c59142272/Untitled.png)
+![](https://blog.kakaocdn.net/dn/KsufW/btrCImmhA09/WOtNQF8MXsP0dSbkPkVoLK/img.png)
 
 InnoDB 버퍼 풀과 리두 로그의 관계 설명의 흐름을 요약해보면 다음과 같다.
 
@@ -120,7 +120,7 @@ InnoDB 서버의 버퍼 풀은 쿼리 성능에 밀접한 관계가 있다. 버�
 
 DB 스토리지 엔진에서는 Double-Write 기법을 사용해 이러한 문제를 해결한다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/65331bfe-d416-4ea1-ace3-56b73c63866b/Untitled.png)
+![](https://blog.kakaocdn.net/dn/ExJ1h/btrCKiQshSv/We7pVXQKCP3ZKfqKGRzz2k/img.png)
 
 1. 실제 데이터 파일에 변경 내용을 기록하기 전에 더티 페이지를 묶어 시스템 테이블스페이스의 DoubleWrite 버퍼에 기록한다.
 2. InnoDB 스토리지 엔진은 각 더티 페이지를 파일의 적당한 위치에 랜덤 쓰기를 실행한다.

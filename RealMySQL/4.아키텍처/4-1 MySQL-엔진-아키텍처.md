@@ -4,7 +4,7 @@
 
 ## MySQL의 구조
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9fba66c6-5ab7-4a7a-a9d4-f8d2ddbfb2f5/Untitled.png)
+![](https://blog.kakaocdn.net/dn/ba6Jtb/btrCtvpA6Ac/GEmkstU3hKbnfXM8kjqyOk/img.png)
 
 ### MySQL 엔진
 
@@ -31,7 +31,7 @@ MySQL 엔진의 쿼리 실행기에서 스토리지 엔진에 쓰기 또는 읽�
 
 ## MySQL 스레딩 구조
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4155c68d-ea2f-4ce6-9363-ec12cb5c96e9/Untitled.png)
+![](https://blog.kakaocdn.net/dn/b78WFz/btrCumzIwon/dPBhyBQhl4z9wtWfkUAir1/img.png)
 
 MySQL 서버는 프로세스 기반이 아닌 스레드 기반으로 동작하며, 크게 포그라운드 스레드와 백그라운드 스레드로 구분할 수 있다.
 
@@ -51,7 +51,7 @@ InnoDB 스토리지 엔진의 백그라운드 스레드에서 가장 중요한 �
 
 ## 플러그인 스토리지 엔진 모델
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/84a02527-b1c4-47bf-b9b4-444d3c55e916/Untitled.png)
+![](https://blog.kakaocdn.net/dn/diRqgQ/btrCvYZfTTW/eVKBKbbVkFBY6VBOdGGPP0/img.png)
 
 MySQL의 독특한 구조 중 대표적인 것이 플러그인 모델이다.
 수많은 사용자의 요구 조건을 만족시키기 위해 기본적으로 제공되는 스토리지 엔진 외에 부가적인 기능을 더 제공하는 스토리지 엔진을 개발하여 플러그인 형태로 제공할 수 있다. 따라서 플러그인 형태로 빌드된 스토리지 엔진 라이브러리를 다운로드해서 끼워 넣기만 하면 손쉽게 부가적인 기능도 사용할 수 있게된다.
@@ -63,7 +63,7 @@ MySQL 서버에서는 스토리지 엔진뿐만 아니라 다양한 기능을 �
 
 쿼리 실행 관점에서 MySQL의 구조를 그림으로 표현하면 다음과 같다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/46a13876-2175-4d5f-994d-9eef1210a4a3/Untitled.png)
+![](https://blog.kakaocdn.net/dn/nTODJ/btrCvYERc2t/dPSxQfYzOSkhaCZh5p3sv0/img.png)
 
 ### 쿼리 파서
 
