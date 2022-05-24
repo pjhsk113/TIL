@@ -1,4 +1,4 @@
-# 4-2 InnoDB 스토리지 엔진 아키텍처
+# [Real MySQL] InnoDB 스토리지 엔진 아키텍처 1/2
 
 ## InnoDB 스토리지 엔진
 
