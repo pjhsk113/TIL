@@ -49,7 +49,7 @@ WHERE SUBSYSTEM='transaction' AND NAME='trx_rseg_history_len';
 
 하나의 언두 테이블스페이스는 1개 이상 128개 이하의 롤백 세그먼트를 가지며, 롤백 세그먼트는 1개 이상의 언두 슬롯을 가진다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/51290472-6202-4ff6-b4cf-9c6be2d27ad7/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bnFqMF/btrDpP0ZAB5/AkLn3Wno4LEHlk1WMT139k/img.png)
 
 하나의 트랜잭션이 필요로 하는 언두 슬롯의 개수는 DML의 특성에 따라 최대 4개까지 사용하게 된다. 우리는 다음과 같은 수식으로 최대 동시 처리 가능 트랜잭션 개수를 예측해 볼 수 있다.
 
@@ -62,7 +62,7 @@ WHERE SUBSYSTEM='transaction' AND NAME='trx_rseg_history_len';
 
 체인지 버퍼는 변경해야 할 인덱스 페이지를 디스크로부터 읽어와야하는 경우 자원 소모를 줄이기 위해 사용되는 임시 메모리 공간을 뜻한다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fd4fe6ee-7b57-4738-9b9d-097d169550b1/Untitled.png)
+![](https://blog.kakaocdn.net/dn/5M4Bb/btrDpP7IFPf/wHifXg1xpjvofIUSvKl2F0/img.png)
 
 레코드가 INSERT 혹은 UPDATE 될 때데이터 파일을 변경하는 작업뿐 아니라 **해당 테이블에 포함된 인덱스도 업데이트하는 작업이 필요**하다. 그런데 테이블에 인덱스가 많다면 이 작업은 디스크를 랜덤하게 읽는 작업이 필요하다. InnoDB는 변경해야할 인덱스 페이지가 버퍼 풀에 있으면 바로 업데이트를 수행하지만, 그렇지 않은 경우 디스크로부터 읽어와야하기 때문이다. 따라서 이러한 작업은 **상당히 많은 자원을 소모**하게 된다.
 
@@ -115,7 +115,7 @@ ALTER INSTANCE ENABLE INNODB REDO_LOG;
 
 B-Tree의 검색 시간을 줄이기 위해 도입된 기능으로, 자주 읽히는 데이터 페이지의 키 값을 이용해 해시 인덱스를 만들고 필요할 때마다 어댑티브 해시 인덱스를 검색해 레코드가 저장된 데이터 페이지를 즉시 찾아 갈 수 있게 해준다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e2a33bc5-b512-40c5-af4c-d47b101b6dce/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bOgVRn/btrDrPTI8NZ/5XbUzSNvPw6GnJjQY8p8tK/img.png)
 
 해시 인덱스는 **인덱스 키 값**과 해당 **인덱스의 키 값이 저장된 데이터 페이지 주소**의 쌍으로 관리된다. 이때 인덱스 키 값은 B-Tree 인덱스의 고유 ID와 B-Tree 인덱스의 실제 키 값의 조합으로 생성된다.
 
