@@ -123,8 +123,87 @@ InnoDB 스토리지 엔진은 잠금 정보가 상당히 작은 공간으로 관
 
 ### 레코드 락
 
-이름 그대로 레코드 자체만을 잠그는 락이라고 볼 수 있다. InnoDB 스토리지 엔진은 레코드 자체가 아니라 인덱스의 레코드를 잠그는 특징을 가지고 있다. 레코드 자체를 잠그느냐, 아니면 인덱스를 잠그느냐는 상당히 중요한 차이를 만들어 낸다. **예제 설명 필**
+- 레코드 자체만을 잠그는 락이라고 볼 수 있다.
+- InnoDB 스토리지 엔진은 레코드 자체가 아니라 인덱스의 레코드를 잠그는 특징을 가지고 있다.
+- 레코드 자체를 잠그느냐, 아니면 인덱스를 잠그느냐는 상당히 중요한 차이를 만들어 낸다. (인덱스와 잠금 참고)
 
 ### 갭 락
 
-갭 락은 레코드 자체가 아니라 레코드와 바로 인접한 레코드 사이의 간격만을 잠그는 것을 의미한다. 레코드와 레코드 사이의 간격에 새로운 레코드가 생성되는 것을 제어하는 역할을 한다.
+- 갭 락은 레코드 자체가 아니라 레코드와 바로 인접한 레코드 사이의 간격만을 잠그는 것을 의미한다.
+- 레코드와 레코드 사이의 간격에 새로운 레코드가 생성되는 것을 제어하는 역할을 한다.
+
+### 넥스트 키 락
+
+- 레코드 락과 갭 락을 합쳐놓은 형태의 잠금이다.
+- REAPEATABLE-READ 격리 수준을 사용해야 한다.
+- 바이너리 로그에 기록되는 쿼리가 레플리카 서버에서 실행될 때 소스 서버에서 만들어 낸 결과 와 동일한 결과를 만들어내도록 보장하는 것이 주목적이다.
+- 데드락이나 다른 트랜잭션을 기다리게 만드는 일이 자주 발생하므로 가능하면 바이너리 로그 포맷을 ROW 형태로 바꿔서 넥스트 키 락이나 갭 락을 줄이는 것이 좋다.
+
+### 자동 증가 락
+
+- AUTO_INCREMENT가 사용된 테이블에 동시에 여러 레코드가 insert되는 경우, 중복되지 않고 저장된 순서대로 증가하는 일련번호 값을 가지도록 해주는 테이블 수준의 잠금이다.
+- INSERT나 REPLACE 쿼리와 같이 새로운 레코드를 저장하는 쿼리에만 사용된다.
+- 자동 증가 락은 하나만 존재하기 때문에 동시에 INSERT가 일어나는 경우 하나의 쿼리는 해당 잠금을 기다려야 한다.
+- 자동 증가 락은 명시적으로 명시적으로 해제하거나 획득할 수 없다.
+
+## 인덱스와 잠금
+
+InnoDB의 잠금은 레코드를 잠그는 것이 아니라 인덱스를 잠그는 방식으로 처리된다. 즉, 변경할 레코드를 찾을 때 검색한 인덱스의 레코드를 모두 잠궈야 한다. 이와 같은 특징 때문에 MySQL에서는 인덱스 설계가 굉장히 중요하다.
+
+더 쉬운 이해를 위해 다음 예제를 살펴보자.
+
+```sql
+// 멤버로 담긴 ix_firstname이라는 인덱스가 준비돼 있다는 가정으로 진행
+
+> SELECT COUNT(*) FROM employees WHERE first_name='Georgi';
++-----------+
+|       256 |
++-----------+
+
+> SELECT COUNT(*) FROM employees WHERE first_name='Georgi' AND last_name='Klassen';
++-----------+
+|         1 |
++-----------+
+
+> UPDATE employees SET hire_date=NOW() WHERE first_name='Georgi' AND last_name='Klassen';
+```
+
+위의 쿼리를 실행하면 1개의 UPDATE 쿼리를 위해 몇 개의 레코드에 락을 걸어야 할까?
+first_name에는 인덱스가 존재하지만 last_name에는 인덱스가 없기 때문에 `first_name='Georgi'` 인 레코드 253건이 모두 잠긴다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8417b544-0084-4275-8a5c-0732e713cb7b/Untitled.png)
+
+만약 인덱스가 아예 존재하지 않는다면 풀 스캔이 일어나면서 1개의 UPDATE를 위해 모든 레코드가 잠기게 된다. MySQL의 InnoDB에서 인덱스 설계가 중요한 이유도 이 때문이다.
+
+## 레코드 수준의 잠금 확인 및 해제
+
+레코드 수준의 잠금은 테이블 수준 잠금보다 조금 더 복잡하고 문제의 원인을 발견하고 해결하기도 어렵다. MySQL 5.1부터는 레코드 잠금과 잠금 대기에 대한 조회가 가능해져 쿼리 하나로 잠금과 잠금 대기를 바로 확인할 수 있게 되었다.
+
+```sql
+// 명령이 실행된 상태의 프로세스 목록을 조회
+SHOW PROCESSLIST;
+
+// performance_schema의 data_locks 테이블과 data_lock_waits 테이블을 조인해 
+// 잠금 대기 순서 조회
+
+SELECT
+	r.trx_id waiting_trx_id,
+	r.trx_mysql_thread_id waiting_thread, 
+	r.trx_query waiting_query,
+	b.trx_id blocking_trx_id, 
+	b.trx_mysql_thread_id blocking_thread, 
+	b.trx_query blocking_query
+FROM performance_schema.data_lock_waits w 
+	INNER OOIN information_schema.innodb_trx b
+		ON b.trx_id = w.blocking_engine_transaction_id 
+	INNER JOIN information_schema.innodb_trx r
+		ON r.trx_id = w.requesting_engine_transaction_id;
+```
+
+만약 특정 스레드가 어떤 잠금을 가지고 있는지 더 상세히 확인하고 싶다면 performance_schema의 data_locks 테이블이 가진 컬럼을 모두 살펴보면 된다.
+
+```sql
+SELECT * FROM performance_schema.data_locks\G
+```
+
+만약 특정 스레드가 잠금을 가진 상탸에서 오랜 시간 멈춰있다면, 다음과 같이 특정 스레드를 강제 종료하여 잠금 경합을 끝낼 수 있다.
