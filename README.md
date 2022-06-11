@@ -163,6 +163,7 @@
   - [MySQL 엔진 아키텍처](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/4.%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/4-1%20MySQL-%EC%97%94%EC%A7%84-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.md)
   - [InnoDB 스토리지 엔진 아키텍처 1/2](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/4.%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/4-2%20InnoDB-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80-%EC%97%94%EC%A7%84-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.md)
   - [InnoDB 스토리지 엔진 아키텍처 2/2](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/4.%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%5BReal%20MySQL%5D%20InnoDB%20%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80%20%EC%97%94%EC%A7%84%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%202-2.md)
+  - [트랜잭션과 잠금](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/4.%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%5BReal%20MySQL%5D%20%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98%EA%B3%BC%20%EC%9E%A0%EA%B8%88.md)
 
 ## daily log
 
