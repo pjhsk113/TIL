@@ -207,3 +207,7 @@ SELECT * FROM performance_schema.data_locks\G
 ```
 
 만약 특정 스레드가 잠금을 가진 상탸에서 오랜 시간 멈춰있다면, 다음과 같이 특정 스레드를 강제 종료하여 잠금 경합을 끝낼 수 있다.
+```sql
+// KILL {특정 스레드 이름}
+KILL 17
+```
