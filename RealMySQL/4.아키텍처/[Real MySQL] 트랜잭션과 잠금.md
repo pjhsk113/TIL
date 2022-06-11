@@ -117,7 +117,7 @@ InnoDB 스토리지 엔진은 잠금 정보가 상당히 작은 공간으로 관
 
 다른 DBMS와 다르게 InnoDB 스토리지 엔진은 레코드와 레코드 사이의 간격을 잠그는 **갭(GAP) 락**이 존재한다.
 
-![점선은 실제 존재하지 않는 레코드를 나타낸다.](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b10f30b4-87af-4946-81ff-500d1d93a9fc/Untitled.png)
+![점선은 실제 존재하지 않는 레코드를 나타낸다.](https://blog.kakaocdn.net/dn/mfKpa/btrEu6A9Vqt/qbxWKLcHveojKww1d6Rkok/img.png)
 
 점선은 실제 존재하지 않는 레코드를 나타낸다.
 
@@ -171,7 +171,7 @@ InnoDB의 잠금은 레코드를 잠그는 것이 아니라 인덱스를 잠그�
 위의 쿼리를 실행하면 1개의 UPDATE 쿼리를 위해 몇 개의 레코드에 락을 걸어야 할까?
 first_name에는 인덱스가 존재하지만 last_name에는 인덱스가 없기 때문에 `first_name='Georgi'` 인 레코드 253건이 모두 잠긴다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8417b544-0084-4275-8a5c-0732e713cb7b/Untitled.png)
+![](https://blog.kakaocdn.net/dn/4BK7Z/btrExHfRuns/OI4GC5Cv3JtEBxweRjOma1/img.png)
 
 만약 인덱스가 아예 존재하지 않는다면 풀 스캔이 일어나면서 1개의 UPDATE를 위해 모든 레코드가 잠기게 된다. MySQL의 InnoDB에서 인덱스 설계가 중요한 이유도 이 때문이다.
 
