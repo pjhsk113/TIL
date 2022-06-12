@@ -56,3 +56,27 @@ REPEATABLE READ 격리 수준은 InnoDB에서 기본으로 사용되는 격리 �
 트랜잭션 내부에서 실행되는 SELECT와 외부에서 실행되는 SELECT의 차이가 없는 READ-COMMITTED 격리 수준과는 다르게 REPEATABLE-READ 격리 수준은 기본적으로 SELECT 쿼리 문장도 트랜잭션 범위 내에서만 작동한다.
 
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/58c09502-64c9-4e1c-a2ea-024d29c5e507/Untitled.png)
+
+위 예제를 살펴보면 사용자 A의 트랜잭션 번호는 12고, 사용자B의 트랜잭션 번호는 10이다. 이때 사용자 A가 레코드를 변경했더라도 사용자 B는 자신보다 작은 트랜잭션 번호(트랜잭션 10보다 낮은 트랜잭션)의 변경사항만 보게된다.
+
+### REPEATABLE-READ의 문제점
+
+REPEATABLE-READ 격리 수준에서도 PHANTOM READ라는 부정합 현상이 발생할 수 있다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c8d08d0e-c0d9-4685-966d-610a93ffce43/Untitled.png)
+
+REPEATABLE-READ 격리 수준에서 배웠던 것 처럼 사용자 B가 실행한 두 번의 SELECT 쿼리 결과는 똑같아야 한다. 하지만 사용자 B가 실행한 두 번의 SELECT .. FOR UPDATE 쿼리는 결과가 다르게 나온다.
+
+SELECT .. FOR UPDATE 쿼리의 경우 SELECT하는 레코드에 쓰기 잠금을 걸어야 하는데, 언두 레코드에는 잠금을 걸 수 없다. 따라서 언두 영역의 변경 전 데이터를 가져오는 것이 아니라 현재 레코드의 값을 가져오게 되는 현상이 발생하기 때문이다.
+
+이렇게 다른 트랜잭션에서 수행한 변경 작업에 의해 레코드가 보였다 안 보였다 하는 현상을 PHANTOM READ라고 부른다.
+
+InnoDB 스토리지 엔진에서는 SELECT ... FOR UPDATE나 SELECT ... FOR SHARE 등 잠금을 동반한 SELECT 쿼리에서 PHANTOM READ 현상이 발생할 수 있지만, 이는 예외적인 상항으로 볼 수 있다. **일반적인 상황이라면 InnoDB 스토리지 엔진의 REPEATABLE-READ 격리 수준에서는 갭 락과 넥스트 키 락 덕분에 PHANTOM READ가 발생하지 않는다.**
+
+## SERIALIZABLE 격리 수준
+
+SERIALIZABLE 격리 수준은 가장 단순하면서도 가장 엄격한 격리 수준인 만큼 동시 처리 성능이 다른 트랜잭션 격리 수준보다 떨어진다.
+
+읽기 작업에도 공유 잠금(읽기 잠금)을 획득해야만 하며, 동시에 다른 트랜잭션은 그 레코드를 변경할 수 없다. 즉, 한 트랜잭션에서 읽고 쓰는 레코드를 다른 트랜잭션에서 절대 접근할 수 없는 것이다.
+
+InnoDB에서는 REPEATABLE-READ 격리 수준에서도 PHANTOM READ가 발생하지 않으므로 굳이 SERIALIZABLE 격리 수준을 사용할 이유가 없다.
