@@ -15,7 +15,7 @@
 
 READ-UNCOMMITTED 격리 수준에서는 트랜잭션의 변경 내용이 Commit이나 Rollback 여부에 관계 없이 다른 트랜잭션에서 보인다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/07f4495c-6949-43e6-b845-29b409a2999c/Untitled.png)
+![](https://blog.kakaocdn.net/dn/SvntH/btrENuuUQBp/oKQhts7BvDKQ54GMouc961/img.png)
 
 사용자 A가 INSERT를 수행한 후 Commit 하지 않은 상태에서 사용자 B가 해당 컬럼을 조회하는 경우, 사용자 B는 정상적으로 해당 컬럼을 읽어 올 수 있다.
 
@@ -29,7 +29,7 @@ READ-UNCOMMITTED 격리 수준에서는 트랜잭션에서 처리 작업이 완�
 
 READ-COMMITTED 격리 수준은 오라클 DBMS에서 기본으로 사용하는 격리 수준이며, 온라인 서비스에서 가장 많이 선택되는 격리 수준이다. 어떤 트랜잭션에서 데이터를 변경했더라도 Commit이 완료된 데이터만 다른 트랜잭션에서 조회할 수 있으며 더티 리드같은 현상은 발생하지 않는다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/de4b706a-592d-45a8-adc3-9ab1f3b38ee1/Untitled.png)
+![](https://blog.kakaocdn.net/dn/Nt1XD/btrEOGVFjkU/Cf66A2lqbKJXiqocmtqYI0/img.png)
 
 READ-COMMITTED 격리 수준에서 부터 앞서 공부했던 언두 로그가 등장한다.
 데이터 변경 발생 시 언두 로그 영역에 이전 레코드 정보가 백업된다. 따라서 사용자 A가 데이터를 변경한 후 사용자 B가 해당 컬럼을 조회하면 언두 로그에 백업된 레코드를 조회하게 된다. 따라서 READ-COMMITTED 격리 수준에서는 어떤 트랜잭션에서 변경한 내용이 커밋되기 전까지는 다른 트랜잭션에서 그러한 변경 내역을 조회할 수 없다.
@@ -38,7 +38,7 @@ READ-COMMITTED 격리 수준에서 부터 앞서 공부했던 언두 로그가 �
 
 READ-COMMITTED 격리 수준에서도 NON-REPEATABLE READ라는 부정합의 문제가 존재한다. 레코드가 반복되어 읽어지는 상황에서 발생하는 데이터 부정합 문제이다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/db21b636-034b-42f3-897f-59b1911f9589/Untitled.png)
+![](https://blog.kakaocdn.net/dn/cuzCuQ/btrELUunPyR/DaoXlNRyRu0owx0exjPCpk/img.png)
 
 **사용자 B가 처음 트랜잭션을 시작하고 특정 조건으로 데이터를 조회했을 때 결과가 없없다**. 하지만 사용자 A가 트랜잭션 중간에 조건에 부합하도록 해당 레코드를 업데이트하고 Commit을 한 후, **사용자 B가 같은 조건으로 레코드를 다시 검색하면 일치하는 결과가 검색된다**.
 
@@ -55,7 +55,7 @@ REPEATABLE READ 격리 수준은 InnoDB에서 기본으로 사용되는 격리 �
 
 트랜잭션 내부에서 실행되는 SELECT와 외부에서 실행되는 SELECT의 차이가 없는 READ-COMMITTED 격리 수준과는 다르게 REPEATABLE-READ 격리 수준은 기본적으로 SELECT 쿼리 문장도 트랜잭션 범위 내에서만 작동한다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/58c09502-64c9-4e1c-a2ea-024d29c5e507/Untitled.png)
+![](https://blog.kakaocdn.net/dn/dscaOz/btrENgjnHO1/qQ8TNIhs8Y6yOsaxYFHEak/img.png)
 
 위 예제를 살펴보면 사용자 A의 트랜잭션 번호는 12고, 사용자B의 트랜잭션 번호는 10이다. 이때 사용자 A가 레코드를 변경했더라도 사용자 B는 자신보다 작은 트랜잭션 번호(트랜잭션 10보다 낮은 트랜잭션)의 변경사항만 보게된다.
 
@@ -63,7 +63,7 @@ REPEATABLE READ 격리 수준은 InnoDB에서 기본으로 사용되는 격리 �
 
 REPEATABLE-READ 격리 수준에서도 PHANTOM READ라는 부정합 현상이 발생할 수 있다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c8d08d0e-c0d9-4685-966d-610a93ffce43/Untitled.png)
+![](https://blog.kakaocdn.net/dn/oYX60/btrEPcz1QwO/6Kx6TTDvabL9qhsaENpsC0/img.png)
 
 REPEATABLE-READ 격리 수준에서 배웠던 것 처럼 사용자 B가 실행한 두 번의 SELECT 쿼리 결과는 똑같아야 한다. 하지만 사용자 B가 실행한 두 번의 SELECT .. FOR UPDATE 쿼리는 결과가 다르게 나온다.
 
