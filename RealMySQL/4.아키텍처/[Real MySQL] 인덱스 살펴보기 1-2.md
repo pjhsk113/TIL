@@ -113,3 +113,74 @@ InnoDB 스토리지 엔진에서는 인덱스 역순 스캔이 인덱스 정순 
 2. 페이지 내에 인덱스 레코드가 단방향으로만 연결된 구조
 
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9c04e528-986f-418a-8e0c-c5337dc6ae92/Untitled.png)
+
+InnoDB 스토리지 엔진에서 정순 스캔과 역순 스캔은 페이지 간의 양방향 연결 고리를 통해 전진하느냐 후진하느냐의 차이만 있지만 위와 같은 이유로 인해 인덱스 정순 스캔이 더 빠른 성능을 가지게 된다.
+
+## B-Tree 인덱스의 가용성과 효율성
+
+우리는 어떤 조건에서 인덱스를 사용할 수 있고 어떨 때 사용할수 없는지 식별할 수 있어야 한다. 그래야만 쿼리를 최적화하거나, 쿼리에 맞게 인덱스를 최적으로 생성할 수 있기 때문이다.
+
+### 비교 조건의 종류와 효율성
+
+다음 예제로 비교 조건에 따라 인덱스의 효율이 어떻게 달라지는지 살펴보자.
+
+```sql
+SELECT * FROM dept_emp
+WHERE dept_no= 'd002' AND emp_no >= 10114 ;
+```
+
+- 케이스 A : INDEX(dept_no, emp_no)
+- 케이스 B : INDEX(emp_no, dept_no)
+
+케이스 A인 경우, 먼저 dept_no가 ‘d002’이고 emp_no가 10114보다 큰 레코드를 찾는다. 이후에는 dept_no가 ‘d002’가 아닐 때까지 인덱스를 쭉 읽기만 하면된다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6128fad8-07b6-4557-9353-0527acfa9eb7/Untitled.png)
+
+비교 작업을 꼭 필요한 부분에만 수행한 것으로 상당히 효율적인 인덱스라고 볼 수 있다.
+
+반면에 케이스 B의 경우, emp_no가 10114 보다 큰 레코드이고 dept_no가 ‘d002’인 레코드를 찾는다. 이후 찾은 모든 레코드에 dept_no가 ‘d002’인지 비교하는 작업을 수행한다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2a80abe0-0c64-4a5e-be44-50d23ae53f37/Untitled.png)
+
+케이스 B는 케이스 A에 비해 많은 비교 작업을 수행해야한다. 왜 이런 현상이 발생할까?
+그 이유는 다중 컬럼 인덱스에서는 2번째 컬럼이 1번째 컬럼에 의존해 다시 정렬되기 때문이다. 즉, 케이스 A는 2번째 컬럼인 emp_no가 비교 작업의 범위를 줄이는데(작업 범위 결정 조건) 도움을 주지만 케이스 B는 범위를 좁히지 못하고 단순히 비교 용도(필터링 조건)로만 사용되기 때문이다.
+
+이처럼 **작업 범위를 결정하는 조건**은 많으면 많을수록 쿼리의 처리 성능을 높여준다. 하지만 **필터링 조건은** 많다고 해서 성능을 높이지 못하고 오히려 느리게 만들 때가 있으니 주의하자.
+
+### 인덱스의 가용성
+
+B-Tree 인덱스의 특징은 왼쪽 값에 의존해 오른쪽 값이 정렬돼 있다는 것이다. 이 말은 값의 왼쪽 부분이 없으면 인덱스 레인지 스캔 검색이 불가능하다는 것을 나타낸다.
+
+```sql
+SELECT * FROM employees WHERE first_name LIKE '%mer1';
+```
+
+위 쿼리는 인덱스 레인지 스캔을 사용할 수 없다. 그 이유는 first_name 컬럼에 저장된 값의 왼쪽부터 비교해가며 일치하는 레코드를 찾아야 하는데, 조건 값의 왼쪽 부분(’%mer1’)이 정해져 있지 않기 때문이다.
+
+또 다른 예로 인덱스가 (dep_no, emp_no)로 생성되어 있다면 아래의 쿼리는 인덱스를 효율적으로 사용하지 못한다.
+
+```sql
+SELECT * FROM dept_emp WHERE emp_no>=10144;
+```
+
+다중 컬럼 인덱스로 생성되어진 인덱스이므로 dept_no를 먼저 정렬한 후, 다시 emp_no 컬럼값으로 정렬돼 있기 때문이다. 이렇듯 B-Tree의 특성상 인덱스를 효율적으로 사용할 수 없는 조건들이 존재한다. 그 조건들은 다음과 같다.
+
+- NOT-EQUAL로 비교된 경우 (NOT IN, NOT BETWEEN, IS NOT NULL)
+    - WHERE column <> 'N'
+    - WHERE column NOT IN (10,11,12)
+    - WHERE column IS NOT NULL
+
+- LIKE %xxx 형태 문자열 패턴 비교인 경우
+    - WHERE column LIKE '%test‘
+    - WHERE column LIKE '%test%‘
+    - WHERE column LIKE '_test‘
+
+- 스토어드 함수나 다른 연산자로 인덱스 컬럼이 변형된 후 비교된 경우
+    - WHERE SUBSTRING(column,1, 1) = 'X'
+    - WHERE DAYOFMONTH(column) = 1
+
+- 인덱스 컬럼의 타입을 변환해야 비교가 가능한 경우
+    - WHERE char_column = 10  → char를 int와 비교
+
+- 문자열 데이터 타입의 콜레이션이 다른 경우
+    - WHERE utf8_bin_char_column = euckr_bin_char_column
