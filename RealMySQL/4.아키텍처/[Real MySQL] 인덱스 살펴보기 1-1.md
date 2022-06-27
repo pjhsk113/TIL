@@ -47,7 +47,7 @@ B-Tree 인덱스는 **Balanced-Tree를 의미한다. Binary가 아닌 것에 주
 
 ### 구조 및 특성
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fa70be2a-fc54-4810-a612-8cb4f9a12c79/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bQ9d2O/btrFAaB3HzH/VhTVsPY6D2bItJ7NAdUw8K/img.png)
 
 B-Tree는 트리 구조의 **최상위에 하나의 루트 노드**가 존재하고 그 **하위에 자식 노드**가 붙어있는 구조를 가지고 있다. **가장 하위의 노드를 “리프 노드(Leaf node)”**라 하고, 루트 노드도 리프 노드도 아닌 **중간의 노드를 “브랜치 노드”**라고 한다.
 
@@ -60,7 +60,7 @@ InnoDB 스토리지 엔진을 사용하는 테이블에서는 프라이머리 �
 
 따라서 InnoDB 테이블에서 인덱스를 통해 레코드를 읽을 때는 데이터 파일을 바로 찾아가지 못하고 다음과 같은 과정을 거친다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0f63553b-d276-4666-aa79-2f227dd1921f/Untitled.png)
+![](https://blog.kakaocdn.net/dn/b6ObQk/btrFBhOodfp/s0XXmPkgIG8XA9vtT3igK1/img.png)
 
 인덱스에 저장돼 있는 프라이머리 키 값을 이용해 프라이머리 키 인덱스를 한번 더 검색한 후, 프라이머리 키 인덱스의 리프 페이지에 저장돼 있는 레코드를 읽는다. 즉, 모든 세컨더리 인덱스 검색에서 프라이머리 키를 저장하고 있는 B-Tree를 한번 더 검색해야만 데이터 레코드를 읽을 수 있다.
 
@@ -117,7 +117,7 @@ B-Tree 인덱스는 인덱스를 구성하는 컬럼의 크기와 레코드 건�
 
 인덱스는 다음과 같이 페이지 단위로 관리된다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/04b7ec63-48e1-45b3-a4da-6800dc22dfc7/Untitled.png)
+![](https://blog.kakaocdn.net/dn/chwLjk/btrFzTtM9h8/ZDn0IK2O5EQaMfQDKXSGeK/img.png)
 
 따라서 인덱스의 페이지 크기와 키 값의 크기에 따라 B-Tree가 자식 노드를 몇 개까지 가질 수 있는지 결정된다.
 
