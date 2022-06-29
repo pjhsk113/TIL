@@ -18,13 +18,13 @@ SELECT * FROM employees WHERE first.name BETWEEN 'Ebbe' AND 'Gad';
 
 위 쿼리가 실행되면 아래 그림과 같이 루트 노드에서부터 브랜치 노드를 거쳐 최종적으로 리프 노드까지 찾아 들어가 필요한 레코드의 시작점을 찾는다. (두꺼운 화살표는 실제 스캔하는 범위)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/240b5797-9d6e-410f-af6c-3f317ad7ae10/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bp7EAi/btrFWxLDCnu/7imDUfCY73wnqQRXCa8fak/img.png)
 
 시작 지점을 찾으면 그때부터는 리프 노드의 레코드만 차례대로 쭉 읽으면 된다. 만약 리프 노드의 끝까지 읽으면 리프 노드 간 링크를 이용해 다음 리프 노드를 찾아 다시 스캔을 시작한다.
 
 위 그림은 실제 인덱스만 읽는 경우를 나타낸다. 하지만 B-Tree 인덱스의 리프 노드를 스캔하면서 실제 데이터 파일의 레코드를 읽어와야 하는 경우도 많은데, 이 과정을 더 자세히 나타내면 다음과 같다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/36cb78d6-93c0-490c-ab44-58f438f7c082/Untitled.png)
+![](https://blog.kakaocdn.net/dn/cAsR53/btrFZ0lhKvm/gYGov3jMYl4Awzut09aOo0/img.png)
 
 인덱스는 정렬되어있기 때문에 인덱스의 컬럼의 정순 또는 역순으로 레코드를 가져온다. 또한, 리프 노드에서 검색 조건에 일치하는 건들은 데이터 파일에서 레코드를 읽어오는데 이때 **한 건당 랜덤 I/O**가 발생한다.
 
@@ -46,7 +46,7 @@ SELECT * FROM employees WHERE B = 'b' AND C = 'c';
 
 인덱스 풀 스캔의 처리 방식을 그림으로 살펴보면 다음과 같다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b88000b7-1d08-41e3-a16a-ab7632e79c77/Untitled.png)
+![](https://blog.kakaocdn.net/dn/b5tRF7/btrFZ1xIbv6/OR9hXgfxXFKE85mBGZxFUk/img.png)
 
 1. 인덱스 리프 노드의 제일 앞 또는 제일 뒤로 이동한다.
 2. 해당 위치에서 리프 노드를 연결하는 링크드 리스트를 따라 처음부터 끝까지 스캔한다.
@@ -84,7 +84,7 @@ GROUP BY의 인덱스 처리에만 사용할 수 있었던 루스 인덱스 스�
 
 두 개 이상의 컬럼으로 구성된 인덱스를 다중 컬럼 인덱스라고 하며, 그 구조는 다음과 같다.
 
-![루트 노드는 생략](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/13162549-66de-43a5-815a-e5b312bac26c/Untitled.png)
+![루트 노드는 생략](https://blog.kakaocdn.net/dn/yS1lO/btrFY7eoh5o/hemNSjJaklj0yQjoZ3n4qK/img.png)
 
 루트 노드는 생략
 
@@ -101,9 +101,7 @@ MySQL 옵티마이저는 인덱스의 스캔 방향을 전환해서 사용하도
 
 인덱스는 항상 정렬되어있으므로 최솟값부터 스캔을 시작하면 오름차순으로, 최댓값부터 읽으면 내림차순으로 값을 가져올 수 있기 때문이다. 따라서 ORDER BY 처리나 MIN() 또는 MAX() 함수 등의 최적화가 필요한 경우 인덱스를 읽는 순서만 변경해서 인덱스 생성시 지정한 정렬 규칙에 대한 문제점을 해결할 수 있다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/341408b6-806d-4caa-93f7-c384faa42480/Untitled.png)
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4ae33289-fe5b-46b9-ab3d-692afa38fa9a/Untitled.png)
+![](https://blog.kakaocdn.net/dn/c3xIjb/btrFZZGIg1X/8B1f0lvRgMtu6GEHTybv41/img.png)
 
 ### 내림차순 인덱스
 
@@ -112,7 +110,7 @@ InnoDB 스토리지 엔진에서는 인덱스 역순 스캔이 인덱스 정순 
 1. 페이지 잠금이 인덱스 정순 스캔에 적합한 구조
 2. 페이지 내에 인덱스 레코드가 단방향으로만 연결된 구조
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9c04e528-986f-418a-8e0c-c5337dc6ae92/Untitled.png)
+![](https://blog.kakaocdn.net/dn/dmQ7X4/btrF00kOOVG/kT1so8PYAIfr0VXl4zX7P1/img.png)
 
 InnoDB 스토리지 엔진에서 정순 스캔과 역순 스캔은 페이지 간의 양방향 연결 고리를 통해 전진하느냐 후진하느냐의 차이만 있지만 위와 같은 이유로 인해 인덱스 정순 스캔이 더 빠른 성능을 가지게 된다.
 
@@ -134,13 +132,13 @@ WHERE dept_no= 'd002' AND emp_no >= 10114 ;
 
 케이스 A인 경우, 먼저 dept_no가 ‘d002’이고 emp_no가 10114보다 큰 레코드를 찾는다. 이후에는 dept_no가 ‘d002’가 아닐 때까지 인덱스를 쭉 읽기만 하면된다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6128fad8-07b6-4557-9353-0527acfa9eb7/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bWXkGD/btrFYv0Sj89/5ZJanY6TWidaOkSE9ezWx1/img.png)
 
 비교 작업을 꼭 필요한 부분에만 수행한 것으로 상당히 효율적인 인덱스라고 볼 수 있다.
 
 반면에 케이스 B의 경우, emp_no가 10114 보다 큰 레코드이고 dept_no가 ‘d002’인 레코드를 찾는다. 이후 찾은 모든 레코드에 dept_no가 ‘d002’인지 비교하는 작업을 수행한다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2a80abe0-0c64-4a5e-be44-50d23ae53f37/Untitled.png)
+![](https://blog.kakaocdn.net/dn/ohGSq/btrFYwS060e/FxBM4kKp5vyCTmFDVoD1Yk/img.png)
 
 케이스 B는 케이스 A에 비해 많은 비교 작업을 수행해야한다. 왜 이런 현상이 발생할까?
 그 이유는 다중 컬럼 인덱스에서는 2번째 컬럼이 1번째 컬럼에 의존해 다시 정렬되기 때문이다. 즉, 케이스 A는 2번째 컬럼인 emp_no가 비교 작업의 범위를 줄이는데(작업 범위 결정 조건) 도움을 주지만 케이스 B는 범위를 좁히지 못하고 단순히 비교 용도(필터링 조건)로만 사용되기 때문이다.
