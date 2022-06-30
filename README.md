@@ -165,6 +165,9 @@
   - [InnoDB 스토리지 엔진 아키텍처 2/2](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/4.%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%5BReal%20MySQL%5D%20InnoDB%20%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80%20%EC%97%94%EC%A7%84%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%202-2.md)
   - [트랜잭션과 잠금](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/4.%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%5BReal%20MySQL%5D%20%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98%EA%B3%BC%20%EC%9E%A0%EA%B8%88.md)
   - [MySQL의 격리 수준](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/4.%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%5BReal%20MySQL%5D%20MySQL%EC%9D%98%20%EA%B2%A9%EB%A6%AC%20%EC%88%98%EC%A4%80.md)
+  - [인덱스 살펴보기 1/2](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/4.%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%5BReal%20MySQL%5D%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0%201-1.md)
+  - [인덱스 살펴보기 2/2](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/4.%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%5BReal%20MySQL%5D%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0%201-2.md)
+  - [R-Tree와 전문 검색 인덱스](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/4.%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%5BReal%20MySQL%5D%20R-Tree%EC%99%80%20%EC%A0%84%EB%AC%B8%20%EA%B2%80%EC%83%89%20%EC%9D%B8%EB%8D%B1%EC%8A%A4.md)
 
 ## daily log
 
