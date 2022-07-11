@@ -168,6 +168,7 @@
   - [인덱스 살펴보기 1/2](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/4.%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%5BReal%20MySQL%5D%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0%201-1.md)
   - [인덱스 살펴보기 2/2](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/4.%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%5BReal%20MySQL%5D%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0%201-2.md)
   - [R-Tree와 전문 검색 인덱스](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/4.%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%5BReal%20MySQL%5D%20R-Tree%EC%99%80%20%EC%A0%84%EB%AC%B8%20%EA%B2%80%EC%83%89%20%EC%9D%B8%EB%8D%B1%EC%8A%A4.md)
+  - [그 외의 다양한 인덱스](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/4.%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%5BReal%20MySQL%5D%20%EA%B7%B8%20%EC%99%B8%EC%97%90%20%EB%8B%A4%EC%96%91%ED%95%9C%20%EC%9D%B8%EB%8D%B1%EC%8A%A4.md)
 
 ## daily log
 
