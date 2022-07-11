@@ -46,7 +46,7 @@ SELECT * FROM user WHERE 360 MEMBER OF(credit.info->'$.credit_scores');
 
 **클러스터링 인덱스는 알고리즘이라기 보다 테이블 레코드 저장 방식으로 볼 수 있다. 그래서 클러스터링 인덱스와 클러스터링 테이블은 동의어로 사용되기도 한다.**
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b50e96d8-893d-4681-8ddb-74c6e3f8f3b3/Untitled.png)
+![](https://blog.kakaocdn.net/dn/0Kzib/btrGTxaR55I/qcYdVNstrBrSAkzIXNL9p0/img.png)
 
 클러스터링 인덱스(테이블)의 구조
 
