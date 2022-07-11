@@ -14,21 +14,21 @@ MySQL의 공간 확장에는 크게 **세 가지 기능이 포함**돼 있다.
 
 MySQL은 공간 정보의 저장 및 검색을 위해 **POINT, LINE, POLYGON, GEOMETRY라는 여러 가지 기하학적 도형 정보를 관리할 수 있는 데이터 타입을 제공한다**.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/29e82b60-25cc-42c5-bc22-ed11bafdeb3e/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bxf18t/btrGf1ymxcJ/ZJBGGlPqcuelEgM0hTiu71/img.png)
 
 GEOMETRY 타입은 나머지 3개 타입의 슈퍼 타입으로, Java의 Object처럼 나머지 모든 객체를 저장할 수 있다. 그리고 R-Tree 알고리즘을 이해하기 위해서 데이터 타입만큼 중요한 개념이 있는데, 바로 **MBR이라는 개념이다.**
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6d2c8b2f-b92b-4d21-b545-1a6c5059c8cb/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bw2aRb/btrGfxEmB0h/3kbhgi5oUS4kV4xPrq5W3K/img.png)
 
 MBR(Minimum Bounding Rectangle)은 도형을 감싸는 최소 크기의 사각형을 의미한다. 이러한 MBR들의 포함 관계를 B-Tree 형태로 구현한 인덱스가 R-Tree 인덱스다.
 
 이러한 도형이 저장됐을 때 만들어지는 인덱스 구조를 이해하려면 MBR이 어떻게 되는지 알아야 한다. 예를 들어, 다음과 같은 공간 데이터가 존재한다고 해보자.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f22d9449-ced9-4c00-9d79-da10fa8a7c3a/Untitled.png)
+![](https://blog.kakaocdn.net/dn/NOc7J/btrGhwYnVVJ/QdYHras38iHfyAeb3kxed0/img.png)
 
 이제 해당 공간 데이터들을 효과적으로 검색하기 위해 인덱스를 만들어야할 차례다. 이때 사용되는게 MBR이라는 개념이다. 공간 데이터를 MBR로 그룹화한 모습을 나타내는 그림을 통해 더 자세히 알아보자.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fef23d46-7357-44e4-9c81-91654cc24dfd/Untitled.png)
+![](https://blog.kakaocdn.net/dn/cOwB4s/btrGhVp5gub/SXs7AEqE0gFRRKOvrJTNq1/img.png)
 
 - 최상위 레벨: R1 ~ R2
 - 차상위 레벨: R3 ~ R6
@@ -38,7 +38,7 @@ MBR(Minimum Bounding Rectangle)은 도형을 감싸는 최소 크기의 사각�
 
 이렇듯 공간을 MBR 그룹으로 나눔으로써 해당 공간 데이터를 찾아 들어갈 수 있는 인덱스의 형태가 만들어진다. 최상위 MBR은 루트 노드에 저장되는 정보이며, 차상위 그룹 MBR은 브랜치 노드가 된다. 마지막으로 각 도형의 객체는 리프 노드에 저장되므로 R-Tree 인덱스의 내부를 표현할 수 있게 된다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6fd02337-0087-427a-8483-897b32b9002e/Untitled.png)
+![](https://blog.kakaocdn.net/dn/dXX01f/btrGfVELomS/1SAtimlfRGlztKMZgjzkaK/img.png)
 
 ### R-Tree 인덱스의 용도
 
@@ -46,7 +46,7 @@ R-Tree 인덱스는 좌표 시스템에 기반을 둔 정보에 대해 모두 �
 
 앞서 살펴봤듯, R-Tree는 MBR의 포함 관계를 이용해 만들어진 인덱스다. 그렇기 때문에 **ST_Contains() 또는 ST_Within() 등과 같은 포함 관계를 비교하는 함수로 검색을 수행하는 경우에만** 인덱스를 사용할 수 있다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e0f2762c-a1d9-4910-b9c0-adb28027896c/Untitled.png)
+![](https://blog.kakaocdn.net/dn/SqJwg/btrGfVSefAm/iqPbg6QqLtJDLtLYKlcTHK/img.png)
 
 특정 지점을 기준으로 위치를 검색할 때 포함 관계 비교 함수를 통해 검색할 수 있다.
 
@@ -100,7 +100,7 @@ n-gram 알고리즘은 본문을 n개씩 잘라서 인덱싱하는 방법이다.
 To be or not to be. That is the question
 ```
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f9798987-362d-4de6-a946-d52babfcbb96/Untitled.png)
+![](https://blog.kakaocdn.net/dn/QugPu/btrGfO0k9o6/7WiEaW79LKQSYdYMr60nB0/img.png)
 
 MySQL 서버는 이렇게 생성된 토큰에 대해 불용어를 걸러내는 작업을 수행한다. 그리고 구분된 토큰들을 B-Tree 인덱스에 저장한다.
 
