@@ -1,5 +1,3 @@
-# [Real MySQL 8.0] 옵티마이저
-
 요청된 쿼리는 같은 결과를 반환하지만, 내부적으로 그 결과를 어떻게 만들어낼 것인지에 대한 방법은 매우 다양하다. 따라서 어떤 방법이 최적이고 최소의 비용이 소모되는지 결정해야 한다.
 
 MySQL에서는 테이블의 데이터가 어떤 분포로 저장돼 있는지 통계 정보를 참조해 최적의 **실행 계획**을 수립한다. 대부분의 DBMS에서도 옵티마이저가 이러한 기능을 담당하고 있다.
@@ -140,3 +138,60 @@ MySQL 서버가 인덱스를 이용하지 않고 별도의 정렬 처리를 수�
 - 조인이 끝나고 일치하는 레코드를 모두 가져온 후 정렬을 수행
 
 당연하지만 드라이빙 테이블만 정렬한 다음 조인을 수행하는게 가장 효율적이다.
+
+1. **인덱스를 이용한 정렬**
+
+- 반드시 ORDER BY에 명시된 컬럼이 제일 먼저 읽는 테이블(조인의 경우 드라이빙 테이블)에 속해야 한다.
+- ORDER BY의 순서대로 생성된 인덱스가 있어야 한다.
+- WHERE절에 첫 번째로 읽는 테이블의 컬럼에 대한 조건이 있다면 ORDER BY와 같은 인덱스를 사용할 수 있어야 한다.
+- 해시 인덱스나 전문 검색 인덱스, R-Tree 등에서는 인덱스를 이용한 정렬을 사용할 수 없다.
+
+다음 쿼리는 드라이빙 테이블의 PK를 기준으로 ORDER BY를 수행하므로 인덱스를 이용한 정렬을 사용하게 된다.
+
+```sql
+SELECT *
+FROM employees e, salaries s 
+WHERE s.emp_no=e.emp_no
+	AND e.emp_no BETWEEN 100002 AND 100020 
+ORDER BY e.emp_no;
+```
+
+인덱스는 이미 정렬돼 있기 때문에 순서대로 읽기만하면 된다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/73119b4f-23b4-4cda-ae12-1b01c14636e8/Untitled.png)
+
+2. **조인의 드라이빙 테이블만 정렬**
+
+- 조인을 실행하기 전 첫 번째로 읽히는 테이블(드라이빙 테이블)의 레코드를 먼저 정렬한 다음 조인을 실행한다.
+- 드라이빙 테이블의 컬럼만으로 ORDER BY절을 작성한 경우 사용 가능하다.
+
+다음 쿼리에서 ORDER BY에 명시된 필드는 드라이빙 테이블의 PK와 아무 연관이 없으므로 인덱스를 이용한 정렬이 불가능하다.
+
+```sql
+SELECT *
+FROM employees e, salaries s
+WHERE s.emp_no=e.emp_no
+	AND e . emp_no BETWEEN 100002 AND 100010
+ORDER BY e.last_name;
+```
+
+하지만 ORDER BY에 명시된 필드는 드라이빙 테이블에 속하므로 옵티마이저는 드라이빙 테이블을 먼저 검색해 정렬을 수행한 후 salaries와의 조인 작업을 실행한다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3dd09f89-dced-4900-bd2e-0a8b05c1edd7/Untitled.png)
+
+**3. 임시 테이블을 이용한 정렬**
+
+- 위의 경우를 뺀 나머지 패턴의 쿼리에서는 항상 조인 결과를 임시 테이블에 저장하고, 다시 정렬하는 과정을 거친다.
+- 실행 계획의 Extra에 Using temporary; Using filesort로 표시되며 앞선 정렬 방법 중 가장 느리다.
+
+다음 쿼리의 정렬 기준(ORDER BY)은 드리븐 테이블의 컬럼이므로 조인된 데이터를 가지고 정렬할 수 밖에 없다.
+
+```sql
+SELECT *
+FROM employees e, salaries s 
+WHERE s.emp_no=e.emp_no
+	AND e.emp.no BETWEEN 100002 AND 100010 
+ORDER BY s.salary;
+```
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/eabd2c07-a8e1-43eb-84f7-09a940413353/Untitled.png)
