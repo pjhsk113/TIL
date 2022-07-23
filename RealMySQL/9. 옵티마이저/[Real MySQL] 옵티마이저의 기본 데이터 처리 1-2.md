@@ -69,3 +69,50 @@ GROUP BY의 기준 컬럼이 드라이빙 테이블에 있든 드리븐 테이�
 MySQL 8.0에서는 GROUP BY가 필요한 경우 내부적으로 GROUP BY 절의 컬럼들로 구성된 유니크 인덱스를 가진 임시 테이블을 만들어 중복 제거와 집합 함수 연산을 수행한다.
 
 실행 계획의 Extra 컬럼에 Using temporary 코멘트가 표시되며, MySQL 8.0 부터는 묵시적 정렬을 수행하지 않으므로 Using filesort 코멘트는 표시되지 않는다.
+
+## DISTINCT 처리
+
+DISTINCT는 특정 컬럼의 유니크한 값만 조회하기 위해 사용한다. 이 작업은 집합 함수와 함께 사용하는 경우와 집합 함수가 없는 경우에 따라 영향을 미치는 범위가 달라지기 떄문에 구분해 살펴봐야 한다.
+
+### 집합 함수가 없는 경우 ( SELECT DISTINCT … )
+
+SELECT DISTINCT 형태의 쿼리는 GROUP BY와 동일한 방식으로 처리된다.
+예를 들어 아래의 두 쿼리는 내부적으로 같은 작업을 수행한다.
+
+```sql
+SELECT DISTINCT emp_no FROM salaries; 
+
+SELECT emp_no FROM salaries GROUP BY emp_no;
+```
+
+DISTINCT는 특정 컬럼만 유니크하게 조회하는 것이 아니라 유니크한 레코드(튜플)를 조회한다.
+
+```sql
+SELECT DISTINCT first_name, last_name FROM employees;
+```
+
+위 쿼리에서는 first_name이 유니크한 값을 조회하는 것이 아니라 (first_name, last_name) 조합 전체가 유니크한 레코드를 가져오는 것이다. 쿼리만 봤을 때 쉽게 착각할 수 있는 부분이기 때문에 실수하지 않도록 주의하자.
+
+### 집합 함수와 함께 사용된 DISTINCT
+
+COUNT(), MIN(), MAX()와 같은 집합 함수 내에서 DISTINCT 키워드가 사용된 경우로, 앞서 살펴본 일반적인 DISTINCT와는 다른 형태로 해석된다. **집합 함수 내에서 사용된 DISTINCT는 인자로 전달된 컬럼값이 유니크한 것들을 가져온다.**
+
+```sql
+SELECT COUNT(DISTINCT s.salary)
+FROM employees e, salaries s 
+WHERE e.emp_no=s.emp_no
+AND e.emp_no BETWEEN 100001 AND 100100;
+```
+
+위 쿼리는 `COUNT(DISTINCT s.salary)`를 처리하기 위해 임시 테이블을 사용한다. 테이블 조인 결과에서 드리븐 테이블의 컬럼 값(s.salary)만 저장해야하기 때문이다. 이때 salary 컬럼에 유니크 인덱스가 생성되므로 레코드 수가 많아진다면 상당이 느려질 수 있는 형태의 쿼리다.
+
+집합 함수와 함께 사용된 DISTINCT를 최적화하려면 인덱스된 컬럼에 대해 DISTINCT 처리를 수행하도록 쿼리를 작성해야 한다.
+
+```sql
+SELECT COUNT(DISTINCT emp_no) FROM employees;
+SELECT COUNT(DISTINCT emp_no) FROM dept_emp GROUP BY dept_no;
+```
+
+인덱스 컬럼에 대해 DISTINCT 처리를 수행할 때 인덱스 풀 스캔이나 레인지 스캔하면서 임시 테이블 없이 최적화된 처리를 수행할 수 있다.
+
+## 내부 임시 테이블 활용
