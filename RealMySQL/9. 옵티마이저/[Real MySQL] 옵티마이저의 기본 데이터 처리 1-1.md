@@ -104,7 +104,7 @@ MySQL 서버가 인덱스를 이용하지 않고 별도의 정렬 처리를 수�
 
 이러한 작업은 모두 디스크 읽기/쓰기를 유발하며, 레코드가 많을수록 반복 작업 횟수도 많아진다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7ba8e68d-4350-4f7d-8b9a-0ebd5afce2e3/Untitled.png)
+![](https://blog.kakaocdn.net/dn/DeZRe/btrH1CpjvLK/0LkIfuHj50gXOv5dXONsf1/img.png)
 
 소트 버퍼를 크게 잡아서 디스크 작업을 줄이고 메모리 작업을 늘려도 실제 성능에는 큰 차이가 나지 않는다. 오히려 너무 큰 메모리 공간 할당 때문에 성능이 떨어질 수도 있다. 하지만 디스크 I/O를 줄일 수 있으므로 성능이 낮은 장비에는 충분히 도움이 될 수 있다.
 
@@ -117,7 +117,7 @@ MySQL 서버가 인덱스를 이용하지 않고 별도의 정렬 처리를 수�
   - additional_field : 레코드의 컬럼들은 고정 사이즈로 메모리 저장
   - pack_additional_field :  레코드의 컬럼들은 가변 사이즈로 메모리 저장
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d7780fb2-d75c-45c4-a8c3-5b9998bde0c3/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bHovcH/btrHZVRgUUY/sq3lLEQyJemhpkC0Mi2o90/img.png)
 
 - 투 패스 정렬 방식
   - 정렬 키와 RowID만 가져와 정렬하는 방식
@@ -160,7 +160,7 @@ ORDER BY e.emp_no;
 
 인덱스는 이미 정렬돼 있기 때문에 순서대로 읽기만하면 된다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/73119b4f-23b4-4cda-ae12-1b01c14636e8/Untitled.png)
+![](https://blog.kakaocdn.net/dn/vcrMh/btrH2nyvk4v/08C0poqdFJnJST10aO5sG0/img.png)
 
 2. **조인의 드라이빙 테이블만 정렬** (버퍼링 처리)
 
@@ -179,7 +179,7 @@ ORDER BY e.last_name;
 
 하지만 ORDER BY에 명시된 필드는 드라이빙 테이블에 속하므로 옵티마이저는 드라이빙 테이블을 먼저 검색해 정렬을 수행한 후 salaries와의 조인 작업을 실행한다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3dd09f89-dced-4900-bd2e-0a8b05c1edd7/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bGprhJ/btrH3ccBYJH/Ezr19Fo0tH6NhNRPTsBxM0/img.png)
 
 **3. 임시 테이블을 이용한 정렬** (버퍼링 처리)
 
@@ -196,7 +196,7 @@ WHERE s.emp_no=e.emp_no
 ORDER BY s.salary;
 ```
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/eabd2c07-a8e1-43eb-84f7-09a940413353/Untitled.png)
+![](https://blog.kakaocdn.net/dn/5nwRW/btrH1bevi8S/aNMp2dUgzGGo9hqUDkhKM0/img.png)
 
 이렇듯 어떤 테이블이 먼저 드라이빙되어 조인되는지도 중요하지만, 어떤 정렬 방식으로 처리되느냐에 따라 더 큰 성능 차이를 만들어낸다. 가**능하다면 인덱스를 사용한 정렬로 유도하고 그렇지 못하면 최소한 드라이빙 테이블만 정렬해도 되는 수준으로 유도하는 것이 좋은 쿼리 튜닝 방법**이라고 할 수 있다.
 
@@ -214,7 +214,7 @@ ORDER BY나 GROUP BY 같은 작업은 WHERE 조건을 만족하는 레코드를 
 
 ORDER BY나 GROUP BY 같은 작업은 쿼리 결과가 스트리밍 되는 것을 불가능하게 만든다. WHERE 조건에 일치하는 레코드를 모두 가져온 후, 정렬하거나 그루핑해야 하기 때문이다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9c7872c0-f8d8-4f2b-a955-110846f34fff/Untitled.png)
+![](https://blog.kakaocdn.net/dn/0bfNh/btrH0SzqWmR/lJFKDIAzrqZEw0HpXau8x0/img.png)
 
 1. 버퍼링 방식으로 처리되는 쿼리는 먼저 결과를 모은다.
 2. MySQL 서버에서 일괄 가공해야 하므로 모든 결과를 스토리지 엔진으로부터 가져올 때까지 기다린다.
