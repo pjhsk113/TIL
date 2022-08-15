@@ -4,7 +4,7 @@
 ### 👏 주간 목표
 
 - [ ] Real MySQL 8.0 스터디
-- [ ] Real MySQL 8.0 370 ~ 읽기
+- [ ] Real MySQL 8.0 370 ~ 392 정리
 - [ ] 글 쓰기 - @Transactional 톺아보기
 - [ ] Spring Transaction 관련 기술서적 읽기
 
@@ -14,7 +14,7 @@
 
 - [x] 주간목표 설정
 - [x] @Transactional 관련 글 작성하기
-- [ ] MySQL 8.0 스터디
+- [x] MySQL 8.0 스터디
 
 <br/>
 
@@ -31,6 +31,7 @@
 - @Transactional 관련 정리
 - 토비 스프링 살펴보기
   - Spring AOP, 선언적 트랜잭션 관련 학습
+- Real MySQL 8.0 370 ~ 읽기
 
 <br/>
 
