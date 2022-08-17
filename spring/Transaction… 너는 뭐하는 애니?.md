@@ -1,4 +1,4 @@
-# [Spring] @Transactional… 너는 뭐하는 애니?
+# [Spring] Transaction… 너는 뭐하는 애니?
 
 # 트랜잭션이란?
 
@@ -72,12 +72,23 @@ TransactionStatus는 시작된 트랜잭션에 대한 구분 정보를 담고 �
 
 ## 선언적 트랜잭션 - @Transactional
 
-선언적 트랜잭션은 일반적으로 가장 많이 사용되는 방식으로 Configuration에 @EnableTransactionManagement를 선언하고 트랜잭션을 적용하고 싶은 클래스 혹은 메서드에 @Transactional 애너테이션을 붙여주는 식으로 사용한다.
+선언적 트랜잭션이라고도 불리는 @Transactional 애너테이션은 트랜잭션을 단순하고 직관적으로 사용할 수 있게 해준다. 따라서 일반적으로 가장 많이 사용되는 방식이다.
 
-스프링 부트에서는 autoConfiguration에 의해 @EnableTransactionManagement가 자동으로 설정된다.
+사용 방법은 아주 간단하다.
+설정 파일에 @EnableTransactionManagement를 선언한 후, 트랜잭션을 적용하고 싶은 **타입 혹은 메서드에** **@Transactional 애너테이션**을 붙여주면 된다. 스프링 부트에서는 AutoConfiguration에 의해 @EnableTransactionManagement가 자동으로 설정되므로 별도의 설정 자체도 필요 없다.
 
-선언적 트랜잭션 534
+```java
+@Transactional
+public void remittance() {
+      // ....
+      // 송금에 대한 작업 진행..
+      // ...
+}
+```
 
-- @Transactional 동작 원리
+@Transactional은 속성 정보를 메서드마다 다르게 설정할 수 있어 세밀한 트랜잭션 속성의 제어가 필요한 경우 아주 유연하고 유용하게 사용할 수 있다.
+
+### @Transactional 동작 원리
+
 - @Transactional 옵션
 - @Transactional 사용법 및 주의사항
