@@ -36,7 +36,7 @@
 스프링은 트랜잭션 추상화 기술을 제공하고 있다.
 이를 이용하면 애플리케이션에서 트랜잭션 API를 이용하지 않고 트랜잭션 경계설정 작업이 가능해진다.
 
-트랜잭션 추상화 계층의 상위 인터페이스인 PlatformTransactionManager를 통해 일관된 방식으로 트랜잭션을 제어하는 경계설정 작업이 가능해지는 것이다.
+트랜잭션 추상화 계층의 상위 인터페이스인 **PlatformTransactionManager**를 통해 일관된 방식으로 트랜잭션을 제어하는 경계설정 작업이 가능해지는 것이다.
 
 우리는 각자의 환경에 맞는 TransactionManager 클래스를 주입해서 트랜잭션 추상화 기술을 사용할 수 있다. JDBC를 이용하는 경우는 DataSourceTransactionManager를 주입해 사용하면 되고, JPA를 이용하는 경우JpaTransactionManager를 주입하면 된다.
 
@@ -52,9 +52,8 @@ public void remittance() {
     TransactionStatus transactionStatus = transactionManager.getTransaction(transactionDefinition);
     
     try {
-        // ....
-        // 송금에 대한 작업 진행..
-        // ...
+        // 송금에 대한 비즈니스 로직 실행
+				businessLogic();
         transactionManager.commit(transactionStatus);
     } catch (Exception e) {
         transactionManager.rollback(transactionStatus);
@@ -70,25 +69,35 @@ DefaultTransactionDefinition은 트랜잭션에 대한 네 가지 속성(propaga
 
 TransactionStatus는 시작된 트랜잭션에 대한 구분 정보를 담고 있으며, 트랜잭션에 대한 조작이 필요할 때(커밋이나 롤백) PlatformTransactionManager 메소드의 파라미터로 전달해 사용한다.
 
-## 선언적 트랜잭션 - @Transactional
+## 선언적 트랜잭션 @Transactional
 
 선언적 트랜잭션이라고도 불리는 @Transactional 애너테이션은 트랜잭션을 단순하고 직관적으로 사용할 수 있게 해준다. 따라서 일반적으로 가장 많이 사용되는 방식이다.
 
 사용 방법은 아주 간단하다.
 설정 파일에 @EnableTransactionManagement를 선언한 후, 트랜잭션을 적용하고 싶은 **타입 혹은 메서드에** **@Transactional 애너테이션**을 붙여주면 된다. 스프링 부트에서는 AutoConfiguration에 의해 @EnableTransactionManagement가 자동으로 설정되므로 별도의 설정 자체도 필요 없다.
 
+선언적 트랜잭션을 사용한 코드의 예시를 살펴보면 다음과 같다.
+
 ```java
 @Transactional
 public void remittance() {
-      // ....
-      // 송금에 대한 작업 진행..
-      // ...
+		businessLogic();
 }
 ```
 
-@Transactional은 속성 정보를 메서드마다 다르게 설정할 수 있어 세밀한 트랜잭션 속성의 제어가 필요한 경우 아주 유연하고 유용하게 사용할 수 있다.
+트랜잭션에 대한 코드를 작성하지 않고 @Transactional 애너테이션을 명시하는 것만으로 트랜잭션 기능을 사용할 수 있게 되었고 트랜잭션 코드와 비즈니스 로직이 분리되어 훨씬 명확한 코드가 됐다. 또한, @Transactional은 속성 정보를 메서드마다 다르게 설정할 수 있어 세밀한 트랜잭션 속성의 제어가 필요한 경우 아주 유연하게 사용할 수도 있다.
+
+어떻게 애너테이션 하나만으로 이런 멋진 일들이 가능한 것일까?
+비밀은 Spring의 핵심 기술 중 하나인 AOP에 숨겨져 있다.
+
+Spring은 애플리케이션에서 사용되는 부가 기능들을 모듈화해 재사용할 수 있도록하는 기능을 제공한다. 예를 들면 트랜잭션이나 로깅, 실행 시간 측정 등 비즈니스 로직과 함께 수행되는 부가 기능들을 모듈화하고, 특정 시점에 끼워 넣어 재사용함으로써 중복을 제거하고 비즈니스 로직과 부가 기능을 명확히 분리하는 것이다.
+
+Spring의 AOP는 런타임 시점에 별도의 코드 조작없이 프록시를 이용해 Target Object에 부가 기능을 적용시킨다.
 
 ### @Transactional 동작 원리
 
+선언적 트랜잭션 534
+
+-
 - @Transactional 옵션
 - @Transactional 사용법 및 주의사항
