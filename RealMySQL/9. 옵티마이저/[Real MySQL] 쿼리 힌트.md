@@ -20,11 +20,11 @@ STRAIGHT_JOIN은 여러 개의 테이블이 조인되는 경우 조인 순서를
 이런 쿼리의 조인 순서를 변경하려는 경우에는 다음과 같이 STRAIGHT_JOIN 힌트를 사용해 테이블의 조인 순서를 유도할 수 있다.
 
 ```sql
-SELECT /*! STRAIGHT_]OIN */ 
-	e.first_name, e.last_name, d.dept_name
-FROM employees e, dept_emp de, departments d 
+SELECT /*! STRAIGHT_]OIN */
+  e.first_name, e.last_name, d.dept_name
+FROM employees e, dept_emp de, departments d
 WHERE e.emp_no=de.emp_no
-	AND d.dept_no=de.dept_no;
+  AND d.dept_no=de.dept_no;
 ```
 
 이 쿼리의 실행 계획을 보면 FROM 절에 명시된 테이블의 순서대로(employees → dept_emp → departments) 조인이 수행된다.
@@ -53,3 +53,21 @@ WHERE e.emp_no=de.emp_no
 - IGNORE INDEX
   - 특정 인덱스를 사용하지 못하도록 하는 힌트
   - 때로는 풀 테이블 스캔을 유도하기 위해 사용
+
+만약 좋은 실행 계획이 어떤 것인지 판단하기 힘든 상황이라면 힌트를 사용해 옵티마이저의 실행 계획에 영향을 미치는 것은 피하는 것이 좋다. 최적의 실행 계획은 데이터의 성격에 따라 시시각각 변하므로 옵티마이저가 당시 통계 정보를 가지고 선택하게 하는 것이 가장 좋은 방법이며, 가장 훌륭한 최적화는 튜닝할 필요가 없게 데이터를 최소화하는 것이다.
+
+# 옵티마이저 힌트
+
+MySQL 8.0에서는 사용 가능한 힌트 종류가 매우 다양하고 미치는 영향 범위도 매우 다양하다.
+
+## 옵티마이저 힌트의 종류
+
+- 인덱스
+  - 특정 인덱스의 이름을 사용할 수 있는 옵티마이저 힌트
+- 테이블
+  - 특정 테이블의 이름을 사용할 수 있는 옵티마이저 힌트
+- 쿼리 블록
+  - 특정 쿼리 블록에 사용할 수 있는 옵티마이저 힌트
+  - 힌트가 명시된 쿼리 블록에 대해서만 영향을 미침
+- 글로벌(쿼리 전체)
+  - 전체 쿼리에 대해 영향을 미치는 힌트
