@@ -18,11 +18,11 @@ STRAIGHT_JOIN은 여러 개의 테이블이 조인되는 경우 조인 순서를
 이런 쿼리의 조인 순서를 변경하려는 경우에는 다음과 같이 STRAIGHT_JOIN 힌트를 사용해 테이블의 조인 순서를 유도할 수 있다.
 
 ```sql
-SELECT /*! STRAIGHT_]OIN */ 
-	e.first_name, e.last_name, d.dept_name
-FROM employees e, dept_emp de, departments d 
+SELECT /*! STRAIGHT_]OIN */
+  e.first_name, e.last_name, d.dept_name
+FROM employees e, dept_emp de, departments d
 WHERE e.emp_no=de.emp_no
-	AND d.dept_no=de.dept_no;
+  AND d.dept_no=de.dept_no;
 ```
 
 이 쿼리의 실행 계획을 보면 FROM 절에 명시된 테이블의 순서대로(employees → dept_emp → departments) 조인이 수행된다.
@@ -124,4 +124,68 @@ FROM departments d
 WHERE d.dept_no IN
 	(SELECT /*+ QB_NAME(subq1) */ de.dept_no 
    FROM dept_emp de);
+```
+
+### JOIN_FIXED_ORDER & JOIN_ORDER & JOIN_PREFIX & JOIN_SUFFIX
+
+MySQL 서버는 조인의 순서를 결정하기 위해 STRAIGHT_JOIN 힌트를 사용해왔다. 하지만 이는 쿼리 FROM 절에 사용된 테이블의 순서를 조인 순서에 맞게 변경해야하는 번거로움이 있었다. 또한 일부 조인 순서를 강제하고 나머지는 옵티마이저에게 맞기는 것도 불가능했다.
+
+이 단점을 보완하기 위해 옵티마이저 힌트에서는 다음과 같이 4개의 힌트를 제공한다.
+
+- JOIN_FIXED_ORDER
+  - FROM 절의 테이블 순서대로 조인을 실행
+- JOIN_ORDER
+  - FROM 절에 사용된 테이블 순서가 아니라 힌트에 명시된 테이블 순서대로 조인 실행
+- JOIN_PREFIX
+  - 조인에서 드라이빙 테이블만 강제
+- JOIN_SUFFIX
+  - 조인에서 드리븐 테이블만 강제
+
+
+```sql
+// FROM 절에 나열된 테이블의 순서대로 조인 실행
+SELECT /*+ JOIN_FIXED_ORDER() */ *
+FROM employees e
+	INNER JOIN dept_emp de ON de.emp_no = e.emp_no 
+	INNER JOIN departments d ON d.dept_no = de.dept_no;
+
+// 일부 테이블에 대해서만 조인 순서를 나열
+SELECT /*+ JOIN_ORDER(d, de) */ *
+FROM employees e
+	INNER JOIN dept_emp de ON de.emp_no = e.emp_no 
+	INNER JOIN departments d ON d.dept_no = de.dept_no;
+
+// 조인의 드라이빙 테이블에 대해서만 조인 순서를 나열 
+SELECT /*+ JOIN_PREFIX(e, de) */ *
+FROM employees e
+	INNER JOIN dept_emp de ON de.emp_no = e.emp_no
+	INNER JOIN departments d ON d.dept_no = de.dept_no;
+
+// 조인의 드리븐 테이블에 대해서만 조인 순서를 나열 
+SELECT /*+ JOIN_SUFFIX(de, e) */ *
+FROM employees e
+	INNER JOIN dept_emp de ON de.emp_no = e.emp_no
+	INNER JOIN departments d ON d.dept_no = de.dept_no;
+```
+
+### MERGE & NO_MERGE
+
+이전 MySQL 서버에서는 FROM 절에 사용된 서브쿼리를 항상 내부 임시 테이블로 생성해 불필요한 자원을 소모했었다. 따라서 MySQL 5.7 이상 버전에서는 임시 테이블을 사용하지 않게 FROM 절의 서브쿼리를 외부 쿼리와 병합하는 최적화를 도입했다.
+
+때로는 임시 테이블을 생성하는 것이 나은 선택이 될 수도 있기 때문에 옵티마이저가 최적의 방법을 선택하지 못했을 때는 MERGE 또는 NO_MERGE 옵티마이저 힌트를 사용하면 된다.
+
+```sql
+// 외부 쿼리와 병합
+EXPLAIN
+SELECT /*+ MERGE(sub)*/ *
+FROM (SELECT *
+			FROM employees
+			WHERE first_name='Matt1') sub LIMIT 10;
+
+// 임시 테이블 사용
+EXPLAIN
+SELECT /*+ N0_MERGE(sub)*/ *
+FROM (SELECT * 
+			FROM employees
+			WHERE first_name='Matt') sub LIMIT 10;
 ```
