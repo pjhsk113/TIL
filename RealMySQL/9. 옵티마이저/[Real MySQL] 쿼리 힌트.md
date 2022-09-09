@@ -1,3 +1,5 @@
+[Real MySQL 8.0] 쿼리 힌트
+
 MySQL의 버전이 업그레이드 되면서 옵티마이저의 쿼리 실행 계획 최적화 방법도 다양해지고 있다. 하지만 옵티마이저가 개발자나 DBA의 요구 조건을 100% 예측할 수는 없다. 따라서 옵티마이저가 부족한 실행 계획을 수립한 경우에는 우리가 옵티마이저에게 어떻게 실행계획을 수립해야 할지 알려줄 수 있는 방법이 필요하다.
 
 MySQL에서 사용 가능한 쿼리 힌트는 다음과 같이 2가지로 구분할 수 있다.
@@ -18,11 +20,11 @@ STRAIGHT_JOIN은 여러 개의 테이블이 조인되는 경우 조인 순서를
 이런 쿼리의 조인 순서를 변경하려는 경우에는 다음과 같이 STRAIGHT_JOIN 힌트를 사용해 테이블의 조인 순서를 유도할 수 있다.
 
 ```sql
-SELECT /*! STRAIGHT_]OIN */
-  e.first_name, e.last_name, d.dept_name
-FROM employees e, dept_emp de, departments d
+SELECT /*! STRAIGHT_]OIN */ 
+	e.first_name, e.last_name, d.dept_name
+FROM employees e, dept_emp de, departments d 
 WHERE e.emp_no=de.emp_no
-  AND d.dept_no=de.dept_no;
+	AND d.dept_no=de.dept_no;
 ```
 
 이 쿼리의 실행 계획을 보면 FROM 절에 명시된 테이블의 순서대로(employees → dept_emp → departments) 조인이 수행된다.
@@ -188,4 +190,76 @@ SELECT /*+ N0_MERGE(sub)*/ *
 FROM (SELECT * 
 			FROM employees
 			WHERE first_name='Matt') sub LIMIT 10;
+```
+
+### INDEX_MERGE & NO_INDEX_MERGE
+
+MySQL 서버는 가능하면 테이블 당 하나의 인덱스만을 이용해 쿼리를 처리하려고 한다. 이때 인덱스를 통해 검색된 레코드의 교집합 또는 합집합만을 구해 결과를 반환하고 **하나의 테이블에 대해 여러 개의 인덱스를 동시에 사용하는 것을 인덱스 머지**라고 한다.
+
+INDEX_MERGE와 NO_INDEX_MERGE는 인덱스 머지 실행 계획 사용 여부를 제어하고자 할 때 사용된다.
+
+```sql
+EXPLAIN 
+SELECT * /*+ INDEX_MERGE(employees ix_firstname, PRIMARY) */ *
+FROM employees
+WHERE first_name='Georgi' AND emp_no BETWEEN 10000 AND 20000
+
+EXPLAIN
+SELECT /*+ NO_INDEX_MERGE(employees PRIMARY) */ *
+FROM employees
+WHERE first_name='Georgi' AND emp_no BETWEEN 10000 AND 20000;
+```
+
+### NO_ICP
+
+인덱스 컨디션 푸시다운 최적화는 항상 성능 향상에 도움이 되므로 옵티마이저는 최대한 인덱스 컨디션 푸시다운 기능을 사용하는 방향으로 실행 계획을 수립한다. 따라서 MySQL 옵티마이저에서는 ICP(Index Condition Pushdown) 힌트는 제공하지 않고 인덱스 컨디션 푸시다운으로 인한 잘못된 실행 계획 수립시 인덱스 컨디션 푸시다운 최적화를 비활성화하는 힌트인 NO_ICP만을 제공한다.
+
+```sql
+EXPLAIN
+SELECT /*+ NO_ICP(employees ix_lastname_firstname) * / * 
+FROM employees
+WHERE last_name='Acton' AND first_name LIKE '%sar';
+```
+
+### SKIP_SCAN & NO_SKIP_SCAN
+
+인덱스 스킵 스캔은 인덱스의 선행 칼럼에 대한 조건이 없어도 옵티마이저가 해당 인덱스를 사용할 수 있게 해주는 최적화 기능이다. 하지만 조건이 누락된 선행 컬럼의 유니크 값의 개수가 많아진다면 오히려 성능이 떨어지므로 옵티마이저가 비효율적인 인덱스 스킵 스캔을 선택한 경우 NO_SKIP_SCAN 힌트로 이를 제어할 수 있다.
+
+```sql
+// 인덱스 스킵 스캔 비활성화
+EXPLAIN
+SELECT /*+ NO_SKIP_SCAN(employees ix_gender_birthdate) ★/ gender, birth_date 
+FROM employees
+WHERE birth_date>='1965-02-01•;
+```
+
+### INDEX & NO_INDEX
+
+INDEX와 NO_INDEX 옵티마이저 힌트는 예전 MySQL 서버에서 사용되던 인덱스 힌트를 대체하는 용도로 사용된다. 대체된 인덱스 힌트는 다음과 같다.
+
+- USE INDEX
+  - → INDEX
+- USE INDEX FOR GROUP BY
+  - → GROUP_INDEX
+- USE INDEX FOR ORDER BY
+  - → ORDER_INDEX
+- IGNORE INDEX
+  - → NO_INDEX
+- IGNORE INDEX FOR GROUP BY
+  - → NO_GROUP_INDEX
+- IGNORE INDEX FOR ORDER BY
+  - → NO_ORDER_INDEX
+
+```sql
+// 인덱스 힌트 사용
+EXPLAIN
+SELECT *
+FROM employees USE INDEX(ix_firstname) 
+WHERE first_name='Matt';
+
+// 옵티마이저 힌트 사용
+EXPLAIN
+SELECT /*+ INDEX(employees ix_firstname) ★/ * 
+FROM employees
+WHERE first_name='Matt';
 ```
