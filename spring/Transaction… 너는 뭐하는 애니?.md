@@ -75,7 +75,7 @@ DefaultTransactionDefinition은 트랜잭션에 대한 네 가지 속성(propaga
 
 TransactionStatus는 시작된 트랜잭션에 대한 구분 정보를 담고 있으며, 트랜잭션에 대한 조작이 필요할 때(커밋이나 롤백) PlatformTransactionManager 메소드의 파라미터로 전달해 사용한다.
 
-## 선언적 트랜잭션 @Transactional
+## 선언적 트랜잭션 - @Transactional
 
 선언적 트랜잭션이라고도 불리는 @Transactional 애너테이션은 트랜잭션을 단순하고 직관적으로 사용할 수 있게 해준다. 따라서 일반적으로 가장 많이 사용되는 방식이다.
 
@@ -135,7 +135,7 @@ Spring은 반복적인 위임 코드가 필요한 프록시 클래스 코드의 
 
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/22090711-7618-4dbf-b9d7-66fe69ed26d1/Untitled.png)
 
-**JDK Dynamic Proxy는 인터페이스를 구현한 오브젝트에 대해** 프록시 클래스를 런타임에 동적으로 생성해준다. 타겟 오브젝트의 **인터페이스를 상속한 프록시 객체를 생성하므로 구체 클래스에 대한 타입 캐스팅이 불가능**하다. 따라서 프록시 빈을 정상적으로 사용하려면 의존 주입시 **반드시 인터페이스의 타입울 명시**해야한다.
+**JDK Dynamic Proxy는 인터페이스를 구현한 오브젝트에 대해** 프록시 클래스를 런타임에 동적으로 생성해준다. 타겟 오브젝트의 **인터페이스를 상속한 프록시 객체를 생성하므로 구체 클래스에 대한 타입 캐스팅이 불가능**하다. 따라서 프록시 빈을 정상적으로 사용하려면 의존 주입시 **반드시 인터페이스의 타입을 명시**해야한다.
 
 ```java
 @Controller
@@ -152,12 +152,10 @@ public class SomeServiceImpl implements SomeService {
 
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9db0d352-534e-4f6f-8dcd-4ae33a1411f4/Untitled.png)
 
-**CGLIB는** 타겟 클래스의 바이트 코드를 조작해 프록시 객체를 생성한다. JDK Dynamic Proxy와는 다르게 구체 클래스에 대해서도 프록시 생성이 가능하다. 리플랙션을 이용하는 JDK Dynamic Proxy에 비해 속도가 빠르며 구체 클래스가 AOP를 사용할 수 있다는 장점이 있다. SpringBoot는 CGLIB를 기본으로 사용하고 있다.
+**CGLIB는** 타겟 클래스의 바이트 코드를 조작해 프록시 객체를 생성한다. 타겟 오브젝트를 상속해 프록시 객체를 생성하므로 JDK Dynamic Proxy와는 다르게 구체 클래스에 대해서도 프록시 생성이 가능하다. 리플랙션을 이용하는 JDK Dynamic Proxy에 비해 속도가 빠르며 구체 클래스가 AOP를 사용할 수 있다는 장점이 있다.
 
-### @Transactional 동작 원리
+타겟 오브젝트를 상속해 프록시를 구현하므로 상속이 불가능한 final 클래스나 final 메서드, private 메서드는 AOP의 대상이 되지 않으며 public 메서드만 프록시를 생성할 수 있다.
 
-선언적 트랜잭션 534
+## @Transactional 옵션
 
--
-- @Transactional 옵션
-- @Transactional 사용법 및 주의사항
+## @Transactional 사용법 및 주의사항
