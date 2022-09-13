@@ -69,11 +69,24 @@ public class SomeService {
 
 ### DefaultTransactionDefinition
 
-DefaultTransactionDefinition은 트랜잭션에 대한 네 가지 속성(propagation, isolationLevel, timeout, readOnly)을 담고 있다. 이 속성에 대한 설명은 이후 아래에서 더 자세히 살펴본다.
+DefaultTransactionDefinition은 트랜잭션에 대한 네 가지 속성(propagation, isolationLevel, timeout, readOnly)을 담고 있다.
+
+- propagation(트랜잭션 전파 옵션)
+    - 트랜잭션의 경계에서 이미 선행되는 트랜잭션이 있거나 없는 경우 트랜잭션을 어떻게 동작시킬 것인가에 대한 설정
+    - 이 속성에 대한 설명은 이후 아래에서 더 자세히 살펴보자.
+- isolation(격리 수준)
+    - 트랜잭션 격리 수준에 대한 설정
+    - 스프링 트랜잭션의 기본값은 *`Isolation.DEFAULT`*로 현재 사용중인 DB 격리 수준의 기본값을 따른다.
+    - 격리 수준에 대한 자세한 설명은 다음을 참고하자.
+- timeout(제한 시간)
+    - 트랜잭션의 수행시간을 제한
+- readOnly(읽기 전용)
+    - 읽기 전용 트랜잭션 설정
+    - 해당 옵션을 명시하면 트랜잭션에서 시도되는 데이터 조작을 방지할 수 있다.
 
 ### TransactionStatus
 
-TransactionStatus는 시작된 트랜잭션에 대한 구분 정보를 담고 있으며, 트랜잭션에 대한 조작이 필요할 때(커밋이나 롤백) PlatformTransactionManager 메소드의 파라미터로 전달해 사용한다.
+TransactionStatus는 시작된 **트랜잭션에 대한 구분 정보**를 담고 있으며, 트랜잭션에 대한 조작이 필요할 때(커밋이나 롤백) PlatformTransactionManager 메소드의 파라미터로 전달해 사용한다.
 
 ## 선언적 트랜잭션 - @Transactional
 
@@ -128,7 +141,7 @@ public class TargetObjectProxy {
 
 ### Spring AOP의 프록시 자동생성 기법
 
-Spring은 반복적인 위임 코드가 필요한 프록시 클래스 코드의 중복 문제를 **런타임 코드 자동생성 기법**을 활용해 풀어냈다. 런타임 코드 자동생성 기법에는 다음과 같은 두 가지 방식이 있다.
+Spring은 반복적인 위임 코드가 필요한 **프록시 클래스 코드의 중복 문제**를 **런타임 코드 자동생성 기법**을 활용해 풀어냈다. 런타임 코드 자동생성 기법에는 다음과 같은 두 가지 방식이 있다.
 
 - JDK Dynamic Proxy
 - CGLIB
@@ -156,6 +169,70 @@ public class SomeServiceImpl implements SomeService {
 
 타겟 오브젝트를 상속해 프록시를 구현하므로 상속이 불가능한 final 클래스나 final 메서드, private 메서드는 AOP의 대상이 되지 않으며 public 메서드만 프록시를 생성할 수 있다.
 
-## @Transactional 옵션
+## @Transactional 속성
 
-## @Transactional 사용법 및 주의사항
+@Transactional 애너테이션은 클래스 레벨 또는 메서드 레벨에 부착할 수 있으며 다양한 속성을 설정할 수 있어 아주 간편하게 원하는 옵션을 트랜잭션에 끼워넣을 수 있는 기능을 제공하고 있다.
+
+스프링 트랜잭션이 제공하고 있는 속성 정보는 다음과 같다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3c97fdd3-32ac-425b-a869-85e35f1581b7/Untitled.png)
+
+| 속성(옵션) | 설명 |
+| --- | --- |
+| value | transactionManager의 별칭을 설정 |
+| transactionManager | 지정된 transactionManager의 식별 값(qualifier value) 또는 빈 이름 설정 |
+| label | 트랜잭션 설명 목적으로 사용되는 label을 정의 |
+| propagation | 트랜잭션이 어떻게 동작할 것인가에 대한 전파 옵션을 설정 |
+| isolation | 트랜잭션의 격리 수준을 설정 |
+| timeout | 트랜잭션 타임아웃 설정(int) |
+| timeoutString | 트랜잭션 타임아웃 설정(String) |
+| readOnly | 읽기 전용(데이터 조작 방지) 트랜잭션 설정, true인 경우 활성화 |
+| rollbackFor | 검사 예외(Checked Exception)발생 시 롤백을 수행할 예외 지정 속성 |
+| rollbackForClassName | rollbackFor과 동일하지만 클래스명을 문자열로 지정하는 속성 |
+| noRollbackFor | 비검사 예외, 즉 RuntimeException과 그 하위 예외 발생 시 롤백 처리를 수행하지 않을 예외를 지정하는 속성 |
+| noRollbackForClassName | noRollbackFor와 동일하지만 클래스명을 문자열로 명시하는 속성 |
+
+이 중 가장 많이 사용되는 몇 가지 옵션들을 더 자세히 살펴보자.
+
+### Propagation
+
+트랜잭션 전파 옵션(propagation)은 트랜잭션의 경계에서 이미 선행되는 트랜잭션이 있거나 없는 경우 트랜잭션을 어떻게 동작시킬 것인가에 대한 설정이다.
+
+다양하고 복잡한 현실 세계의 문제를 해결하기 위해서는 트랜잭션을 단순하게만 사용할 수는 없다. 비즈니스 요구사항에 따라 트랜잭션도 복잡해질 수 있다. 예를들어, 선행 트랜잭션 내부에서 독립적으로 실행되어야 하는 트랜잭션이 존재한다거나, 커밋이나 롤백 시점을 어떤 트랜잭션에 의존적으로 동작하게 만들지 제어해야 하는 경우도 있다.
+
+이처럼 트랜잭션 전파 옵션(propagation)은 트랜잭션 동작 방식을 애플리케이션단에서 조금 더 쉽게 설정하고 사용할 수 있도록하는 옵션이다.
+
+| 속성 | 설명 |
+| --- | --- |
+| REQUIRED | - 트랜잭션이 존재하지 않는다면 새로운 트랜잭션을 생성  - 이미 트랜잭션이 존재하는 경우 새로운 트랜잭션을 생성하지 않고 기존 트랜잭션을 그대로 사용 |
+| REQUIRES_NEW | - 항상 새로운 독립 트랜잭션을 생성  - 생성된 트랜잭션은 별도의 커밋 & 롤백 시점을 가짐 |
+| MANDATORY | - 트랜잭션이 존재하지 않는 경우 예외 발생  - 이미 트랜잭션이 존재하는 경우 새로운 트랜잭션을 생성하지 않고 기존 트랜잭션을 그대로 사용 |
+| NESTED | - 트랜잭션이 존재하지 않는다면 새로운 트랜잭션을 생성  - 이미 트랜잭션이 존재하는 경우 새로운 트랜잭션을 생성  - 중첩 트랜잭션 롤백 시 선행 트랜잭션에 전파되지 않음  - 선행 트랜잭션 롤백 시 중첩 트랜잭션도 함께 롤백(전파)되고 커밋될 때 중첩 트랜잭션도 함께 커밋 |
+| SUPPORTS | - 트랜잭션이 존재하지 않는다면 트랜잭션을 사용하지 않음  - 이미 트랜잭션이 존재하는 경우 새로운 트랜잭션을 생성하지 않고 기존 트랜잭션을 그대로 사용 |
+| NOT_SUPPORTED | - 트랜잭션을 사용하지 않음  - 트랜잭션을 무시하고 로직을 수행 |
+| NEVER | - 트랜잭션이 존재하는 경우 예외 발생  - 트랜잭션을 허용하지 않는 경우에 사용 |
+
+```java
+@Service
+@RequiredArgsConstructor
+public class SomeService {
+
+	// 기본값인 REQUIRED 전파 옵션 사용
+	@Transactional
+	public void remittance1() {
+		businessLogic();
+	}
+
+	// REQUIRES_NEW 전파 옵션 사용
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void remittance2() {
+		businessLogic();
+	}
+}
+```
+
+### ReadOnly
+
+### RollbackFor & NoRollbackFor
+
+- @Transactional 사용법 및 주의사항
