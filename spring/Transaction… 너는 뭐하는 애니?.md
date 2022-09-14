@@ -231,8 +231,54 @@ public class SomeService {
 }
 ```
 
-### ReadOnly
-
 ### RollbackFor & NoRollbackFor
 
-- @Transactional 사용법 및 주의사항
+**스프링 트랜잭션은 확인된 예외(Checked Exception)에 대해서는 롤백을 수행하지 않는다.** 스프링 트랜잭션의 **롤백 대상은 RuntimeException과 Error이며** RuntimeException을 상속한 NullPointerException이나 IllegalArgumentException과 같은 **비검사 예외(Unchecked Exception)가 롤백의 대상**이라고 보면 된다.
+
+rollbackFor 속성은 Checked Exception 발생 시 롤백을 수행할 예외를 설정할 때 사용된다. 해당 속성 값으로는 Throwable의 하위 클래스 범위 내에 N개의 예외 클래스를 지정할 수 있다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a9b97507-73c4-4c77-9894-581ffc629c5a/Untitled.png)
+
+@Transactional 애너테이션의 rollbackFor 속성의 기본 값은 RuntimeException과 Error이다. rollbackFor 속성을 명시하지 않은 경우 롤백의 대상은 RuntimeException과 Error가 된다.
+
+```java
+// rollbackFor 옵션 생략
+@Transactional
+public void remittance() {
+	businessLogic();
+}
+
+// 위 메서드와 동일한 동작
+@Transactional(rollbackFor = { RuntimeException.class, Error.class })
+public void remittance() {
+	businessLogic();
+}
+```
+
+rollbackFor 옵션에는 Throwable의 하위 클래스를 모두 지정할 수 있으므로 Exception 클래스 자체를 지정할 수도 있다. 이렇게 하면 모든 예외에 대해 롤백을 수행할 수 있게 되지만, Exception은 거의 모든 예외를 포함하므로 다른 규칙들을 잡아 먹어 버린다. 필수 사항은 아니지만 rollbackFor 옵션에는 좀 더 구체적인 예외 정보를 명시해주는 것이 좋은 선택이 될 수 있다.
+
+```java
+// 모든 예외에 대해 롤백 수행
+@Transactional(rollbackFor = { Exception.class })
+public void remittance() {
+	businessLogic();
+}
+
+// 구체적인 CheckedException을 명시해 특정 예외 발생 시 롤백을 수행
+@Transactional(rollbackFor = { FileNotFoundException.class, RuntimeException.class, Error.class })
+public void remittance() {
+	businessLogic();
+}
+```
+
+noRollbackFor 옵션은 rollbackFor 옵션과 반대로 Error나 RuntimeException 예외 발생 시 롤백을 수행하지 않을 예외를 지정하는 속성이다.
+
+```java
+// 특정 비즈니스 로직에서 발생하는 예외(RuntimeException 상속)에 대해서만 롤백 수행
+@Transactional(noRollbackFor = { SomeBusinessException.class })
+public void remittance() {
+	businessLogic();
+}
+```
+
+## @Transactional 사용법 및 주의사항
