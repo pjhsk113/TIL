@@ -281,7 +281,98 @@ public void remittance() {
 }
 ```
 
-## @Transactional 사용법 및 주의사항
+## @Transactional 사용시 주의사항
+
 스프링에서는 메서드나 클래스 레벨에 @Transactional 애너테이션을 부착하는 것만으로 손쉽게 트랜잭션 기능을 사용할 수 있다. 하지만 동작 방식에 대한 이해없이 마구 사용하다보면 왜 트랜잭션이 제대로 동작을 안하는지 어디서 문제가 발생하지 찾기가 쉽지않다.(내 얘기..)
 
-따라서 스프링 트랜잭션을 사용할 때 쉽게 실수할 수 있는 부분과 주의사항 몇 가지를 알아보자.
+따라서 선언적 트랜잭션을 사용할 때 자주 실수할 수 있는 몇 가지 주의사항을 알아보자.
+
+### private 메서드와 final 키워드
+
+트랜잭션 AOP는 대상에 대한 프록시 객체를 생성하고 트랜잭션 기능을 끼워넣는 식으로 동작한다. 이때 타겟 오브젝트를 상속(extends)하거나 구현(implements)해서 프록시를 생성하는데 트랜잭션을 적용해야 할 대상 메서드의 접근 제어자가 private인 경우 재정의가 불가능하고 호출 자체도 불가능하다.
+
+이와 같은 맥락으로 메서드에 final 키워드를 명시하면 재정의를 금지시키므로 AOP를 적용할 대상이 되지 못한다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d65eef6c-9e55-49c5-9e94-6d85af7b9885/Untitled.png)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/efe41ab3-4365-452e-88cf-b891ab640747/Untitled.png)
+
+### 프록시 내부 호출
+
+```java
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class SomeService {
+
+    private final SomeRepository someRepository;
+
+    public void targetMethod() {
+			internalMethod();
+    }
+
+    @Transactional
+    public void innerMethod() {
+			someRepository.save(new Some("something!"));
+    }
+}
+```
+
+위 코드의 트랜잭션은 정상적으로 동작하지 않는다.
+앞서 살펴봤듯 트랜잭션 AOP를 적용할 때 타겟 오브젝트의 **프록시 객체를 생성하**고 트랜잭션 기능을 끼워넣는다. 따라서 클라이언트는 **프록시 빈을 호출**하고, 트랜잭션을 시작한 후 **프록시의 타겟 메서드를 호출**한다. 타겟 메서드 실행 후에는 커밋이나 롤백을 수행한다. 이 말은 클라이언트가 프록시로 감싸진 타겟 메서드를 호출했을 때 정상적으로 트랜잭션 AOP가 적용될 수 있다는 걸 나타낸다.
+
+하지만 위 예제에서는 `targetMethod()`가 @Transactional 애너테이션이 붙어있는 내부 메서드 `innerMethod()`를 호출하는 형태를 가지고 있다.
+
+`targetMethod()`는 클라이언트에게 호출될 때 프록시를 통해 호출되지만 실제 트랜잭션이 필요한 `innerMethod()`는 프록시에게 호출되는 것이 아닌 자기 자신(targetMethod)에게 호출당하는 것이기 때문에 트랜잭션이 동작하지 않는 것이다.
+
+이 문제는 innerMethod()를 분리해서 프록시로 감싸지게 만들거나 자기 자신을 주입(self injection)을 통해 해결할 수 있다.
+
+```java
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class SomeService {
+
+    private final InnerService innerService;
+
+    public void targetMethod() {
+			// 프록시로 감싸진 internalMethod 호출
+			innerService.internalMethod();
+    }
+}
+
+// innerMethod 분리!
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public class InnerService {
+
+    private final SomeRepository someRepository;
+
+    @Transactional
+    public void innerMethod() {
+			someRepository.save(new Some("something!"));
+    }
+}
+```
+
+```java
+// self injection을 통해 innerMethod를 프록시로 감싸기
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class SomeService {
+		@Autowired
+    private SomeService someService;
+    private final SomeRepository someRepository;
+
+    public void targetMethod() {
+			someService.internalMethod();
+    }
+
+    @Transactional
+    public void innerMethod() {
+			someRepository.save(new Some("something!"));
+    }
+}
+```
