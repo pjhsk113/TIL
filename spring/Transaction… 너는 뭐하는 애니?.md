@@ -308,12 +308,12 @@ public class SomeService {
     private final SomeRepository someRepository;
 
     public void targetMethod() {
-			internalMethod();
+        internalMethod();
     }
 
     @Transactional
     public void innerMethod() {
-			someRepository.save(new Some("something!"));
+        someRepository.save(new Some("something!"));
     }
 }
 ```
@@ -336,8 +336,8 @@ public class SomeService {
     private final InnerService innerService;
 
     public void targetMethod() {
-			// 프록시로 감싸진 internalMethod 호출
-			innerService.internalMethod();
+        // 프록시로 감싸진 internalMethod 호출
+        innerService.internalMethod();
     }
 }
 
@@ -351,7 +351,7 @@ public class InnerService {
 
     @Transactional
     public void innerMethod() {
-			someRepository.save(new Some("something!"));
+        someRepository.save(new Some("something!"));
     }
 }
 ```
@@ -367,12 +367,12 @@ public class SomeService {
     private final SomeRepository someRepository;
 
     public void targetMethod() {
-			someService.internalMethod();
+        someService.internalMethod();
     }
 
     @Transactional
     public void innerMethod() {
-			someRepository.save(new Some("something!"));
+        someRepository.save(new Some("something!"));
     }
 }
 ```
@@ -385,34 +385,34 @@ public class SomeService {
 
 ```java
 1) 처리 시작
-        2) 사용자의 로그인 여부 확인
-        3) 사용자의 글쓰기 내용의 오류 여부 확인
-        4) 첨부로 업로드된 파일 확인 및 저장
-        5) 사용자의 입력 내용을 DBMS에 저장
-        6) 첨부 파일 정보를 DBMS에 저장
-        7) 저장된 내용 또는 기타 정보를 DBMS에서 조회
-        8) 게시물 등록에 대한 알림 메일 발송
-        9) 알림 메일 발송 이력을 DBMS에 저장
-        10) 처리 완료
+2) 사용자의 로그인 여부 확인
+3) 사용자의 글쓰기 내용의 오류 여부 확인
+4) 첨부로 업로드된 파일 확인 및 저장
+5) 사용자의 입력 내용을 DBMS에 저장
+6) 첨부 파일 정보를 DBMS에 저장
+7) 저장된 내용 또는 기타 정보를 DBMS에서 조회
+8) 게시물 등록에 대한 알림 메일 발송
+9) 알림 메일 발송 이력을 DBMS에 저장
+10) 처리 완료
 ```
 
 @Transactional을 이용했다면 처리 로직의 트랜잭션의 범위는 다음과 같이 잡히게 된다.
 
 ```java
 1) 처리 시작
-        => 데이터베이스 커넥션 생성
-        => 트랜잭션 시작
-        2) 사용자의 로그인 여부 확인
-        3) 사용자의 글쓰기 내용의 오류 여부 확인
-        4) 첨부로 업로드된 파일 확인 및 저장
-        5) 사용자의 입력 내용을 DBMS에 저장
-        6) 첨부 파일 정보를 DBMS에 저장
-        7) 저장된 내용 또는 기타 정보를 DBMS에서 조회
-        8) 게시물 등록에 대한 알림 메일 발송
-        9) 알림 메일 발송 이력을 DBMS에 저장
-        <= 트랜잭션 종료(COMMIT)
-        <= 데이터베이스 커넥션 반납
-        10) 처리 완료
+	=> 데이터베이스 커넥션 생성
+	=> 트랜잭션 시작
+2) 사용자의 로그인 여부 확인
+3) 사용자의 글쓰기 내용의 오류 여부 확인
+4) 첨부로 업로드된 파일 확인 및 저장
+5) 사용자의 입력 내용을 DBMS에 저장
+6) 첨부 파일 정보를 DBMS에 저장
+7) 저장된 내용 또는 기타 정보를 DBMS에서 조회
+8) 게시물 등록에 대한 알림 메일 발송
+9) 알림 메일 발송 이력을 DBMS에 저장
+	<= 트랜잭션 종료(COMMIT)
+	<= 데이터베이스 커넥션 반납
+10) 처리 완료
 ```
 
 비즈니스 로직 흐름에 따라 메서드 수행 로직 전체가 트랜잭션 범위로 설정된다.
@@ -455,22 +455,21 @@ public class SomeService {
   private final PlatformTransactionManager transactionManager;
 
 	public void businessLogic() {
-			사용자의 로그인 여부 확인();
-			사용자의 글쓰기 내용의 오류 여부 확인();
-			첨부로 업로드된 파일 확인 및 저장();
-			doSaveTransaction();
-			저장된 내용 또는 기타 정보를 DBMS에서 조회();
-			게시물 등록에 대한 알림 메일 발송();
-			saveEmailHistoryTransaction();
+        사용자의 로그인 여부 확인();
+        사용자의 글쓰기 내용의 오류 여부 확인();
+        첨부로 업로드된 파일 확인 및 저장();
+        doSaveTransaction();
+        저장된 내용 또는 기타 정보를 DBMS에서 조회();
+        게시물 등록에 대한 알림 메일 발송();
+        saveEmailHistoryTransaction();
 	}
-}
 
 	public void doSaveTransaction() {
 	    TransactionStatus transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
 	    
 	    try {
-					사용자의 입력 내용을 DBMS에 저장();
-					첨부 파일 정보를 DBMS에 저장();
+            사용자의 입력 내용을 DBMS에 저장();
+            첨부 파일 정보를 DBMS에 저장();
 	        transactionManager.commit(transactionStatus);
 	    } catch (Exception e) {
 	        transactionManager.rollback(transactionStatus);
@@ -481,13 +480,13 @@ public class SomeService {
 	    TransactionStatus transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
 	    
 	    try {
-					알림 메일 발송 이력을 DBMS에 저장();
+            알림 메일 발송 이력을 DBMS에 저장();
 	        transactionManager.commit(transactionStatus);
 	    } catch (Exception e) {
 	        transactionManager.rollback(transactionStatus);
 	    }
 	}
-
+}
 ```
 
 **TransactionTemplate**
@@ -502,35 +501,34 @@ public class SomeService {
 	private final TransactionTemplate transactionTemplate;
 
 	public void businessLogic() {
-			사용자의 로그인 여부 확인();
-			사용자의 글쓰기 내용의 오류 여부 확인();
-			첨부로 업로드된 파일 확인 및 저장();
-			doSaveTransaction();
-			저장된 내용 또는 기타 정보를 DBMS에서 조회();
-			게시물 등록에 대한 알림 메일 발송();
-			saveEmailHistoryTransaction();
+        사용자의 로그인 여부 확인();
+        사용자의 글쓰기 내용의 오류 여부 확인();
+        첨부로 업로드된 파일 확인 및 저장();
+        doSaveTransaction();
+        저장된 내용 또는 기타 정보를 DBMS에서 조회();
+        게시물 등록에 대한 알림 메일 발송();
+        saveEmailHistoryTransaction();
 	}
-}
 
 	public void doSaveTransaction() {
-			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+      transactionTemplate.execute(new TransactionCallbackWithoutResult() {
           @Override
           protected void doInTransactionWithoutResult(TransactionStatus status) {
               사용자의 입력 내용을 DBMS에 저장();
-							첨부 파일 정보를 DBMS에 저장();
+              첨부 파일 정보를 DBMS에 저장();
           }
       });
 	}
 
 	public void saveEmailHistoryTransaction() {
-			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+      transactionTemplate.execute(new TransactionCallbackWithoutResult() {
           @Override
           protected void doInTransactionWithoutResult(TransactionStatus status) {
-							알림 메일 발송 이력을 DBMS에 저장();
+              알림 메일 발송 이력을 DBMS에 저장();
           }
       });
 	}
-
+}
 ```
 
 TransactionTemplate의 경우 내부 execute 메서드에 try-catch문이 정의되어 있어 커밋과 롤백에 대한 설정을 따로 해줄 필요가 없다.
@@ -549,28 +547,27 @@ public class SomeService {
 	private final TransactionTemplate transactionTemplate;
 
 	public void businessLogic() {
-			사용자의 로그인 여부 확인();
-			사용자의 글쓰기 내용의 오류 여부 확인();
-			첨부로 업로드된 파일 확인 및 저장();
-			doSaveTransaction();
-			저장된 내용 또는 기타 정보를 DBMS에서 조회();
-			게시물 등록에 대한 알림 메일 발송();
-			saveEmailHistoryTransaction();
+        사용자의 로그인 여부 확인();
+        사용자의 글쓰기 내용의 오류 여부 확인();
+        첨부로 업로드된 파일 확인 및 저장();
+        doSaveTransaction();
+        저장된 내용 또는 기타 정보를 DBMS에서 조회();
+        게시물 등록에 대한 알림 메일 발송();
+        saveEmailHistoryTransaction();
 	}
-}
 
 	public void doSaveTransaction() {
-			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
           @Override
           protected void doInTransactionWithoutResult(TransactionStatus status) {
-							try {
+              try {
                   사용자의 입력 내용을 DBMS에 저장();
-									첨부 파일 정보를 DBMS에 저장();
+                  첨부 파일 정보를 DBMS에 저장();
               } catch (Exception e) {
                   status.setRollbackOnly();
               }        
           }
       });
-	}
-
+    }
+}
 ```
