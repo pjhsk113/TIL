@@ -385,41 +385,41 @@ public class SomeService {
 
 ```java
 1) 처리 시작
-2) 사용자의 로그인 여부 확인
-3) 사용자의 글쓰기 내용의 오류 여부 확인
-4) 첨부로 업로드된 파일 확인 및 저장
-5) 사용자의 입력 내용을 DBMS에 저장
-6) 첨부 파일 정보를 DBMS에 저장
-7) 저장된 내용 또는 기타 정보를 DBMS에서 조회
-8) 게시물 등록에 대한 알림 메일 발송
-9) 알림 메일 발송 이력을 DBMS에 저장
-10) 처리 완료
+        2) 사용자의 로그인 여부 확인
+        3) 사용자의 글쓰기 내용의 오류 여부 확인
+        4) 첨부로 업로드된 파일 확인 및 저장
+        5) 사용자의 입력 내용을 DBMS에 저장
+        6) 첨부 파일 정보를 DBMS에 저장
+        7) 저장된 내용 또는 기타 정보를 DBMS에서 조회
+        8) 게시물 등록에 대한 알림 메일 발송
+        9) 알림 메일 발송 이력을 DBMS에 저장
+        10) 처리 완료
 ```
 
 @Transactional을 이용했다면 처리 로직의 트랜잭션의 범위는 다음과 같이 잡히게 된다.
 
 ```java
 1) 처리 시작
-	=> 데이터베이스 커넥션 생성
-	=> 트랜잭션 시작
-2) 사용자의 로그인 여부 확인
-3) 사용자의 글쓰기 내용의 오류 여부 확인
-4) 첨부로 업로드된 파일 확인 및 저장
-5) 사용자의 입력 내용을 DBMS에 저장
-6) 첨부 파일 정보를 DBMS에 저장
-7) 저장된 내용 또는 기타 정보를 DBMS에서 조회
-8) 게시물 등록에 대한 알림 메일 발송
-9) 알림 메일 발송 이력을 DBMS에 저장
-	<= 트랜잭션 종료(COMMIT)
-	<= 데이터베이스 커넥션 반납
-10) 처리 완료
+        => 데이터베이스 커넥션 생성
+        => 트랜잭션 시작
+        2) 사용자의 로그인 여부 확인
+        3) 사용자의 글쓰기 내용의 오류 여부 확인
+        4) 첨부로 업로드된 파일 확인 및 저장
+        5) 사용자의 입력 내용을 DBMS에 저장
+        6) 첨부 파일 정보를 DBMS에 저장
+        7) 저장된 내용 또는 기타 정보를 DBMS에서 조회
+        8) 게시물 등록에 대한 알림 메일 발송
+        9) 알림 메일 발송 이력을 DBMS에 저장
+        <= 트랜잭션 종료(COMMIT)
+        <= 데이터베이스 커넥션 반납
+        10) 처리 완료
 ```
 
-하지만 2~4번 작업은 단순 조회 작업이므로 트랜잭션에 포함될 필요는 없다. 또한, 8번의 **메일 발송 작업은 불필요한 트랜잭션 범위(제어할 수 없음)**일뿐더러 만약 네트워크 장애 등의 이유로 외부 메일 서버가 통신 불가의 상태에 빠진다면 웹 서버뿐아니라 DB 서버 장애로까지 이어질 수 있기 때문에 트랜잭션 범위에서 제외시키는 것이 좋다.
+비즈니스 로직 흐름에 따라 메서드 수행 로직 전체가 트랜잭션 범위로 설정된다.
 
-실제 데이터 저장이 일어나는 시점은 5번과 6번, 9번이다.
+하지만 2~4번 작업은 단순 조회 작업이므로 트랜잭션에 포함될 필요는 없다. 또한, 8번의 **메일 발송 작업은 외부 메일 서버에서 수행하므로 불필요한 트랜잭션 범위**이고 만약 네트워크 장애 등의 이유로 외부 메일 서버가 통신 불가의 상태에 빠진다면 웹 서버뿐아니라 DB 서버 장애로까지 이어질 수 있기 때문에 트랜잭션 범위에서 제외시키는 것이 좋다.
 
-긴 트랜잭션을 다음과 같이 최소화하고 나눠주면 위험도를 낮출 수 있다.
+실제 DB에 데이터 저장이 일어나는 시점은 5번과 6번, 9번이기 때문에 다음과 같이 트랜잭션 범위를 최소화하고 나눠주면 위험도를 낮출 수 있다.
 
 ```java
 1) 처리 시작
@@ -438,4 +438,139 @@ public class SomeService {
 	<= 트랜잭션 종료(COMMIT)
 	<= 데이터베이스 커넥션 종료(또는 커넥션 풀에 반납) 
 10) 처리 완료
+```
+
+위의 예시처럼 트랜잭션 범위를 최소화하기 위해서는 개발자가 직접 트랜잭션의 경계를 설정해줘야 한다. 트랜잭션의 경계를 수동으로 설정하는 방법은 앞서 살펴본 **트랜잭션 서비스 추상화 계층을 사용하는 방법**과 **TransactionTemplate를 사용하는 방법**이 있다.
+
+**트랜잭션 서비스 추상화 계층**
+
+```java
+/**
+* 트랜잭션 서비스 추상화 계층을 이용한 트랜잭션 범위 최소화
+*/
+@Service
+@RequiredArgsConstructor
+public class SomeService {
+	// 환경에 맞는 트랜잭션 매니저 주입
+  private final PlatformTransactionManager transactionManager;
+
+	public void businessLogic() {
+			사용자의 로그인 여부 확인();
+			사용자의 글쓰기 내용의 오류 여부 확인();
+			첨부로 업로드된 파일 확인 및 저장();
+			doSaveTransaction();
+			저장된 내용 또는 기타 정보를 DBMS에서 조회();
+			게시물 등록에 대한 알림 메일 발송();
+			saveEmailHistoryTransaction();
+	}
+}
+
+	public void doSaveTransaction() {
+	    TransactionStatus transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
+	    
+	    try {
+					사용자의 입력 내용을 DBMS에 저장();
+					첨부 파일 정보를 DBMS에 저장();
+	        transactionManager.commit(transactionStatus);
+	    } catch (Exception e) {
+	        transactionManager.rollback(transactionStatus);
+	    }
+	}
+
+	public void saveEmailHistoryTransaction() {
+	    TransactionStatus transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
+	    
+	    try {
+					알림 메일 발송 이력을 DBMS에 저장();
+	        transactionManager.commit(transactionStatus);
+	    } catch (Exception e) {
+	        transactionManager.rollback(transactionStatus);
+	    }
+	}
+
+```
+
+**TransactionTemplate**
+
+```java
+/**
+* TransactionTemplate을 이용한 트랜잭션 범위 최소화
+*/
+@Service
+@RequiredArgsConstructor
+public class SomeService {
+	private final TransactionTemplate transactionTemplate;
+
+	public void businessLogic() {
+			사용자의 로그인 여부 확인();
+			사용자의 글쓰기 내용의 오류 여부 확인();
+			첨부로 업로드된 파일 확인 및 저장();
+			doSaveTransaction();
+			저장된 내용 또는 기타 정보를 DBMS에서 조회();
+			게시물 등록에 대한 알림 메일 발송();
+			saveEmailHistoryTransaction();
+	}
+}
+
+	public void doSaveTransaction() {
+			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+          @Override
+          protected void doInTransactionWithoutResult(TransactionStatus status) {
+              사용자의 입력 내용을 DBMS에 저장();
+							첨부 파일 정보를 DBMS에 저장();
+          }
+      });
+	}
+
+	public void saveEmailHistoryTransaction() {
+			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+          @Override
+          protected void doInTransactionWithoutResult(TransactionStatus status) {
+							알림 메일 발송 이력을 DBMS에 저장();
+          }
+      });
+	}
+
+```
+
+TransactionTemplate의 경우 내부 execute 메서드에 try-catch문이 정의되어 있어 커밋과 롤백에 대한 설정을 따로 해줄 필요가 없다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e352e0eb-fb18-4bac-8207-1c967669875b/Untitled.png)
+
+만약 특정 예외에 대한 롤백을 수행하고 싶다면 로직에 try-catch문을 추가해주기만 하면된다.
+
+```java
+/**
+* TransactionTemplate을 이용한 트랜잭션 범위 최소화
+*/
+@Service
+@RequiredArgsConstructor
+public class SomeService {
+	private final TransactionTemplate transactionTemplate;
+
+	public void businessLogic() {
+			사용자의 로그인 여부 확인();
+			사용자의 글쓰기 내용의 오류 여부 확인();
+			첨부로 업로드된 파일 확인 및 저장();
+			doSaveTransaction();
+			저장된 내용 또는 기타 정보를 DBMS에서 조회();
+			게시물 등록에 대한 알림 메일 발송();
+			saveEmailHistoryTransaction();
+	}
+}
+
+	public void doSaveTransaction() {
+			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+          @Override
+          protected void doInTransactionWithoutResult(TransactionStatus status) {
+							try {
+                  사용자의 입력 내용을 DBMS에 저장();
+									첨부 파일 정보를 DBMS에 저장();
+              } catch (Exception e) {
+                  status.setRollbackOnly();
+              }        
+          }
+      });
+	}
+
 ```
