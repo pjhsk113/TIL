@@ -1,8 +1,6 @@
-# [Spring] Transaction… 너는 뭐하는 애니?
-
 # 트랜잭션이란?
 
-트랜잭션은 어떤 작업의 완정성을 보장해주는 것을 의미한다.
+트랜잭션은 어떤 작업의 완전성을 보장해주는 것을 의미한다.
 논리적인 작업 단위를 완벽하게 처리하거나 모두 취소하여 작업의 일부만 적용되는 현상을 방지하는 기술이다. 즉, 데이터의 정합성을 보장하기 위한 기능라고 볼 수 있다.
 
 트랜잭션의 가장 쉬운 예로 계좌 송금 시스템을 떠올릴 수 있다.
@@ -14,8 +12,8 @@
 4. B에게 금액 송금
 5. B의 계좌에 송금된 금액이 가산
 
-이러한 논리적 작업을 수행하는 도중 만약 4번 과정에서(B에게 금액을 송금) 장애가 발생한다면 어떻게 될까?
-당연히 송금은 취소되고 A의 계좌에서 차감됐던 금액도 원상복구(롤백)가 된다.
+이러한 논리적 작업을 수행하는 도중 4번 과정에서(B에게 금액을 송금) 장애가 발생한다면 어떻게 될까?
+당연히 송금은 취소되고 A의 계좌에서 차감됐던 금액도 원상복구가 된다.
 이게 가능한 이유가 바로 **트랜잭션 덕분이다.**
 
 이런 상황에 트랜잭션이 보장되지 않았다면 A의 계좌는 송금 금액만큼 차감됐지만 B의 계좌 금액은 가산되지 않는 불상사가 일어났을 것이다.
@@ -47,23 +45,23 @@
 ```java
 @Service
 @RequiredArgsConstructor
-public class SomeService {
-	// 환경에 맞는 트랜잭션 매니저 주입
-  private final PlatformTransactionManager transactionManager;
+public class SomeService { 
+    // 환경에 맞는 트랜잭션 매니저 주입   
+    private final PlatformTransactionManager transactionManager;
 
-	public void remittance() {
-	    TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
-			// 트랜잭션 시작
-	    TransactionStatus transactionStatus = transactionManager.getTransaction(transactionDefinition);
-	    
-	    try {
-	        // 송금에 대한 비즈니스 로직 실행
-					businessLogic();
-	        transactionManager.commit(transactionStatus);
-	    } catch (Exception e) {
-	        transactionManager.rollback(transactionStatus);
-	    }
-	}
+    public void remittance() {
+        TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
+        // 트랜잭션 시작
+        TransactionStatus transactionStatus = transactionManager.getTransaction(transactionDefinition);
+        
+        try {
+            // 송금에 대한 비즈니스 로직 실행
+            businessLogic();
+            transactionManager.commit(transactionStatus);
+        } catch (Exception e) {
+            transactionManager.rollback(transactionStatus);
+        }
+    }
 }
 ```
 
@@ -72,17 +70,17 @@ public class SomeService {
 DefaultTransactionDefinition은 트랜잭션에 대한 네 가지 속성(propagation, isolationLevel, timeout, readOnly)을 담고 있다.
 
 - propagation(트랜잭션 전파 옵션)
-    - 트랜잭션의 경계에서 이미 선행되는 트랜잭션이 있거나 없는 경우 트랜잭션을 어떻게 동작시킬 것인가에 대한 설정
-    - 이 속성에 대한 설명은 이후 아래에서 더 자세히 살펴보자.
+  - 트랜잭션의 경계에서 이미 선행되는 트랜잭션이 있거나 없는 경우 트랜잭션을 어떻게 동작시킬 것인가에 대한 설정
+  - 이 속성에 대한 설명은 이후 아래에서 더 자세히 살펴보자.
 - isolation(격리 수준)
-    - 트랜잭션 격리 수준에 대한 설정
-    - 스프링 트랜잭션의 기본값은 *`Isolation.DEFAULT`*로 현재 사용중인 DB 격리 수준의 기본값을 따른다.
-    - 격리 수준에 대한 자세한 설명은 다음을 참고하자.
+  - 트랜잭션 격리 수준에 대한 설정
+  - 스프링 트랜잭션의 기본값은 *`Isolation.DEFAULT`*로 현재 사용중인 DB 격리 수준의 기본값을 따른다.
+  - 격리 수준에 대한 자세한 설명은 다음을 참고하자.
 - timeout(제한 시간)
-    - 트랜잭션의 수행시간을 제한
+  - 트랜잭션의 수행시간을 제한
 - readOnly(읽기 전용)
-    - 읽기 전용 트랜잭션 설정
-    - 해당 옵션을 명시하면 트랜잭션에서 시도되는 데이터 조작을 방지할 수 있다.
+  - 읽기 전용 트랜잭션 설정
+  - 해당 옵션을 명시하면 트랜잭션에서 시도되는 데이터 조작을 방지할 수 있다.
 
 ### TransactionStatus
 
@@ -100,12 +98,12 @@ TransactionStatus는 시작된 **트랜잭션에 대한 구분 정보**를 담�
 ```java
 @Service
 @RequiredArgsConstructor
-public class SomeService {
-
-	@Transactinal
-	public void remittance() {
-		businessLogic();
-	}
+public class SomeService { 
+    
+    @Transactinal 
+    public void remittance() {
+        businessLogic();
+    }
 }
 ```
 
@@ -122,20 +120,21 @@ Spring의 AOP는 **런타임 시점에 별도의 코드 조작없이** 자동으
 
 ```java
 // 프록시 생성
-public class TargetObjectProxy {
-	private SomeService target;
-	
-	public void remittance() {
-	    TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
-	    TransactionStatus transactionStatus = transactionManager.getTransaction(transactionDefinition);
-	    
-	    try {
-					// target 메서드 호출
-					target.businessLogic();
-	        transactionManager.commit(transactionStatus);
-	    } catch (Exception e) {
-	        transactionManager.rollback(transactionStatus);
-	    }
+public class TargetObjectProxy { 
+    private SomeService target;
+    
+    public void remittance() {
+        TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
+        TransactionStatus transactionStatus = transactionManager.getTransaction(transactionDefinition);
+        
+        try {
+            // target 메서드 호출
+            target.businessLogic();
+            transactionManager.commit(transactionStatus);
+        } catch (Exception e) {
+            transactionManager.rollback(transactionStatus);
+        }
+    }
 }
 ```
 
@@ -148,13 +147,13 @@ Spring은 반복적인 위임 코드가 필요한 **프록시 클래스 코드�
 
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/22090711-7618-4dbf-b9d7-66fe69ed26d1/Untitled.png)
 
-**JDK Dynamic Proxy는 인터페이스를 구현한 오브젝트에 대해** 프록시 클래스를 런타임에 동적으로 생성해준다. 타겟 오브젝트의 **인터페이스를 상속한 프록시 객체를 생성하므로 구체 클래스에 대한 타입 캐스팅이 불가능**하다. 따라서 프록시 빈을 정상적으로 사용하려면 의존 주입시 **반드시 인터페이스의 타입을 명시**해야한다.
+**JDK Dynamic Proxy는 인터페이스를 구현한 오브젝트에 대해** 프록시 클래스를 런타임에 동적으로 생성해준다. 타겟 오브젝트의 **인터페이스를 구현한 프록시 객체를 생성하므로 구체 클래스에 대한 타입 캐스팅이 불가능**하다. 따라서 프록시 빈을 정상적으로 사용하려면 의존 주입시 **반드시 인터페이스의 타입을 명시**해야한다.
 
 ```java
 @Controller
-public class SomeController {
-	@Autowired
-	private SomeServiceImpl someService; // 런타임 오류 발생 -> 구체 클래스 타입 캐스팅 불가능
+public class SomeController { 
+    @Autowired 
+    private SomeServiceImpl someService; // 런타임 오류 발생 -> 구체 클래스 타입 캐스팅 불가능
 }
 
 @Service
@@ -215,19 +214,18 @@ public class SomeServiceImpl implements SomeService {
 ```java
 @Service
 @RequiredArgsConstructor
-public class SomeService {
-
-	// 기본값인 REQUIRED 전파 옵션 사용
-	@Transactional
-	public void remittance1() {
-		businessLogic();
-	}
-
-	// REQUIRES_NEW 전파 옵션 사용
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void remittance2() {
-		businessLogic();
-	}
+public class SomeService { 
+    // 기본값인 REQUIRED 전파 옵션 사용
+    @Transactional 
+    public void remittance1() {
+        businessLogic();
+    }
+    
+    // REQUIRES_NEW 전파 옵션 사용
+    @Transactional(propagation = Propagation.REQUIRES_NEW) 
+    public void remittance2() {
+        businessLogic();
+    }
 }
 ```
 
@@ -245,13 +243,13 @@ rollbackFor 속성은 Checked Exception 발생 시 롤백을 수행할 예외를
 // rollbackFor 옵션 생략
 @Transactional
 public void remittance() {
-	businessLogic();
-}
+    businessLogic();
+
 
 // 위 메서드와 동일한 동작
 @Transactional(rollbackFor = { RuntimeException.class, Error.class })
 public void remittance() {
-	businessLogic();
+    businessLogic();
 }
 ```
 
@@ -261,13 +259,13 @@ rollbackFor 옵션에는 Throwable의 하위 클래스를 모두 지정할 수 �
 // 모든 예외에 대해 롤백 수행
 @Transactional(rollbackFor = { Exception.class })
 public void remittance() {
-	businessLogic();
+    businessLogic();
 }
 
 // 구체적인 CheckedException을 명시해 특정 예외 발생 시 롤백을 수행
 @Transactional(rollbackFor = { FileNotFoundException.class, RuntimeException.class, Error.class })
 public void remittance() {
-	businessLogic();
+    businessLogic();
 }
 ```
 
@@ -277,7 +275,7 @@ noRollbackFor 옵션은 rollbackFor 옵션과 반대로 Error나 RuntimeExceptio
 // 특정 비즈니스 로직에서 발생하는 예외(RuntimeException 상속)에 대해서만 롤백 수행
 @Transactional(noRollbackFor = { SomeBusinessException.class })
 public void remittance() {
-	businessLogic();
+    businessLogic();
 }
 ```
 
@@ -304,10 +302,11 @@ public void remittance() {
 @Service
 @RequiredArgsConstructor
 public class SomeService {
+
     private final SomeRepository someRepository;
 
     public void targetMethod() {
-        internalMethod();
+        innerMethod();
     }
 
     @Transactional
@@ -320,17 +319,18 @@ public class SomeService {
 위 코드의 트랜잭션은 정상적으로 동작하지 않는다.
 앞서 살펴봤듯 트랜잭션 AOP를 적용할 때 타겟 오브젝트의 **프록시 객체를 생성하**고 트랜잭션 기능을 끼워넣는다. 따라서 클라이언트는 **프록시 빈을 호출**하고, 트랜잭션을 시작한 후 **프록시의 타겟 메서드를 호출**한다. 타겟 메서드 실행 후에는 커밋이나 롤백을 수행한다. 이 말은 클라이언트가 프록시로 감싸진 타겟 메서드를 호출했을 때 정상적으로 트랜잭션 AOP가 적용될 수 있다는 걸 나타낸다.
 
-하지만 위 예제에서는 `targetMethod()`가 @Transactional 애너테이션이 붙어있는 내부 메서드 `innerMethod()`를 호출하는 형태를 가지고 있다.
+하지만 위 예제에서는 `targetMethod()`가 내부 메서드 `innerMethod()`를 호출하는 형태를 가지고 있다.
 
 `targetMethod()`는 클라이언트에게 호출될 때 프록시를 통해 호출되지만 실제 트랜잭션이 필요한 `innerMethod()`는 프록시에게 호출되는 것이 아닌 자기 자신(targetMethod)에게 호출당하는 것이기 때문에 트랜잭션이 동작하지 않는 것이다.
 
-이 문제는 innerMethod()를 분리해서 프록시로 감싸지게 만들거나 자기 자신을 주입(self injection)을 통해 해결할 수 있다.
+이 문제는 innerMethod()를 분리해서 프록시로 감싸지게 만들거나 self injection을 통해 해결할 수 있다.
 
 ```java
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class SomeService {
+
     private final InnerService innerService;
 
     public void targetMethod() {
@@ -344,6 +344,7 @@ public class SomeService {
 @Component
 @RequiredArgsConstructor
 public class InnerService {
+
     private final SomeRepository someRepository;
 
     @Transactional
@@ -540,31 +541,31 @@ TransactionTemplate의 경우 내부 execute 메서드에 try-catch문이 정의
  */
 @Service
 @RequiredArgsConstructor
-public class SomeService { 
-    private final TransactionTemplate transactionTemplate;
-    
-    public void businessLogic() {
-        사용자의 로그인 여부 확인(); 
-        사용자의 글쓰기 내용의 오류 여부 확인(); 
-        첨부로 업로드된 파일 확인 및 저장(); 
-        doSaveTransaction();
-        저장된 내용 또는 기타 정보를 DBMS에서 조회();
-        게시물 등록에 대한 알림 메일 발송(); 
-        saveEmailHistoryTransaction();
-    }
-    
-    public void doSaveTransaction() {
-        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-            @Override 
-            protected void doInTransactionWithoutResult(TransactionStatus status) {
-                try {
-                    사용자의 입력 내용을 DBMS에 저장();
-                    첨부 파일 정보를 DBMS에 저장();
-                } catch (Exception e) {
-                    status.setRollbackOnly();
-                }
-            }
-        });
-    }
+public class SomeService {
+  private final TransactionTemplate transactionTemplate;
+
+  public void businessLogic() {
+    사용자의 로그인 여부 확인();
+    사용자의 글쓰기 내용의 오류 여부 확인();
+    첨부로 업로드된 파일 확인 및 저장();
+    doSaveTransaction();
+    저장된 내용 또는 기타 정보를 DBMS에서 조회();
+    게시물 등록에 대한 알림 메일 발송();
+    saveEmailHistoryTransaction();
+  }
+
+  public void doSaveTransaction() {
+    transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+      @Override
+      protected void doInTransactionWithoutResult(TransactionStatus status) {
+        try {
+          사용자의 입력 내용을 DBMS에 저장();
+          첨부 파일 정보를 DBMS에 저장();
+        } catch (Exception e) {
+          status.setRollbackOnly();
+        }
+      }
+    });
+  }
 }
 ```
