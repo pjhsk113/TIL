@@ -26,6 +26,7 @@
 - [데이터 바인딩 PropertyEditor](https://github.com/pjhsk113/TIL/blob/main/spring/%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%B0%94%EC%9D%B8%EB%94%A9%20PropertyEditor.md)
 - [Null Safety](https://github.com/pjhsk113/TIL/blob/main/spring/Null%20Safety.md)
 - [@Bean VS @Component](https://github.com/pjhsk113/TIL/blob/main/spring/%40Bean%20VS%20%40Component%20%EC%B0%A8%EC%9D%B4%EC%A0%90%20%EC%A0%95%EB%A6%AC.md)
+- [Transaction 알아보기](https://github.com/pjhsk113/TIL/blob/main/spring/Transaction%E2%80%A6%20%EB%84%88%EB%8A%94%20%EB%AD%90%ED%95%98%EB%8A%94%20%EC%95%A0%EB%8B%88%3F.md)
 
 ### JPA
 
