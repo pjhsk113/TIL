@@ -18,7 +18,7 @@
 
 이런 상황에 트랜잭션이 보장되지 않았다면 A의 계좌는 송금 금액만큼 차감됐지만 B의 계좌 금액은 가산되지 않는 불상사가 일어났을 것이다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9c2ad5fd-92aa-4c56-bd16-957179c8b73b/Untitled.png)
+![](https://blog.kakaocdn.net/dn/tj1Cj/btrMBscrtg9/s4eDpYgKfJCuno7zmGeOLk/img.png)
 
 트랜잭션이란 개념은 우리가 사용하는 모든 서비스에 적용되어있다. 트랜잭션 덕분에 데이터의 정합성이 보장되고그렇기에 우리는 안심하고 서비스를 사용할 수 있게된다.
 
@@ -38,7 +38,7 @@
 
 우리는 각자의 환경에 맞는 TransactionManager 클래스를 주입해서 트랜잭션 추상화 기술을 사용할 수 있다. JDBC를 이용하는 경우는 DataSourceTransactionManager를 주입해 사용하면 되고, JPA를 이용하는 경우JpaTransactionManager를 주입하면 된다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9bf57c28-eced-4e84-870d-175af3c0c7d3/Untitled.png)
+![](https://blog.kakaocdn.net/dn/cqtXaS/btrMDgiio0B/81d798jIGWobgkhqk0eOwk/img.png)
 
 이제 트랜잭션 추상화 API의 사용 방법을 간단히 살펴보자.
 
@@ -112,7 +112,7 @@ public class SomeService {
 어떻게 애너테이션 하나만으로 이런 멋진 일들이 가능한 것일까?
 비밀은 Spring의 핵심 기술 중 하나인 **AOP**에 숨겨져 있다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d80906d1-c99e-4c82-a4d1-8dbac3b550c8/Untitled.png)
+![](https://blog.kakaocdn.net/dn/SXkZ7/btrMBsKka7C/RvpbiiMMCZk2L1X8l3hs3K/img.png)
 
 AOP란 애플리케이션에서 사용되는 부가 기능들을 모듈화해 재사용할 수 있도록하는 기술이다. 예를 들면 트랜잭션이나 로깅, 실행 시간 측정 등 비즈니스 로직과 함께 수행되는 부가 기능들을 모듈화하고, 특정 시점에 끼워 넣어 재사용함으로써 중복을 제거하고 비즈니스 로직과 부가 기능을 명확히 분리하는 것이다.
 
@@ -145,7 +145,7 @@ Spring은 반복적인 위임 코드가 필요한 **프록시 클래스 코드�
 - JDK Dynamic Proxy
 - CGLIB
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/22090711-7618-4dbf-b9d7-66fe69ed26d1/Untitled.png)
+![](https://blog.kakaocdn.net/dn/XtXyQ/btrME3PyL0W/tesQYQpWlkjCRMPHZJfqz1/img.png)
 
 **JDK Dynamic Proxy는 인터페이스를 구현한 오브젝트에 대해** 프록시 클래스를 런타임에 동적으로 생성해준다. 타겟 오브젝트의 **인터페이스를 구현한 프록시 객체를 생성하므로 구체 클래스에 대한 타입 캐스팅이 불가능**하다. 따라서 프록시 빈을 정상적으로 사용하려면 의존 주입시 **반드시 인터페이스의 타입을 명시**해야한다.
 
@@ -162,7 +162,7 @@ public class SomeServiceImpl implements SomeService {
 }
 ```
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9db0d352-534e-4f6f-8dcd-4ae33a1411f4/Untitled.png)
+![](https://blog.kakaocdn.net/dn/k6IM4/btrMDYA9XJs/FNKYd9Ydg9tcbRiv9vkxL0/img.png)
 
 **CGLIB는** 타겟 클래스의 바이트 코드를 조작해 프록시 객체를 생성한다. 타겟 오브젝트를 상속해 프록시 객체를 생성하므로 JDK Dynamic Proxy와는 다르게 구체 클래스에 대해서도 프록시 생성이 가능하다. 리플랙션을 이용하는 JDK Dynamic Proxy에 비해 속도가 빠르며 구체 클래스가 AOP를 사용할 수 있다는 장점이 있다.
 
@@ -174,7 +174,7 @@ public class SomeServiceImpl implements SomeService {
 
 스프링 트랜잭션이 제공하고 있는 속성 정보는 다음과 같다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3c97fdd3-32ac-425b-a869-85e35f1581b7/Untitled.png)
+![](https://blog.kakaocdn.net/dn/brdvDc/btrMDnVSk0S/NIiUOio3ZgmzOmbK11ryfK/img.png)
 
 | 속성(옵션) | 설명 |
 | --- | --- |
@@ -235,7 +235,7 @@ public class SomeService {
 
 rollbackFor 속성은 Checked Exception 발생 시 롤백을 수행할 예외를 설정할 때 사용된다. 해당 속성 값으로는 Throwable의 하위 클래스 범위 내에 N개의 예외 클래스를 지정할 수 있다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a9b97507-73c4-4c77-9894-581ffc629c5a/Untitled.png)
+![](https://blog.kakaocdn.net/dn/bk9Dek/btrMBsXQH0a/A1K82b3bC9U2efa6hhN1NK/img.png)
 
 @Transactional 애너테이션의 rollbackFor 속성의 기본 값은 RuntimeException과 Error이다. rollbackFor 속성을 명시하지 않은 경우 롤백의 대상은 RuntimeException과 Error가 된다.
 
@@ -291,9 +291,9 @@ public void remittance() {
 
 이와 같은 맥락으로 메서드에 final 키워드를 명시하면 재정의를 금지시키므로 AOP를 적용할 대상이 되지 못한다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d65eef6c-9e55-49c5-9e94-6d85af7b9885/Untitled.png)
+![](https://blog.kakaocdn.net/dn/tIVHg/btrMBsQ5HdX/Ck4I4KS9R3ycz2A3uGMybK/img.png)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/efe41ab3-4365-452e-88cf-b891ab640747/Untitled.png)
+![](https://blog.kakaocdn.net/dn/m8bXZ/btrMBsDvbFT/pIVw0HK3F10T9H7b1CseyK/img.png)
 
 ### 프록시 내부 호출
 
@@ -531,7 +531,7 @@ public class SomeService {
 
 TransactionTemplate의 경우 내부 execute 메서드에 try-catch문이 정의되어 있어 커밋과 롤백에 대한 설정을 따로 해줄 필요가 없다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e352e0eb-fb18-4bac-8207-1c967669875b/Untitled.png)
+![](https://blog.kakaocdn.net/dn/cHuovV/btrMzDMbplt/P98PTmYOPTYmPmwKsdJNNk/img.png)
 
 만약 특정 예외에 대한 롤백을 수행하고 싶다면 로직에 try-catch문을 추가해주기만 하면된다.
 
