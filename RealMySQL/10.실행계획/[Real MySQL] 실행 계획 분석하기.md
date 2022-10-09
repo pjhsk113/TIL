@@ -1,116 +1,4 @@
-# [Real MySQL 8.0] 실행 계획 확인과 분석
-
-# 실행 계획 확인
-
-MySQL 서버의 실행 계획은 DESC 또는 EXPLAIN 명령으로 확인할 수 있다.
-MySQL 8.0부터는 실행 계획의 출력 포맷과 실제 쿼리의 실행 결과까지 확인할 수 있는 기능이 추가됐다.
-
-## 실행 계획 출력 포맷
-
-MySQL 8.0 이전 버전에서는 EXPLAIN EXTENDED 또는 EXPLAIN PARTITIONS 명령이 구분돼 있었지만, 해당 옵션은 현재(MySQL 8.0) 문법에서 제거됐다.
-
-MySQL 8.0부터는 **FORMAT 옵션을 사용해** 실행 계획의 표시 방법을 **JSON이나 TREE, 단순 테이블 형태**로 선택할 수 있다.
-
-EXPLAIN의 기본값은 테이블 형태 출력이다.
-
-```sql
-// 테이블 형태로 출력
-EXPLAIN 
-SELECT *
-FROM employees e
-	INNER JOIN salaries s ON s.emp_no=e.emp_no
-WHERE first_name='ABC';
-
-+----+------------+--------+----------+-----+---------------------+-------------+--------+------+-----+---------+------+
-|id  |select_type | table |partitions |type |possible_keys        |key          |key_len |ref   |rows |filtered |Extra |
-+----+------------+--------+----------+-----+---------------------+-------------+--------+------+-----+---------+------+
-| 1  |SIMPLE      | e     | NULL      |ref  |PRIMARY,ix_firstname |ix_firstname |58      |const | 1   | 100.00  | NULL |
-| 1  |SIMPLE      | s     | NULL      |ref  |PRIMARY              |PRIMARY      |4       |const | 10  | 100.00  | NULL |
-+----+------------+--------+----------+-----+---------------------+-------------+--------+------+-----+---------+------+
-```
-
-```sql
-// 트리 형태로 출력
-EXPLAIN FORMAT=TREE 
-SELECT *
-FROM employees e
-	INNER JOIN salaries s ON s.emp_no=e.emp_no
-WHERE first_name='ABC'\G
-
-*************************** 1. row ***************************
-EXPLAIN:-> Nested loop inner join (cost=2.40 rows=10)
--> Index lookup on e using ix_firstname (first_name='ABC') (cost=0.35 rows=1) 
--> Index lookup on s using PRIMARY(emp_no=e.emp_no) (cost=2.05 rows=10)
-```
-
-```sql
-// JSON 형태로 출력
-EXPLAIN FORMAT=JSON 
-SELECT *
-FROM employees e
-	INNER JOIN salaries s ON s.emp_no=e.emp_no
-WHERE first_name='ABC'\G
-
-*************************** 1, row ***************************
-EXPLAIN:{ 
-    "query_block" : {
-        "select_id": 1, 
-        "cost_info" : {
-            "query_cost" :"2.40"
-        }, 
-        "nested_loop":[
-        {
-            "table": {
-                "table.name":"e", 
-                "access_type":"ref", 
-                "possible_keys":[
-                    "PRIMARY",
-                    "ix_firstname"
-                ],
-                "key":"ix_firstnam e", 
-                "used_key_parts":[
-                    "first_name"
-                ],
-......
-```
-
-## 쿼리의 실행 시간 확인
-
-MySQL 8.0.18 버전부터 EXPLAIN ANALYZE 기능이 추가돼 쿼리의 실행 계획과 단계별 소요된 시간 정보를 확인할 수 있다.
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f0cc6636-535a-47d1-ade7-e9e9fea6b288/Untitled.png)
-
-실제 실행 순서는 다음 기준으로 읽으면 된다.
-
-- 들여쓰기가 같은 레벨에서는 상단에 위치한 라인이 먼저 실행
-- 들여쓰기가 다른 레벨에서는 가장 안쪽에 위치한 라인이 먼저 실행
-
-따라서 위 쿼리는 다음과 같은 실행 순서를 가진다.
-
-```sql
-1. D) Index lookup on e using ix_firstname 
-2. F) Index lookup on s using PRIMARY
-3. E) Filter
-4. C) Nested loop inner join
-5. B) Aggregate using temporary table 
-6. A) Table scan on <temporary>
-
-SELECT e.emp_no, avg(s.salary) 
-FROM employees e
-	INNER JOIN salaries s ON s.emp_no=e.emp_no 
-						AND s.salary>50000
-						AND s.from_date<= '1990-01-01'
-						AND s.to_date>'1990-01-01' 
-WHERE e.first_name='Matt'
-GROUP BY e.hire_date \G
-
-1. employee 테이블에서 ix_firstname 인덱스를 이용해 first_name = 'Matt' 인 레코드를 찾는다.
-2. salaries 테이블의 PRIMARY 키를 통해 emp_no가 1번 결과와 동일한 레코드를 찾는다.
-3. INNER JOIN의 조건에 일치하는 건만 가져온다.
-4. 1번과 3번의 결과를 조인한다.
-5. 임시 테이블에 결과를 저장하면서 GROUP BY 집계를 실행한다.
-6. 임시 테이블의 결과를 읽어서 결과를 반환한다.
-```
+# [Real MySQL 8.0] 실행 계획 분석하기
 
 # 실행 계획 분석
 
@@ -255,3 +143,143 @@ WHERE e.emp_no=tb.emp_no;
 >
 
 ### DEPENDENT DERIVED
+
+MySQL 8.0 이전 버전에서는 FROM 절의 서브쿼리는 외부 컬럼을 사용할 수 없었는데, MySQL 8.0 부터는 래터럴 조인 기능이 추가되면서 FROM 절의 서브쿼리에서도 외부 컬럼을 참조할 수 있게됐다. **래터럴 조인을 사용하면 select_type 컬럼이 DEPENDENT DERIVED 키워드가 표시 된다.**
+
+> 래터럴 조인이란?
+특정 그룹별로 서브쿼리를 실행해서 그 결과와 조인하는 기능이다.
+>
+
+### UNCACHEABLE SUBQUERY
+
+조건이 똑같은 서브쿼리가 실행될 때는 쿼리를 다시 실행하지 않고 이전의 실행 결과를 내부적인 캐시 공간에 담아두고 재사용하게 된다. 하지만 **서브쿼리에 포함된 요소에 의해 캐시 자체가 불가능한 경우 select_type이 UNCACHEABLE SUBQUERY로 표시된다.**
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1dd321dd-678f-4c3a-a45f-d1e545ce41b4/Untitled.png)
+
+위 그림은 select_type이 SUBQUERY인 경우 캐시를 사용하는 방법을 나타내며 캐시가 처음 한번만 생성된 것을 알 수 있다. 다만, select_type이 DEPENDENT SUBQUERY인 경우 캐시 방식은 똑같지만 한 번만 캐시되는 것이 아니라 외부 쿼리의 값 단위로 캐시가 만들어진다.
+
+- SUBQUERY
+    - 한 번만 실행해서 그 결과를 캐시하고 필요할 때 캐시된 결과를 이용한다.
+- DEPENDENT SUBQUERY
+    - 의존하는 바깥쪽 쿼리의 컬럼 값 단위로 캐시해두고 사용한다.
+
+캐시를 사용하지 못하게 하는 요소로는 다음과 같은 것들이 있다.
+
+- 사용자 변수가 서브쿼리에 사용된 경우
+- NOT-DETERMINISTIC 속성의 스토어드 루틴이 서브쿼리내에 사용된 경우
+- UUID(), RAND() 같은 결과값이 호출할 때마다 달라지는 함수가 서브쿼리에 사용된 경우
+
+### UNCACHEABLE UNION
+
+UNION 수행 시 포함된 요소에 의해 캐시가 불가능한 경우 select_type이 UNCACHEABLE UNION로 표시된다.
+
+### MATERIALIZED
+
+MySQL 5.6 버전부터 도입된 select_type으로 주로 FROM 절이나 IN(subquery) 형태의 쿼리에 사용된 서브쿼리의 최적화를 위해 사용된다.
+
+```sql
+EXPLAIN 
+SELECT *
+FROM employees e
+WHERE e.emp_no IN (SELECT emp_no FROM salaries WHERE salary BETWEEN 100 AND 1000);
+
++------+-------------+-------------+-------+-----------+------+--------------------------+
+|id    |select_type  | table       | type  |key        | rows | Extra                    |
++------+-------------+-------------+-------+-----------+------+--------------------------+
+| 1    |SIMPLE       | <subquery2> | ALL   | NULL      | NULL | NULL                     |
+| 1    |SIMPLE       | e           | eq_ref| PRIMARY   |    1 | NULL                     |
+| 2    |MATERIALIZED | salaries    | range | ix_salary |    1 | Using where; Using index |
++------+-------------+-------------+-------+-----------+------+--------------------------+
+```
+
+위 예제에서 MySQL 5.6 버전까지는 employees 테이블을 읽어서 레코드마다 salaries 테이블을 읽는 서브쿼리가 실행되는 형태로 처리됐다. 하지만 MySQL 5.7 버전부터는 서브쿼리의 내용을 임시 테이블로 구체화(Materialization)한 후, 임시 테이블과 employees 테이블을 조인하는 형태로 최적화되어 처리된다.
+
+## table 컬럼
+
+MySQL 서버의 실행 계획은 단위 SELECT 쿼리 기준이 아니라 테이블 기준으로 표시된다. 테이블의 이름에 별칭이 부여된 경우 별칭이 표시된다.
+
+- 별도의 테이블을 사용하지 않는 SELECT 쿼리의 경우 table 컬럼이 NULL로 표시된다.
+- <derived N> 또는 <union M, N> 으로 표시되는 것은 임시 테이블을 의미한다.
+    - M, N은 단위 SELECT 쿼리의 id 값을 가리킨다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/76f6f1bb-7097-4dd6-94f0-cbba0a7ec14c/Untitled.png)
+
+지금까지 살펴본 **id 컬럼, select_type 컬럼, table 컬럼은 실행 계획의 각 라인에 명시된 테이블이 어떤 순서로 실행되는지 판단하는 근거를 표시해주는 역할을 한다.**
+
+다음 예시를 통해 앞서 살펴본 3개의 컬럼을 이용해 테이블이 어떤 순서로 실행되는지 실행 계획을 분석해보자.
+
+```sql
+EXPLAIN
+SELECT * 
+FROM
+  (SELECT de.empjio FROM dept_emp de GROUP BY de.emp_no) tb,
+   employees e
+WHERE e.emp_no = tb.emp_no;
+
++------+------------+------------+-------+--------------------+--------+-------------+
+|id    |select_type | table      | type   |key                | rows   | Extra       |
++------+------------+------------+-------+--------------------+--------+-------------+
+| 1    |PRIMARY     | <derived2> | ALL    | NULL              | 331143 | NULL        |
+| 1    |PRIMARY     | e          | eq_ref | PRIMARY           |      1 | NULL        |
+| 2    |DERIVED     | de         | index  | ix_empno_fromdate | 331143 | Using index |
++------+------------+------------+-------+--------------------+--------+-------------+
+```
+
+1. 첫 번째 테이블이 <derived2>이므로 id 값이 2인 라인이 먼저 실행되고 그 결과가 파생 테이블로 준비된다.
+2. 세 번째 라인(id 값이 2인) select_type이 DERIVED 이므로 dept_emp 테이블을 읽어 파생 테이블을 생성한다.
+3. 세 번째 라인의 분석이 끝났으니 다시 첫 번째 라인으로 돌아간다.
+4. 첫 번째와 두 번째 id 값이 같은 것으로 보아 조인되는 쿼리라는 것을 알 수 있다.
+   표시 순서에 따라 **첫 번째 라인이 드라이빙 테이블**이 되고 **두 번째 라인이 드리븐 테이블**이 된다는 것을 알 수 있다. 즉, <derived2> 테이블을 먼저 읽어서 e 테이블로 조인을 실행한 것으로 분석할 수 있다.
+
+## partitions 컬럼
+
+파티션을 참조하는 쿼리(파티션 키 컬럼을 WHERE 조건으로 가진)의 경우 옵티마이저가 쿼리 처리를 위해 필요한 파티션의 목록만 모아서 실행 계획의 partitions 컬럼에 표시해준다.
+
+이해를 돕기위한 예제를 살펴보자. 우선, hire_date 컬럼값을 기준으로 5년 단위로 나누어진 파티션을 생성한다.
+
+```sql
+CREATE TABLE employees_2 (
+  emp_no int NOT NULL,
+  birth_date DATE NOT NULL, 
+  first_name VARCHAR(14) NOT NULL, 
+  last_name VARCHAR(16) NOT NULL, 
+  gender ENUM('M','F') NOT NULL, 
+  hire_date DATE NOT NULL, 
+  PRIMARY KEY (emp_no, hire_date)
+) PARTITION BY RANGE COLUMNS(hire_date) 
+(PARTITION p1986_1990 VALUES LESS THAN ('1990-01-01'), 
+ PARTITION p1991_1995 VALUES LESS THAN ('1996-01-01'), 
+ PARTITION p1996_2000 VALUES LESS THAN ('2000-01-01'), 
+ PARTITION p2O01_2005 VALUES LESS THAN ('2006-01-01'));
+
+INSERT INTO employees_2 SELECT * FROM employees;
+```
+
+그리고 hire_date 컬럼 값이 1999-11-15 ~ 2000-01-15 사이인 레코드를 검색하는 쿼리를 살펴보자.
+
+```sql
+EXPLAIN 
+SELECT *
+FROM employees_2
+WHERE hire_date BETWEEN '1999-11-15' AND '2000-01-15' ;
+```
+
+해당 쿼리에 필요한 데이터는 p1996_2000과 p2000_2006 파티션에 저장돼 있다. 실제로 옵티마이저는 hire_date 컬럼의 조건을 확인해 해당 파티션에 필요한 데이터가 들어있다는 것을 알아낸다. 따라서 실행 계획에서도 나머지 파티션에 대해서는 데이터 분포 등의 분석을 수행하지 않는다.
+
+**파티션이 여러 개인 테이블에서 불필요한 파티션을 뺴고 접근해야 할 것으로 판단되는 테이블만 골라내는 과정을 파티션 프루닝(Partition pruning)이라고 한다.**
+
+이제 위 쿼리의 실제 실행 계획을 살펴보자.
+
+```sql
++------+------------+------------+------------------------+------+-------+
+|id    |select_type | table      | partitions             | type | rows  | 
++------+------------+------------+------------------------+------+-------+
+| 1    |SIMPLE     | employees_2 | p1996_2000, p2000_2006 | ALL  | 21743 |
++------+------------+------------+------------------------+------+-------+
+```
+
+실행 계획을 살펴보면 쿼리 처리를 위해 필요한 파티션 목록이 partitions 컬럼에 표시된 것을 확인할 수 있다. 한 가지 특이한 점은 type의 값이 ALL(풀 테이블 스캔)이라는 것이다.
+
+어떻게 풀 테이블 스캔으로 테이블의 일부만 읽을 수 있는 것일까?
+
+그 이유는 대부분의 RDBMS에서 지원하는 파티션은 물리적으로 개별 테이블처럼 별도의 저장 공간을 가지기 때문이다. 따라서 해당 쿼리의 경우 employees_2 테이블의 모든 파티션이 아니라 p1996_2000 파티션과 p2000_2006 파티션만 풀 스캔을 실행한 것이다.
