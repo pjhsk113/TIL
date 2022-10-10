@@ -62,7 +62,7 @@ MySQL 8.0 버전에서는 2종류의 히스토그램 타입이 지원된다.
   - 각 버킷이 **컬럼의 값과 발생 빈도의 비율**, 2개 값을 가짐
   - Value-Based 히스토그램 또는 도수 분포라고 불린다.
 
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/207960ef-4a20-4389-bff8-1b7d593386fd/Untitled.png)
+    ![](https://blog.kakaocdn.net/dn/rrgFY/btrN666y1Mi/HCIRcxtbDCvKvhtkGeuzRK/img.png)
 
 
 - 높이 균형 히스토그램(Equi-Height)
@@ -71,7 +71,7 @@ MySQL 8.0 버전에서는 2종류의 히스토그램 타입이 지원된다.
   - 각 버킷이 **범위 시작 값, 마지막 값, 발생 빈도율, 버킷에 포함된 유니크 값의 개수** 등 4개 값을 가짐
   - Height-Balanced 히스토그램이라고 불린다.
 
-  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/76137f18-f49d-4a01-93ca-3d018fc1654a/Untitled.png)
+  ![](https://blog.kakaocdn.net/dn/bDBCrl/btrN79onByZ/lF8LHBDZ5hRFu7JwbAQOg0/img.png)
 
 
 ### 히스토그램의 용도
@@ -158,7 +158,7 @@ SELECT *
 FROM employees WHERE first_name='Matt' \G
 ```
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d2df86ea-7ec4-4f0c-b9fa-b5fee8b30611/Untitled.png)
+![](https://blog.kakaocdn.net/dn/zehhj/btrN78JM88J/W1gwo3PVmRTKskOGHmK4Bk/img.png)
 
 코스트 모델에서 중요한 것은 각 단위 작업에 설정되는 비용 값이 커지면 어떤 실행 계획들이 고비용으로 바뀌고 어떤 실행 계획들이 저비용으로 바뀌는지를 파악하는 것이다. 아래의 예제는 개략적으로 코스트 모델을 이해하고 각 단위 작업의 비용 조절을 연습해볼 수 있는 기준이다.
 
@@ -253,7 +253,7 @@ EXPLAIN:{
 
 MySQL 8.0.18 버전부터 EXPLAIN ANALYZE 기능이 추가돼 쿼리의 실행 계획과 단계별 소요된 시간 정보를 확인할 수 있다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f0cc6636-535a-47d1-ade7-e9e9fea6b288/Untitled.png)
+![](https://blog.kakaocdn.net/dn/v3sqi/btrN8zUXEqf/1nhT6tKYbWO4ZDZg3YDmC0/img.png)
 
 실제 실행 순서는 다음 기준으로 읽으면 된다.
 
