@@ -273,9 +273,9 @@ MySQL 8.0.18 버전부터 EXPLAIN ANALYZE 기능이 추가돼 쿼리의 실행 �
 SELECT e.emp_no, avg(s.salary) 
 FROM employees e
 	INNER JOIN salaries s ON s.emp_no=e.emp_no 
-						AND s.salary>50000
-						AND s.from_date<= '1990-01-01'
-						AND s.to_date>'1990-01-01' 
+				AND s.salary>50000
+				AND s.from_date<= '1990-01-01'
+				AND s.to_date>'1990-01-01' 
 WHERE e.first_name='Matt'
 GROUP BY e.hire_date \G
 
