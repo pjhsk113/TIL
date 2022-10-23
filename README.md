@@ -174,6 +174,8 @@
   - [옵티마이저의 기본 데이터 처리 2/2](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/9.%20%EC%98%B5%ED%8B%B0%EB%A7%88%EC%9D%B4%EC%A0%80/%5BReal%20MySQL%5D%20%EC%98%B5%ED%8B%B0%EB%A7%88%EC%9D%B4%EC%A0%80%EC%9D%98%20%EA%B8%B0%EB%B3%B8%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%B2%98%EB%A6%AC%201-2.md)
   - [쿼리 힌트](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/9.%20%EC%98%B5%ED%8B%B0%EB%A7%88%EC%9D%B4%EC%A0%80/%5BReal%20MySQL%5D%20%EC%BF%BC%EB%A6%AC%20%ED%9E%8C%ED%8A%B8.md)
   - [실행 계획 통계 정보와 실행 계획을 확인하는 방법](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/10.%EC%8B%A4%ED%96%89%EA%B3%84%ED%9A%8D/%5BReal%20MySQL%5D%20%EC%8B%A4%ED%96%89%20%EA%B3%84%ED%9A%8D%20%ED%86%B5%EA%B3%84%20%EC%A0%95%EB%B3%B4%EC%99%80%20%EC%8B%A4%ED%96%89%20%EA%B3%84%ED%9A%8D%EC%9D%84%20%ED%99%95%EC%9D%B8%ED%95%98%EB%8A%94%20%EB%B0%A9%EB%B2%95.md)
+  - [실행 계획 분석하기(id ~ partitions)](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/10.%EC%8B%A4%ED%96%89%EA%B3%84%ED%9A%8D/%5BReal%20MySQL%5D%20%EC%8B%A4%ED%96%89%20%EA%B3%84%ED%9A%8D%20%EB%B6%84%EC%84%9D%ED%95%98%EA%B8%B0(id%20~%20partitions).md)
+  - [실행 계획 분석하기(type ~ filtered)](https://github.com/pjhsk113/TIL/blob/main/RealMySQL/10.%EC%8B%A4%ED%96%89%EA%B3%84%ED%9A%8D/%5BReal%20MySQL%5D%20%EC%8B%A4%ED%96%89%20%EA%B3%84%ED%9A%8D%20%EB%B6%84%EC%84%9D%ED%95%98%EA%B8%B0(type%20~%20filtered).md)
 
 ## daily log
 
