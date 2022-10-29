@@ -137,7 +137,7 @@ CREATE TABLE tb_member(
  mem_phone VARCHAR(25),
  PRIMARY KEY (mem_id),
  INDEX ix_nick_name (mem_nickname, mem_name), 
- INDEX ix_nick_regiᄋn (mem_nickname, mem_region), 
+ INDEX ix_nick_region (mem_nickname, mem_region), 
  INDEX ix_nick_gender (mem_nickname, mem_gender), 
  INDEX ix_nick_phone (mem_nickname, mem_phone)
 }
@@ -174,3 +174,29 @@ SELECT * FROM cte;
 그리고 WITH 절 다음의 SELECT 쿼리에서는 생성된 임시 내부 테이블을 풀 스캔해 결과를 반환한다. 이때 실행계획에 Recursive 구문이 표시된다.
 
 ### Rematerialize
+
+래터럴 조인(LATERAL JOIN)되는 테이블은 선행 테이블의 레코드별로 서브쿼리를 실행해 그 결과를 임시 테이블에 저장한다. 이 과정을 Rematerializing이라고 한다.
+
+```sql
+EXPLAIN
+SELECT * FROM employees e
+ LEFT JOIN LATERAL (SELECT *
+                    FROM salaries s
+                    WHERE s.emp_no=e.emp_no
+                    ORDER BY s.from_date DESC LIMIT 2) s2 ON s2.emp_no = e.emp_no
+WHERE e.first_name='Matt' ;
+
++------+------------------+------------+-------+--------------+----------------------------+
+|id    |select_type       | table      | type  | key          | Extra                      |
++------+------------------+------------+-------+--------------+----------------------------+
+| 1    |PRIMARY           | e          | ref   | ix_firstname | Rematerialize (<derived2>) |
+| 1    |PRIMARY           | <derived2> | ref   | <auto_key0>  | NULL                       |
+| 2    |DEPENDENT DERIVED | s          | ref   | PRIMARY      | Using filesort             |
++------+------------------+------------+-------+--------------+----------------------------+
+```
+
+위 쿼리의 실행 계획에서는 조인되는 서브쿼리를 임시 테이블 derived2로 저장하고 employees 테이블과 생성된 임시 테이블을 조인한다. 그런데 derived2 임시 테이블은 employees 테이블의 레코드마다 새로 내부 임시 테이블에 생성된다.
+
+이처럼 매번 임시 테이블이 새로 생성되는 경우 Rematerialize 문구가 표시된다.
+
+### Select tables optimized away
