@@ -200,3 +200,34 @@ WHERE e.first_name='Matt' ;
 이처럼 매번 임시 테이블이 새로 생성되는 경우 Rematerialize 문구가 표시된다.
 
 ### Select tables optimized away
+
+MIN() 또는 MAX()만 SELECT 절에 사용되거나 GROUP BY로 MIN(), MAX()를 조회하는 쿼리가 인덱스를 오름차순 또는 내림차순으로 1건만 읽는 형태의 최적화가 적용되면 해당 메시지가 표시된다.
+
+```sql
+EXPLAIN
+SELECT MAX(emp_no), MIN(emp_no) FROM employees;
+
++------+------------+-------+------+------+------------------------------+
+|id    |select_type | table | type | key  | Extra                        |
++------+------------+-------+------+------+------------------------------+
+| 1    |SIMPLE      | NULL  | NULL | NULL | Select tables optimized away |
++------+------------+-------+------+------+------------------------------+
+```
+
+epm_no는 PK이므로 인덱스를 사용할 수 있고, 이미 정렬되어 있으므로 `SELECT MAX(emp_no), MIN(emp_no)` 구문은 인덱스의 첫 번째 레코드와 마지막 레코드만 읽어서 최솟값, 최댓값을 가져올 수 있다. 따라서 Select tables optimized away 최적화가 가능하다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d9587ac6-7dfa-47ac-ad0b-930655d03f46/Untitled.png)
+
+또한, WHERE 절이 포함된 쿼리라도 Select tables optimized away 최적화가 가능하다.
+
+```sql
+SELECT MAX(from_date), MIN(from_date) FROM salaries WHERE emp_no=10002;
+```
+
+salaries 테이블에 (emp_no, from_date) 인덱스가 생성되어 있는 경우, 먼저 emp_no = 10002 인 레코드를 검색하고 첫 번째와 마지막 레코드를 가져올 수 있다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/adc0db2e-3cb8-4fa0-9332-c045dd606d3e/Untitled.png)
+
+### Start temporary, End temporary
+
+세미 조인 최적화 중 Duplicate Weed-out 최적화 전략이 사용되면 해당 문구가 표시된다. Duplicate Weed-out 최적화 전략은 불필요한 중복을 제거하기 위해 내부 임시 테이블을 사용하는데, 조인되어 내부 임시 테이블에 저장되는 테이블을 식별할 수 있도록 첫 번째 테이블에 Start temporary 문구를 보여주고 끝나는 부분에 End temporary를 표시해준다.
