@@ -231,3 +231,39 @@ salaries 테이블에 (emp_no, from_date) 인덱스가 생성되어 있는 경�
 ### Start temporary, End temporary
 
 세미 조인 최적화 중 Duplicate Weed-out 최적화 전략이 사용되면 해당 문구가 표시된다. Duplicate Weed-out 최적화 전략은 불필요한 중복을 제거하기 위해 내부 임시 테이블을 사용하는데, 조인되어 내부 임시 테이블에 저장되는 테이블을 식별할 수 있도록 첫 번째 테이블에 Start temporary 문구를 보여주고 끝나는 부분에 End temporary를 표시해준다.
+
+### Using filesort
+
+ORDER BY 처리가 인덱스를 사용하지 못할 때 Using filesort가 표시된다.
+이는 조회된 레코드를 정렬용 메모리 버퍼(Sort buffer)에 복사해 정렬을 수행하게 된다는 의미다.
+
+이 메시지가 표시되는 쿼리는 많은 부하를 일으키므로 쿼리 튜닝이나 인덱스를 생성하는 것이 좋다.
+
+### Using index(커버링 인덱스)
+
+데이터 파일 접근 없이 인덱스만 읽어서 쿼리를 처리할 수 있는 경우 Using index가 표시된다.
+
+employees 테이블에 firstname에 대한 인덱스를 생성하면 다음과 같은 리프 노드를 가지게 된다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d0b661b9-e9bf-4f93-a553-b290c9c9148d/Untitled.png)
+
+MySQL의 인덱스는 테이블의 PK를 데이터 파일에 접근하는 주소로 사용하므로 (firstname, emp_no)와 같은 인덱스를 생성한 효과를 가진다.
+
+```sql
+SELECT first_name
+FROM employees
+WHERE first_name BETWEEN 'Babette' AND 'Gad';
+```
+
+위 쿼리를 실행하면 ix_firstname 인덱스를 검색하게 된다.
+SELECT에 필요한 컬럼은 first_name이므로 데이터 파일을 조회할 필요없이 인덱스에서 데이터를 가져올 수 있다. firstname은 이미 인덱스에 (first_name, emp_no) 형태로 존재하기 때문이다.
+
+이처럼 **인덱스만으로 처리되는 것을 커버링 인덱스**라고 하며, 데이터 파일을 읽어올 필요가 없어 매우 빠르게 처리된다.
+
+```sql
+SELECT first_name, birth_date
+FROM employees
+WHERE first_name BETWEEN 'Babette' AND 'Gad';
+```
+
+만약 위와 같이 조회 컬럼을 변경하면 커버링 인덱스를 사용하지 못하고 데이터 파일에 접근하게 된다. 인덱스에 존재하는 정보만으로 쿼리를 처리할 수 없기 때문이다.
