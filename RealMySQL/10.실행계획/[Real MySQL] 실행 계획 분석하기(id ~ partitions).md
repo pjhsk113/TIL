@@ -96,7 +96,7 @@ SELECT emp_no FROM dept_emp WHERE from_date > '2001-01-01';
 +------+-------------+-------------+-------+-------------+---------+---------------------------+
 ```
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/37a44b18-ffed-4320-8ce7-d81d068b8f26/Untitled.png)
+![](https://k.kakaocdn.net/dn/c7xeFN/btrOFlu8g4s/cMPvxWUFfmCkJGKcVxOp41/img.png)
 
 <union1, 2>는 id 값이 1인 단위 쿼리와 2인 단위 쿼리의 조회 결과를 UNION 했다는 것을 의미한다.
 
@@ -154,7 +154,7 @@ MySQL 8.0 이전 버전에서는 FROM 절의 서브쿼리는 외부 컬럼을 �
 
 조건이 똑같은 서브쿼리가 실행될 때는 쿼리를 다시 실행하지 않고 이전의 실행 결과를 내부적인 캐시 공간에 담아두고 재사용하게 된다. 하지만 **서브쿼리에 포함된 요소에 의해 캐시 자체가 불가능한 경우 select_type이 UNCACHEABLE SUBQUERY로 표시된다.**
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1dd321dd-678f-4c3a-a45f-d1e545ce41b4/Untitled.png)
+![](https://k.kakaocdn.net/dn/s0pnA/btrO3FtN3js/lJrv3xtfK8coVnkuNqf05k/img.png)
 
 위 그림은 select_type이 SUBQUERY인 경우 캐시를 사용하는 방법을 나타내며 캐시가 처음 한번만 생성된 것을 알 수 있다. 다만, select_type이 DEPENDENT SUBQUERY인 경우 캐시 방식은 똑같지만 한 번만 캐시되는 것이 아니라 외부 쿼리의 값 단위로 캐시가 만들어진다.
 
@@ -202,7 +202,7 @@ MySQL 서버의 실행 계획은 단위 SELECT 쿼리 기준이 아니라 테이
 - <derived N> 또는 <union M, N> 으로 표시되는 것은 임시 테이블을 의미한다.
     - M, N은 단위 SELECT 쿼리의 id 값을 가리킨다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/76f6f1bb-7097-4dd6-94f0-cbba0a7ec14c/Untitled.png)
+![](https://k.kakaocdn.net/dn/bH5EJS/btrO6MYK4H8/6d0LxiLNFmkIuNi4EHlDE1/img.png)
 
 지금까지 살펴본 **id 컬럼, select_type 컬럼, table 컬럼은 실행 계획의 각 라인에 명시된 테이블이 어떤 순서로 실행되는지 판단하는 근거를 표시해주는 역할을 한다.**
 
