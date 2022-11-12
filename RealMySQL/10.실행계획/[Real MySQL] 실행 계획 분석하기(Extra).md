@@ -22,7 +22,7 @@ MySQL 8.0 버전에서는 Deleting all rows 최적화는 표시되지 않는다.
 
 조회하려는 값을 중복없이 유니크하게 가져오기 위해 DISTINCT 키워드를 사용하면 Extra 컬럼에 Distinct가 표시된다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/441a4dec-a8b0-4ed4-ab8a-2438b97c8a2d/Untitled.png)
+![](https://k.kakaocdn.net/dn/Qcn5K/btrQRFZ5pkw/6MwUIdgTOivNokXfRihLE1/img.png)
 
 위 예시처럼 두 테이블을 조인해서 dept_no만 중복없이 유니크하게 가져오기 위해 DISTINCT 키워드를 사용한다. 쿼리의 DISTINCT를 처리하기 위해 조인하지 않아도 되는 항목은 모두 무시하고 dept_emp 테이블에서는 필요한 레코드만 읽은 것을 볼 수 있다.
 
@@ -121,7 +121,7 @@ e1 테이블의 레코드를 하나씩 읽을 때마다 e1.emp_no 값이 계속 
 
 Range checked for each record는 “레코드마다 인덱스 레인지 스캔을 체크한다.” 라는 의미를 가지고 있다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e17df757-2ee3-4365-90dd-b1265d773074/Untitled.png)
+![](https://k.kakaocdn.net/dn/cQjb5X/btrQUVUtJGV/zVGVVmxCkT5K1uVb84RFAk/img.png)
 
 실행 계획을 살펴보면 `index map: 0x1` 이라는 메시지도 함께 표시되어 있다. 이는 후보 인덱스의 순번을 나타내며, 해석하기 위해선 이진수로 변환을 해야한다.
 
@@ -146,7 +146,7 @@ CREATE TABLE tb_member(
 생성된 인덱스는 총 5개이고 0x19를 이진수로 변환하면 11001이다.
 이 비트 배열을 해석하는 방법은 다음과 같다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/33cc4ab7-ba5f-41bd-9a50-9f07bd2fcf09/Untitled.png)
+![](https://k.kakaocdn.net/dn/cpSOS4/btrQUT3rpKq/Nls699lv1ijeTkFQ5tBtGk/img.png)
 
 여기서 값이 1인 인덱스를 사용 가능한 인덱스 후보로 선정했음을 의미한다.
 
@@ -216,7 +216,7 @@ SELECT MAX(emp_no), MIN(emp_no) FROM employees;
 
 epm_no는 PK이므로 인덱스를 사용할 수 있고, 이미 정렬되어 있으므로 `SELECT MAX(emp_no), MIN(emp_no)` 구문은 인덱스의 첫 번째 레코드와 마지막 레코드만 읽어서 최솟값, 최댓값을 가져올 수 있다. 따라서 Select tables optimized away 최적화가 가능하다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d9587ac6-7dfa-47ac-ad0b-930655d03f46/Untitled.png)
+![](https://k.kakaocdn.net/dn/vOxwF/btrQTjI6Fxc/6dVbpoKcXgwF6mL9hm30AK/img.png)
 
 또한, WHERE 절이 포함된 쿼리라도 Select tables optimized away 최적화가 가능하다.
 
@@ -226,7 +226,7 @@ SELECT MAX(from_date), MIN(from_date) FROM salaries WHERE emp_no=10002;
 
 salaries 테이블에 (emp_no, from_date) 인덱스가 생성되어 있는 경우, 먼저 emp_no = 10002 인 레코드를 검색하고 첫 번째와 마지막 레코드를 가져올 수 있다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/adc0db2e-3cb8-4fa0-9332-c045dd606d3e/Untitled.png)
+![](https://k.kakaocdn.net/dn/zLzr3/btrQVqzVyph/C3byrRkOSHU73u6sdn9W21/img.png)
 
 ### Start temporary, End temporary
 
@@ -245,7 +245,7 @@ ORDER BY 처리가 인덱스를 사용하지 못할 때 Using filesort가 표시
 
 employees 테이블에 firstname에 대한 인덱스를 생성하면 다음과 같은 리프 노드를 가지게 된다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d0b661b9-e9bf-4f93-a553-b290c9c9148d/Untitled.png)
+![](https://k.kakaocdn.net/dn/YyXJS/btrQVzwLBPA/qfZ1SJZ75vLoLmzpkGb1j1/img.png)
 
 MySQL의 인덱스는 테이블의 PK를 데이터 파일에 접근하는 주소로 사용하므로 (firstname, emp_no)와 같은 인덱스를 생성한 효과를 가진다.
 
@@ -343,7 +343,7 @@ MySQL 엔진 레이어에서 별도의 가공을 통해 필터링 작업을 처�
 MySQL 서버는 MySQL 엔진과 스토리지 엔진이라는 두 개의 레이어로 나눠져 있다.
 스토리지 엔진은 레코드를 읽어거나 저장하는 역할을 하고, MySQL 엔진은 스토리지 엔진으로부터 전달받은 레코드를 조인, 필터링 등과 같은 가공 또는 연산 작업을 수행한다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9ee4f55e-3183-4944-95b8-b22fad4771b3/Untitled.png)
+![](https://k.kakaocdn.net/dn/mgsaF/btrQSFTcgnZ/P0iuuaJ3OIBlqWOCyfgzt0/img.png)
 
 만약 스토리지 엔진에서 200건의 레코드를 읽고, MySQL 엔진에서 별도의 필터링이나 가공 처리 필요없이 클라이언트에게 전달하면 Using where 메시지는 표시되지 않는다.
 
