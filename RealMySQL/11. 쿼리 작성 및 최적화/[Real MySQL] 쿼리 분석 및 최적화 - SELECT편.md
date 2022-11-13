@@ -1,6 +1,6 @@
 # [Real MySQL 8.0] 쿼리 작성 및 최적화 - SELECT 편
 
-## SELECT 절의 처리 순서
+# SELECT 절의 처리 순서
 
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f0f41e8d-0c0a-4429-ab89-7ddd6e82658f/Untitled.png)
 
@@ -15,6 +15,8 @@
 >
 
 하지만 인라인 뷰가 사용되면 임시 테이블이 사용되기 때문에 주의해야 한다.
+
+# WHERE 조건과 GROUP BY 절, ORDER BY 절의 인덱스 사용
 
 ## 인덱스를 사용하기 위한 기본 규칙
 
@@ -45,3 +47,111 @@ SELECT * FROM tb_test WHERE age=2;
 ## WHERE 절의 인덱스 사용
 
 WHERE 절의 인덱스 사용 방법은 **작업 범위 결정 조건**과 **체크 조건** 두 가지 방식으로 구분한다.
+
+작업 범위 결정 조건은 동등 비교 조건이나 IN으로 구성된 조건에 사용된 컬럼들이 인덱스의 구성과 좌측부터 얼마나 일치하는가에 따라 달라진다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3b645c95-ff6a-4f26-8861-4ac7dc8d08ee/Untitled.png)
+
+위 그림에서 WHERE 조건절의 순서는 실제 인덱스의 사용 여부와 무관하다.
+옵티마이저는 인덱스를 사용할 수 있는 조건을 뽑아서 최적화를 수행할 수 있기 때문이다.
+
+WHERE 조건절에서 COL_1과 COL_2는 동등 비교 조건이고 COL_3은 범위 비교 조건이다.
+따라서 그 뒤 컬럼인 COL_4는 인덱스의 범위 결정 조건으로 사용되지 못하고 체크 조건으로 사용된다.
+
+다중 컬럼 인덱스에서는 N-1번째 컬럼이 N번째 컬럼에 의존해 다시 정렬된다. 즉, COL_3 컬럼까지는 비교 작업의 범위를 줄이는데(작업 범위 결정 조건) 도움을 주지만 COL_4 컬럼은 COL_3에 의존적이므로 범위를 좁히지 못하고 단순히 비교 용도(필터링 조건)로만 사용되어 체크 조건으로 사용되는 것이다.
+
+위 예시들은 모두 AND 조건으로 연결되는 경우를 가정한 것이며, OR 조건으로 묶이면 더욱 복잡해진다.
+OR로 연결되면 읽어서 비교해야 할 레코드가 더 늘어나기 때문에 주의해야한다.
+
+## GROUP BY 절의 인덱스 사용
+
+GROUP BY 절의 각 컬럼은 비교 연산자를 가지지 않으므로 작업 범위 결정 조건이나 체크 조건을 구분해서 생각할 필요없이 **GROUP BY 절에 명시된 컬럼의 순서가 인덱스 구성 컬럼 순서와 동일하면 인덱스를 이용할 수 있다.**
+
+- GROUP BY 인덱스 사용 조건
+    - GROUP BY 절에 명시된 컬럼이 인덱스 컬럼의 순서와 같아야 한다.
+    - 순서상 인덱스의 앞쪽에 있는 컬럼이 GROUP BY 절에 명시되지 않으면 인덱스를 사용할 수 없다.
+    - GROUP BY 절에 명시된 컬럼이 하나라도 인덱스에 없으면 인덱스를 사용하지 못한다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c1176eee-146c-4b32-89e2-a7f25f7b678c/Untitled.png)
+
+WHERE 절과 GROUP BY 절이 혼용된 쿼리가 인덱스를 사용할 수 있는지를 판별하기 위해서는 WHERE 절에서 동등 비교 조건으로 사용된 컬럼을 GROUP BY 절로 옮겨보자.
+
+```sql
+- // 원본 쿼리
+... WHERE COL_1 ='상수' ... GROUP BY COL_2, COL_3
+
+— // WHERE 조건절의 COL_1 칼럼을 GROUP BY 절의 앞쪽으로 포함시켜 본 쿼리 
+... WHERE COL_1 ='상수' ... GROUP BY COL_1, COL_2, COL_3
+```
+
+위와 같이 변경해도 똑같은 결과가 조회된다면 인덱스를 사용할 수 있는 쿼리로 판단하면 된다.
+
+## ORDER BY 절의 인덱스 사용
+
+ORDER BY와 GROUP BY는 처리 방법이 거의 비슷하다. 따라서 인덱스 사용 조건도 거의 흡사하다.
+
+한 가지 다른점이 있다면, 정렬되는 컬럼의 오름차순 및 내림차순 옵션이 인덱스와 같거나 정반대인 경우에만 사용할 수 있다는 것이다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c4d7ea6e-d233-4afa-b623-940162fe29dc/Untitled.png)
+
+## WHERE 조건과 ORDER BY(또는 GROUP BY)절의 인덱스 사용
+
+우리가 사용하는 쿼리는 일반적으로 WHERE 절과 GROUP BY 절, ORDER BY 절 등을 포함한 복잡한 형태의 쿼리로 구성된다.
+
+하나의 쿼리에는 하나의 인덱스만 사용 가능하므로(index_merge 제외) 여러개의 절이 같이 사용된 쿼리 문장은 다음 3가지 중 한 가지 방법으로만 인덱스를 이용한다.
+
+- WHERE 절과 ORDER BY 절이 동시에 같은 인덱스를 사용
+    - WHERE 절의 비교 조건과 ORDER BY 절의 정렬 대상이 모두 하나의 인덱스에 연속해서 포함돼 있을 때 사용 가능
+    - 가장 빠른 성능을 보이므로 이 방식으로 처리될 수 있도록 튜닝하거나 인덱스를 생성하는 것이 좋음
+- WHERE 절만 인덱스 사용
+    - ORDER BY 절은 인덱스를 통해 검색된 레코드를 별도 정렬 처리 과정(Using Filesort)으로 처리
+    - WHERE 조건절에 일치하는 레코드 건수가 많지 않을 때 효율적인 방식(레코드 건수가 많은 경우 Using Filesort가 부하를 유발)
+- ORDER BY 절만 인덱스를 사용
+    - ORDER BY 절의 순서대로 인덱스를 읽으며 WHERE 절의 조건에 일치하는지 비교하는 형태
+    - 대량의 레코드를 조회해서 정렬해야할 때 이런 형태로 튜닝
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e8385f4d-6c8e-43a4-9127-66c35262224a/Untitled.png)
+
+이 방식도 마찬가지로 WHERE 절에 동등 비교로 비교된 컬럼과 ORDER BY 절에 명시된 컬럼이 순서대로 빠짐없이 인덱스에 왼쪽부터 일치해야 한다. 그렇지 않다면 역시 인덱스를 사용할 수 없다.
+
+이제 범위 조건 비교가 사용되는 쿼리 예제를 살펴보자.
+
+```sql
+SELECT * FROM tb.test WHERE COL_1 > 10 ORDER BY COL_1, COL_2, COL_3;
+```
+
+위 쿼리에서 COL_1에 만족하는 값은 여러 개일 수 있지만 ORDER BY 절에서 인덱스가 순서대로 모두 명시되었기 때문에 인덱스를 사용할 수 있다.
+
+하지만 다음과 같은 경우 인덱스를 이용하지 못한다.
+
+```sql
+SELECT * FROM tb.test WHERE COL_1 > 10 ORDER BY COL_2, COL_3;
+```
+
+COL_1이 동등 비교 조건이였다면 인덱스를 사용할 수 있었겠지만, 범위 조건이므로 ORDER BY 절에서 COL_1이 명시되지 않은 이 쿼리는 인덱스를 이용하지 못한다.
+
+## GROUP BY 절과 ORDER BY 절의 인덱스 사용
+
+두 절이 모두 하나의 인덱스를 사용해서 처리되려면 GROUP BY 절과 ORDER BY 절에 명시된 컬럼의 순서와 내용이 모두 같아야 한다.
+
+따라서 둘 중 하나라도 인덱스를 사용할 수 없는 경우 두 절 모두에서 인덱스를 사용할 수 없다.
+
+```sql
+-- // 인덱스 사용 불가
+... GROUP BY col_1, col_2 ORDER BY col_2 
+... GROUP BY col_1, col_2 ORDER BY col_1, col_3
+```
+
+MySQL 5.7 버전까지는 GROUP BY 컬럼에 대한 정렬까지 함께 수행하는 것이 기본 작동 방식이지만, MySQL 8.0 버전부터는 GROUP BY 컬럼의 정렬까지 보장하지 않는 형태로 변경되었다.
+
+## WHERE 조건과 ORDER BY 절, GROUP BY 절의 인덱스 사용
+
+WHERE, GROUP BY, ORDER BY 절이 모두 포함된 쿼리가 인덱스를 사용하는지 판단하기 위해서 다음 흐름도를 적용해보자.
+
+1. WHERE 절이 인덱스를 사용할 수 있는가?
+2. GROUP BY 절이 인덱스를 사용할 수 있는가?
+3. GROUP BY 절과 ORDER BY 절이 동시에 인덱스를 사용할 수 있는가?
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/18ae07c7-bfee-457c-8f69-eac98f23bd06/Untitled.png)
+
+# WHERE 절의 비교 조건 사용 시 주의사항
