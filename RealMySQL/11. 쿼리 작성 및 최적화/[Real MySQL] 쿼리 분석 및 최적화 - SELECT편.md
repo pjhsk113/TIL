@@ -227,3 +227,120 @@ DATETIME 타입이라면 FROM_UNIXTIME() 함수를 이용해 DATETIME 타입으�
   - TIMESTAMP → DATETIME
 - UNIX_TIMESTAMP()
   - DATETIME → TIMESTAMP
+
+## Short-Circuit Evaluation
+
+Short-circuit Evaluation이란 여러 개의 표현식이 AND 또는 OR 연산자로 연결된 경우 선행 표현식의 결과에 따라 뒤에 연산을 평가할지 말지 결정하는 최적화를 말한다.
+
+예를 들어, 다음과 같은 표현식이 있다고 가정해보자.
+
+```java
+if (isMember() && hasName()) {
+    ....
+}
+```
+
+isMember() 함수가 True를 반환한다면 후행 표현식인 hasName() 함수를 호출해 결과를 확인해야 한다. 하지만 isMember() 함수가 False를 반환한다면 hasName()을 검사할 필요가 없다. 후행 표현식을 확인하지 않아도 결과는 False를 반환하기 때문이다.
+
+Short-circuit Evaluation는 쿼리 성능에 영향을 준다.
+**WHERE 조건절에 명시된 조건이 인덱스를 사용할 수 없는 경우** 순서에 따라 조회하는 레코드 건수가 달라질 수 있기 때문이다.
+
+다음과 같은 결과를 반환하는 쿼리를 살펴보자.
+두 쿼리 모두 인덱스를 사용하지 못하고 풀 테이블 스캔을 사용한다고 가정한다.
+
+```sql
+-- // 1번 조건을 만족하는 레코드 건수
+SELECT COUNT(*) FROM salaries
+WHERE CONVERT_TZ(from_date,'+00:00', '+09:00') > '1991-01-01';
++----------+
+| COUNT(*) |  
++----------+
+|  2442943 |
++----------+
+
+-- // 2번 조건을 만족하는 레코드 건수
+SELECT COUNT(*) FROM salaries
+WHERE to_date < '1985-01-01' ;
++----------+
+| COUNT(*) |  
++----------+
+|        0 |
++----------+
+```
+
+이제 위의 두 쿼리를 하나의 쿼리로 조합하고 WHERE 조건의 순서만 변경해서 결과를 살펴보자.
+
+```sql
+-- // (1번 조건, 2번 조건) 순으로 조합
+SELECT * FROM salaries
+WHERE CONVERT_TZ(from_date,'+00:00', '+09:00') > '1991-01-01'
+AND to_date < '1985-01-01';
+
+==> (0.73 sec)
+
+-- // (2번 조건, 1번 조건) 순으로 조합
+SELECT * FROM salaries
+WHERE to_date < '1985-01-01'
+AND CONVERT_TZ(from_date,'+00:00', '+09:00') > '1991-01-01';
+
+==> (0.52 sec)
+```
+
+확실히 성능에 차이가 있는걸 확인할 수 있다.
+현재는 근소한 차이지만 만약 더 많은 자원을 소모하는 조건이였다면 성능 차이는 더욱 커졌을 것이다.
+
+이처럼 MySQL 서버는 쿼리의 WHERE 절에 나열된 조건을 순서대로 Short-circuit Evaluation 방식으로 평가해 레코드를 반환할지 말지를 결정한다.
+
+하지만 WHERE 절의 조건 중 인덱스를 사용할 수 있는 조건이 있다면 MySQL 서버는 그 조건을 최우선으로 사용하며, 나열된 조건의 순서가 인덱스 사용 여부를 결정하지는 않는다.
+
+**MySQL 서버에서 쿼리를 작성할 때 가능하면 복잡한 연산 또는 다른 테이블의 레코드를 읽어야하는 서브쿼리 조건 등은 WHERE 절의 뒤쪽으로 배치하는 것이 성능상 도움이 된다는 것을 알아두자.**
+
+## DISTINCT
+
+## LIMIT n
+
+LIMIT는 쿼리 결과에서 지정된 순서에 위치한 레코드만 가져오고자 할 때 사용한다.
+일반적으로 MySQL 서버에서 LIMIT는 쿼리의 가장 마지막에 실행된다. 따라서 GROUP BY 절이나 DISTINCT 등과 같이 사용됐을 때 어떻게 동작하는 지 알아둘 필요가 있다.
+
+- `SELECT * FROM employees LIMIT 0, 10;`
+  - 해당 쿼리는 풀 테이블 스캔을 하면서 10개의 레코드를 읽어들인 시점에 읽기 작업을 멈춘다.
+  - 이러한 형태의 쿼리는 LIMIT를 이용해 쿼리를 상당히 빨리 끝낼 수 있다.
+- `SELECT * FROM employees GROUP BY first_name LIMIT 0, 10;`
+  - 해당 쿼리는 GROUP BY 처리가 완료되고 LIMIT 처리를 수행한다.
+  - 따라서 LIMIT가 실질적 서버 작업을 크게 줄여주지 못한다.
+- `SELECT DISTINCT first_name FROM employees LIMIT 0, 10;`
+  - 해당 쿼리는 중복 제거 작업(DISTINCT)을 반복 처리하다 유니크한 레코드가 10건 채워지면 작업을 중지한다.
+  - LIMIT 절을 활용해 작업량을 상당히 줄인 쿼리다.
+
+### LIMIT 주의 사항
+
+- LIMIT의 인자로 표현식이나 별도의 서브쿼리를 사용할 수 없다.
+
+```sql
+SELECT * FROM employees LIMIT (100-10) ;
+ERROR 1064 (42000) :You have an error in your SQL syntax;check the manual that corresponds to your MySQL server version for the right syntax to use near '(100-10)' at line 1
+```
+
+- 페이징 처리
+
+```sql
+SELECT * FROM salaries ORDER BY salary LIMIT 0,10;
+10 rows in set (0.00 sec)
+
+SELECT * FROM salaries ORDER BY salary LIMIT 2000000,10;
+10 rows in set (1.57 sec)
+```
+
+이 경우 10건의 레코드를 가져오는 결과는 같지만 MySQL 서버가 처리하는 작업 내용이 다르다.
+
+아래 쿼리의 경우 2,000,010건의 레코드를 읽은 후 2,000,000건은 버리고 마지막 10건만 사용자에게 반환한다. 이러한 비효율을 막기위해서는 다음과 같이 WHERE 조건절로 읽어야 할 위치를 찾고 그 위치에서 10건만 반환하도록 쿼리를 변경하는 것이 좋다.
+
+```sql
+SELECT * FROM salaries
+WHERE salary >= 154888 AND NOT(salary=154888 AND emp_no <= 109334) 
+ORDER BY salary LIMIT 0, 10;
+```
+
+위 예제에서`NOT(salary=154888 AND emp_no <= 109334)` 조건을 명시한 이유는 중복이나 누락을 방지하기 위함이다.
+
+중복을 허용하는 인덱스를 사용하는 경우 단순히 이전 페이지의 마지막 값보다 큰 값을 조회하거나 크거나 같은 경우를 조회하면 중복이나 누락이 발생할 수 있기 때문이다. **페이징을 위한 쿼리 작성 시 주의해야할 부분이다.**
