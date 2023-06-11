@@ -18,6 +18,7 @@
 ### 💯 오늘 한 일
 
 - 책 읽기 - 그림으로 공부하는 TCP/IP(SSL/TLS, DNS)
+- devOps - CI/CD Jenkins VS github Action
 - 휴식
 
 <br/>
@@ -26,6 +27,7 @@
 
 - 주간목표 설정
 - 사내 스터디 - 이펙티브 자바 item52 ~ item54
+- github Action 맛보기
 
 <br/>
 
