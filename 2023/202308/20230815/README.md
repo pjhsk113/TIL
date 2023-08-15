@@ -17,6 +17,7 @@
 ### 💯 오늘 한 일
 
 - 이펙티브 자바 item73 ~ item81 복습
+- docker elk - elastic APM
 
 <br/>
 
